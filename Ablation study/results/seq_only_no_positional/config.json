@@ -1,0 +1,29 @@
+{
+  "learning_rate": 0.001,
+  "hidden_dim": 128,
+  "dropout": 0.4,
+  "batch_size": 128,
+  "weight_decay": 0.01,
+  "num_epochs": 150,
+  "patience": 25,
+  "num_seeds": 10,
+  "ablation": {
+    "id": 14,
+    "name": "seq_only_no_positional",
+    "label": "Sequence-only minus Positional Features",
+    "use_sequence": true,
+    "context_dims": [],
+    "use_interactions": false,
+    "bias_replace": false,
+    "permute_context": false,
+    "feature_mask": {
+      "binned": true,
+      "positional": false,
+      "count": true,
+      "cooccurrence": true
+    },
+    "ablation_group": "feature_seqonly"
+  },
+  "data_dir": "/home/saiful/CARCM/output/",
+  "gpu": 3
+}

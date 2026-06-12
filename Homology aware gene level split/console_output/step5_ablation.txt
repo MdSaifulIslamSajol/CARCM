@@ -1,0 +1,13 @@
+======================================================================
+STEP 5: CONTEXT ABLATION LADDER — HOMOLOGY-AWARE SPLIT
+======================================================================
+Device: cuda
+Traceback (most recent call last):
+  File "/home/saiful/CARCM/Homology aware gene level split/step5_context_ablation.py", line 335, in <module>
+    main()
+  File "/home/saiful/CARCM/Homology aware gene level split/step5_context_ablation.py", line 95, in main
+    feature_groups = load_feature_groups(OUTPUT_DIR)
+  File "/home/saiful/CARCM/rice_classifier_v7b.py", line 134, in load_feature_groups
+    with open(os.path.join(data_dir, 'feature_groups.json'), 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/saiful/CARCM/Homology aware gene level split/output/feature_groups.json'
+ERROR conda.cli.main_run:execute(49): `conda run python /home/saiful/CARCM/Homology aware gene level split/step5_context_ablation.py` failed. (See above for error)

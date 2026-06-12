@@ -1,0 +1,22 @@
+{
+  "learning_rate": 0.001,
+  "hidden_dim": 128,
+  "dropout": 0.4,
+  "batch_size": 128,
+  "weight_decay": 0.01,
+  "num_epochs": 150,
+  "patience": 25,
+  "num_seeds": 10,
+  "ablation": {
+    "id": 8,
+    "name": "param_matched_bias",
+    "label": "Full CARCM with context branch replaced by param-matched bias",
+    "use_sequence": true,
+    "context_dims": [],
+    "use_interactions": false,
+    "bias_replace": true,
+    "permute_context": false
+  },
+  "data_dir": "/home/saiful/CARCM/output/",
+  "gpu": 6
+}

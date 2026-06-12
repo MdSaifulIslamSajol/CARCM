@@ -1,0 +1,36 @@
+========================================================================
+SEQUENCE-IDENTITY LEAKAGE AUDIT  (CD-HIT-EST @ 80% identity)
+INPUT: RiceMetaSys_Drought_merged_all_excels_6.csv
+(conflicting-label rows removed)
+========================================================================
+
+[1] Reproducing train/dev/test split (random_state=42)
+    Split sizes: {'TRAIN': 35601, 'TEST': 4451, 'DEV': 4450}
+    Total samples: 44502
+
+[2] Unique promoter sequences: 17042 / 44502 rows
+    -> Each unique sequence appears on avg 2.61 times across (tissue, stage, variety) combinations.
+
+[3] Exact-sequence cross-split matches: 5145 unique sequences (of 17042)
+    Of these, 5055 are in train, 3031 in test.
+
+[4] Wrote 17042 unique sequences to /home/saiful/DeepRice/motif_based_classification_ALL_DATA/bin_based_v2/benchmarks/leakage_audit_excel_6/unique_sequences.fasta
+
+[5] Running cd-hit-est at identity=0.8
+    -> 16877 clusters formed from 17042 unique seqs
+
+[6] Near-duplicate cluster analysis
+    Multi-member clusters: 134
+    Clusters spanning >1 split (LEAKAGE):  80
+
+[7] Impact on evaluation integrity
+    Test rows in clusters also containing TRAIN: 68  (1.53% of test)
+    Train rows in such clusters:                321
+
+[8] CONCLUSION
+------------------------------------------------------------------------
+  1.53% of test rows share a >=80%-identical sequence with training.
+
+  Verdict: MINOR
+
+All outputs in /home/saiful/DeepRice/motif_based_classification_ALL_DATA/bin_based_v2/benchmarks/leakage_audit_excel_6

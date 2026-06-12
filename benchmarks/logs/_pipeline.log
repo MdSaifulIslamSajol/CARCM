@@ -1,0 +1,366 @@
+========================================================
+  Motif-Based Classification -- Full Benchmark Pipeline
+  Python   : /home/saiful/anaconda3/envs/dnabert_bench/bin/python
+  Bench dir: /home/saiful/CARCM/benchmarks
+  Started  : Sat Apr 18 11:30:02 PM CDT 2026
+========================================================
+
+##################  [1/5] run_simple_baselines.py  ##################
+Train: (35601, 621)  Test: (4451, 621)  Hard in test: 1767
+
+===== DecisionTree =====
+[DecisionTree] AUC=0.6527  F1=0.6848  MCC=0.2331  hard=0.6924  easy=0.6268
+
+===== GaussianNB =====
+[GaussianNB] AUC=0.5900  F1=0.4968  MCC=0.1335  hard=0.6094  easy=0.5736
+
+===== BernoulliNB =====
+[BernoulliNB] AUC=0.5894  F1=0.6884  MCC=0.0446  hard=0.6167  easy=0.5653
+
+===== KNN =====
+[KNN] AUC=0.6261  F1=0.6975  MCC=0.0917  hard=0.6548  easy=0.6114
+>>> run_simple_baselines DONE (30s)
+
+##################  [2/5] run_classical.py  ##################
+Train: (35601, 621)  Test: (4451, 621)  Hard in test: 1767
+
+===== LogisticRegression =====
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+[LogisticRegression] AUC=0.6533  F1=0.7024  MCC=0.1396  hard=0.6645  easy=0.6434
+
+===== SVM_RBF =====
+[SVM_RBF] AUC=0.6166  F1=0.6957  MCC=0.0317  hard=0.6159  easy=0.6162
+
+===== RandomForest =====
+[RandomForest] AUC=0.6995  F1=0.7140  MCC=0.2236  hard=0.7535  easy=0.6672
+
+===== XGBoost =====
+[XGBoost] AUC=0.7554  F1=0.7302  MCC=0.3077  hard=0.7899  easy=0.7318
+
+===== LightGBM =====
+Training until validation scores don't improve for 50 rounds
+Early stopping, best iteration is:
+[343]	valid_0's auc: 0.763155	valid_0's binary_logloss: 0.572187
+[LightGBM] AUC=0.7648  F1=0.7357  MCC=0.3400  hard=0.7963  easy=0.7425
+
+===== CatBoost =====
+[CatBoost] AUC=0.7734  F1=0.7437  MCC=0.3635  hard=0.8098  easy=0.7480
+>>> run_classical DONE (775s)
+
+##################  [3/5] run_tabnet.py  ##################
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/pytorch_tabnet/abstract_model.py:82: UserWarning: Device used : cuda
+  warnings.warn(f"Device used : {self.device}")
+epoch 0  | loss: 1.22127 | dev_auc: 0.49752 |  0:00:04s
+epoch 1  | loss: 0.70711 | dev_auc: 0.49599 |  0:00:07s
+epoch 2  | loss: 0.69381 | dev_auc: 0.51047 |  0:00:11s
+epoch 3  | loss: 0.6917  | dev_auc: 0.5013  |  0:00:17s
+epoch 4  | loss: 0.69192 | dev_auc: 0.52554 |  0:00:21s
+epoch 5  | loss: 0.69045 | dev_auc: 0.51854 |  0:00:26s
+epoch 6  | loss: 0.69076 | dev_auc: 0.52107 |  0:00:29s
+epoch 7  | loss: 0.68903 | dev_auc: 0.53397 |  0:00:33s
+epoch 8  | loss: 0.69012 | dev_auc: 0.53589 |  0:00:36s
+epoch 9  | loss: 0.68937 | dev_auc: 0.52398 |  0:00:41s
+epoch 10 | loss: 0.68859 | dev_auc: 0.52336 |  0:00:45s
+epoch 11 | loss: 0.68805 | dev_auc: 0.52327 |  0:00:51s
+epoch 12 | loss: 0.68752 | dev_auc: 0.52837 |  0:00:54s
+epoch 13 | loss: 0.6874  | dev_auc: 0.5229  |  0:00:59s
+epoch 14 | loss: 0.68784 | dev_auc: 0.52703 |  0:01:02s
+epoch 15 | loss: 0.68684 | dev_auc: 0.52205 |  0:01:06s
+epoch 16 | loss: 0.68596 | dev_auc: 0.53886 |  0:01:09s
+epoch 17 | loss: 0.6868  | dev_auc: 0.53541 |  0:01:15s
+epoch 18 | loss: 0.68667 | dev_auc: 0.54124 |  0:01:20s
+epoch 19 | loss: 0.68573 | dev_auc: 0.53034 |  0:01:23s
+epoch 20 | loss: 0.68615 | dev_auc: 0.54063 |  0:01:27s
+epoch 21 | loss: 0.68583 | dev_auc: 0.54118 |  0:01:30s
+epoch 22 | loss: 0.68488 | dev_auc: 0.53785 |  0:01:35s
+epoch 23 | loss: 0.68522 | dev_auc: 0.54377 |  0:01:39s
+epoch 24 | loss: 0.68383 | dev_auc: 0.5464  |  0:01:44s
+epoch 25 | loss: 0.68324 | dev_auc: 0.55103 |  0:01:48s
+epoch 26 | loss: 0.68226 | dev_auc: 0.54852 |  0:01:52s
+epoch 27 | loss: 0.68135 | dev_auc: 0.55688 |  0:01:55s
+epoch 28 | loss: 0.67989 | dev_auc: 0.56334 |  0:01:59s
+epoch 29 | loss: 0.68029 | dev_auc: 0.56285 |  0:02:04s
+epoch 30 | loss: 0.68047 | dev_auc: 0.56636 |  0:02:09s
+epoch 31 | loss: 0.67868 | dev_auc: 0.58046 |  0:02:12s
+epoch 32 | loss: 0.67716 | dev_auc: 0.57962 |  0:02:16s
+epoch 33 | loss: 0.673   | dev_auc: 0.59326 |  0:02:20s
+epoch 34 | loss: 0.66933 | dev_auc: 0.60035 |  0:02:24s
+epoch 35 | loss: 0.66345 | dev_auc: 0.60911 |  0:02:29s
+epoch 36 | loss: 0.6612  | dev_auc: 0.61903 |  0:02:33s
+epoch 37 | loss: 0.65511 | dev_auc: 0.62976 |  0:02:36s
+epoch 38 | loss: 0.64905 | dev_auc: 0.6304  |  0:02:41s
+epoch 39 | loss: 0.64501 | dev_auc: 0.64604 |  0:02:46s
+epoch 40 | loss: 0.64405 | dev_auc: 0.63071 |  0:02:51s
+epoch 41 | loss: 0.64996 | dev_auc: 0.62668 |  0:02:55s
+epoch 42 | loss: 0.65056 | dev_auc: 0.63091 |  0:02:58s
+epoch 43 | loss: 0.64863 | dev_auc: 0.64992 |  0:03:03s
+epoch 44 | loss: 0.64515 | dev_auc: 0.62641 |  0:03:08s
+epoch 45 | loss: 0.65277 | dev_auc: 0.6442  |  0:03:11s
+epoch 46 | loss: 0.64743 | dev_auc: 0.66494 |  0:03:15s
+epoch 47 | loss: 0.63992 | dev_auc: 0.65652 |  0:03:20s
+epoch 48 | loss: 0.63791 | dev_auc: 0.66446 |  0:03:24s
+epoch 49 | loss: 0.63491 | dev_auc: 0.6687  |  0:03:27s
+epoch 50 | loss: 0.62285 | dev_auc: 0.68371 |  0:03:32s
+epoch 51 | loss: 0.6132  | dev_auc: 0.69012 |  0:03:37s
+epoch 52 | loss: 0.60893 | dev_auc: 0.68845 |  0:03:40s
+epoch 53 | loss: 0.59875 | dev_auc: 0.70249 |  0:03:44s
+epoch 54 | loss: 0.59065 | dev_auc: 0.70356 |  0:03:47s
+epoch 55 | loss: 0.5828  | dev_auc: 0.70866 |  0:03:51s
+epoch 56 | loss: 0.57179 | dev_auc: 0.71725 |  0:03:56s
+epoch 57 | loss: 0.56199 | dev_auc: 0.71625 |  0:03:59s
+epoch 58 | loss: 0.55082 | dev_auc: 0.72127 |  0:04:03s
+epoch 59 | loss: 0.54044 | dev_auc: 0.71874 |  0:04:08s
+epoch 60 | loss: 0.53418 | dev_auc: 0.71288 |  0:04:11s
+epoch 61 | loss: 0.52881 | dev_auc: 0.72111 |  0:04:16s
+epoch 62 | loss: 0.50719 | dev_auc: 0.72526 |  0:04:19s
+epoch 63 | loss: 0.49618 | dev_auc: 0.72001 |  0:04:22s
+epoch 64 | loss: 0.48831 | dev_auc: 0.72458 |  0:04:26s
+epoch 65 | loss: 0.48847 | dev_auc: 0.72654 |  0:04:30s
+epoch 66 | loss: 0.46608 | dev_auc: 0.72397 |  0:04:33s
+epoch 67 | loss: 0.45886 | dev_auc: 0.72584 |  0:04:39s
+epoch 68 | loss: 0.45002 | dev_auc: 0.73043 |  0:04:44s
+epoch 69 | loss: 0.42924 | dev_auc: 0.73749 |  0:04:47s
+epoch 70 | loss: 0.4018  | dev_auc: 0.73784 |  0:04:50s
+epoch 71 | loss: 0.37777 | dev_auc: 0.73497 |  0:04:54s
+epoch 72 | loss: 0.36692 | dev_auc: 0.74425 |  0:04:58s
+epoch 73 | loss: 0.35266 | dev_auc: 0.74412 |  0:05:02s
+epoch 74 | loss: 0.34544 | dev_auc: 0.74922 |  0:05:05s
+epoch 75 | loss: 0.32837 | dev_auc: 0.74543 |  0:05:11s
+epoch 76 | loss: 0.3154  | dev_auc: 0.74296 |  0:05:16s
+epoch 77 | loss: 0.29122 | dev_auc: 0.75178 |  0:05:19s
+epoch 78 | loss: 0.28137 | dev_auc: 0.75159 |  0:05:23s
+epoch 79 | loss: 0.26903 | dev_auc: 0.7547  |  0:05:26s
+epoch 80 | loss: 0.24824 | dev_auc: 0.75319 |  0:05:31s
+epoch 81 | loss: 0.23969 | dev_auc: 0.75056 |  0:05:35s
+epoch 82 | loss: 0.22649 | dev_auc: 0.75683 |  0:05:39s
+epoch 83 | loss: 0.2094  | dev_auc: 0.75047 |  0:05:43s
+epoch 84 | loss: 0.20137 | dev_auc: 0.7543  |  0:05:46s
+epoch 85 | loss: 0.19486 | dev_auc: 0.75557 |  0:05:51s
+epoch 86 | loss: 0.18642 | dev_auc: 0.75701 |  0:05:54s
+epoch 87 | loss: 0.17604 | dev_auc: 0.76112 |  0:05:59s
+epoch 88 | loss: 0.17008 | dev_auc: 0.75906 |  0:06:04s
+epoch 89 | loss: 0.1615  | dev_auc: 0.75808 |  0:06:09s
+epoch 90 | loss: 0.15329 | dev_auc: 0.75679 |  0:06:14s
+epoch 91 | loss: 0.15357 | dev_auc: 0.75146 |  0:06:17s
+epoch 92 | loss: 0.14344 | dev_auc: 0.75029 |  0:06:23s
+epoch 93 | loss: 0.13456 | dev_auc: 0.75298 |  0:06:26s
+epoch 94 | loss: 0.13731 | dev_auc: 0.75626 |  0:06:31s
+epoch 95 | loss: 0.125   | dev_auc: 0.75169 |  0:06:34s
+epoch 96 | loss: 0.12836 | dev_auc: 0.74877 |  0:06:38s
+epoch 97 | loss: 0.11859 | dev_auc: 0.75323 |  0:06:41s
+epoch 98 | loss: 0.12677 | dev_auc: 0.75537 |  0:06:44s
+epoch 99 | loss: 0.11232 | dev_auc: 0.74695 |  0:06:48s
+epoch 100| loss: 0.10352 | dev_auc: 0.75344 |  0:06:51s
+epoch 101| loss: 0.09934 | dev_auc: 0.7537  |  0:06:54s
+epoch 102| loss: 0.09525 | dev_auc: 0.7504  |  0:06:58s
+epoch 103| loss: 0.08967 | dev_auc: 0.74637 |  0:07:01s
+epoch 104| loss: 0.08441 | dev_auc: 0.75107 |  0:07:04s
+epoch 105| loss: 0.08855 | dev_auc: 0.75319 |  0:07:08s
+epoch 106| loss: 0.08564 | dev_auc: 0.74965 |  0:07:11s
+epoch 107| loss: 0.08389 | dev_auc: 0.7438  |  0:07:15s
+epoch 108| loss: 0.08212 | dev_auc: 0.7488  |  0:07:19s
+epoch 109| loss: 0.07776 | dev_auc: 0.75135 |  0:07:24s
+epoch 110| loss: 0.07542 | dev_auc: 0.75313 |  0:07:27s
+epoch 111| loss: 0.07685 | dev_auc: 0.75284 |  0:07:31s
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/pytorch_tabnet/callbacks.py:172: UserWarning: Best weights from best epoch are automatically used!
+  warnings.warn(wrn_msg)
+epoch 112| loss: 0.07222 | dev_auc: 0.75279 |  0:07:34s
+
+Early stopping occurred at epoch 112 with best_epoch = 87 and best_dev_auc = 0.76112
+[TabNet] AUC=0.7373  F1=0.7196  MCC=0.3100  hard=0.7893  easy=0.6990
+>>> run_tabnet DONE (476s)
+
+##################  [4/5] run_ft_transformer.py  ##################
+[FT seed=42] epoch 001 dev_auc=0.5439 best=0.5439
+[FT seed=42] epoch 002 dev_auc=0.5670 best=0.5670
+[FT seed=42] epoch 003 dev_auc=0.6262 best=0.6262
+[FT seed=42] epoch 004 dev_auc=0.6665 best=0.6665
+[FT seed=42] epoch 005 dev_auc=0.6754 best=0.6754
+[FT seed=42] epoch 006 dev_auc=0.7039 best=0.7039
+[FT seed=42] epoch 007 dev_auc=0.7089 best=0.7089
+[FT seed=42] epoch 008 dev_auc=0.7115 best=0.7115
+[FT seed=42] epoch 009 dev_auc=0.7224 best=0.7224
+[FT seed=42] epoch 010 dev_auc=0.7280 best=0.7280
+[FT seed=42] epoch 011 dev_auc=0.7306 best=0.7306
+[FT seed=42] epoch 012 dev_auc=0.7310 best=0.7310
+[FT seed=42] epoch 013 dev_auc=0.7297 best=0.7310
+[FT seed=42] epoch 014 dev_auc=0.7299 best=0.7310
+[FT seed=42] epoch 015 dev_auc=0.7313 best=0.7313
+[FT seed=42] epoch 016 dev_auc=0.7326 best=0.7326
+[FT seed=42] epoch 017 dev_auc=0.7238 best=0.7326
+[FT seed=42] epoch 018 dev_auc=0.7304 best=0.7326
+[FT seed=42] epoch 019 dev_auc=0.7343 best=0.7343
+[FT seed=42] epoch 020 dev_auc=0.7306 best=0.7343
+[FT seed=42] epoch 021 dev_auc=0.7402 best=0.7402
+[FT seed=42] epoch 022 dev_auc=0.7409 best=0.7409
+[FT seed=42] epoch 023 dev_auc=0.7410 best=0.7409
+[FT seed=42] epoch 024 dev_auc=0.7407 best=0.7409
+[FT seed=42] epoch 025 dev_auc=0.7429 best=0.7429
+[FT seed=42] epoch 026 dev_auc=0.7389 best=0.7429
+[FT seed=42] epoch 027 dev_auc=0.7322 best=0.7429
+[FT seed=42] epoch 028 dev_auc=0.7363 best=0.7429
+[FT seed=42] epoch 029 dev_auc=0.7349 best=0.7429
+[FT seed=42] epoch 030 dev_auc=0.7419 best=0.7429
+[FT seed=42] epoch 031 dev_auc=0.7418 best=0.7429
+[FT seed=42] epoch 032 dev_auc=0.7465 best=0.7465
+[FT seed=42] epoch 033 dev_auc=0.7489 best=0.7489
+[FT seed=42] epoch 034 dev_auc=0.7452 best=0.7489
+[FT seed=42] epoch 035 dev_auc=0.7480 best=0.7489
+[FT seed=42] epoch 036 dev_auc=0.7479 best=0.7489
+[FT seed=42] epoch 037 dev_auc=0.7479 best=0.7489
+[FT seed=42] epoch 038 dev_auc=0.7483 best=0.7489
+[FT seed=42] epoch 039 dev_auc=0.7454 best=0.7489
+[FT seed=42] epoch 040 dev_auc=0.7459 best=0.7489
+[FT seed=42] epoch 041 dev_auc=0.7449 best=0.7489
+[FT seed=42] epoch 042 dev_auc=0.7470 best=0.7489
+[FT seed=42] epoch 043 dev_auc=0.7493 best=0.7493
+[FT seed=42] epoch 044 dev_auc=0.7490 best=0.7493
+[FT seed=42] epoch 045 dev_auc=0.7444 best=0.7493
+[FT seed=42] epoch 046 dev_auc=0.7466 best=0.7493
+[FT seed=42] epoch 047 dev_auc=0.7491 best=0.7493
+[FT seed=42] epoch 048 dev_auc=0.7522 best=0.7522
+[FT seed=42] epoch 049 dev_auc=0.7520 best=0.7522
+[FT seed=42] epoch 050 dev_auc=0.7500 best=0.7522
+[FT seed=42] epoch 051 dev_auc=0.7478 best=0.7522
+[FT seed=42] epoch 052 dev_auc=0.7473 best=0.7522
+[FT seed=42] epoch 053 dev_auc=0.7464 best=0.7522
+[FT seed=42] epoch 054 dev_auc=0.7459 best=0.7522
+[FT seed=42] epoch 055 dev_auc=0.7463 best=0.7522
+[FT seed=42] epoch 056 dev_auc=0.7473 best=0.7522
+[FT seed=42] epoch 057 dev_auc=0.7471 best=0.7522
+[FT seed=42] epoch 058 dev_auc=0.7468 best=0.7522
+[FT seed=123] epoch 001 dev_auc=0.5465 best=0.5465
+[FT seed=123] epoch 002 dev_auc=0.5892 best=0.5892
+[FT seed=123] epoch 003 dev_auc=0.6095 best=0.6095
+[FT seed=123] epoch 004 dev_auc=0.6753 best=0.6753
+[FT seed=123] epoch 005 dev_auc=0.6845 best=0.6845
+[FT seed=123] epoch 006 dev_auc=0.7053 best=0.7053
+[FT seed=123] epoch 007 dev_auc=0.7140 best=0.7140
+[FT seed=123] epoch 008 dev_auc=0.7147 best=0.7147
+[FT seed=123] epoch 009 dev_auc=0.7186 best=0.7186
+[FT seed=123] epoch 010 dev_auc=0.7259 best=0.7259
+[FT seed=123] epoch 011 dev_auc=0.7283 best=0.7283
+[FT seed=123] epoch 012 dev_auc=0.7287 best=0.7287
+[FT seed=123] epoch 013 dev_auc=0.7336 best=0.7336
+[FT seed=123] epoch 014 dev_auc=0.7356 best=0.7356
+[FT seed=123] epoch 015 dev_auc=0.7359 best=0.7359
+[FT seed=123] epoch 016 dev_auc=0.7303 best=0.7359
+[FT seed=123] epoch 017 dev_auc=0.7406 best=0.7406
+[FT seed=123] epoch 018 dev_auc=0.7373 best=0.7406
+[FT seed=123] epoch 019 dev_auc=0.7409 best=0.7409
+[FT seed=123] epoch 020 dev_auc=0.7383 best=0.7409
+[FT seed=123] epoch 021 dev_auc=0.7448 best=0.7448
+[FT seed=123] epoch 022 dev_auc=0.7413 best=0.7448
+[FT seed=123] epoch 023 dev_auc=0.7445 best=0.7448
+[FT seed=123] epoch 024 dev_auc=0.7438 best=0.7448
+[FT seed=123] epoch 025 dev_auc=0.7465 best=0.7465
+[FT seed=123] epoch 026 dev_auc=0.7457 best=0.7465
+[FT seed=123] epoch 027 dev_auc=0.7390 best=0.7465
+[FT seed=123] epoch 028 dev_auc=0.7459 best=0.7465
+[FT seed=123] epoch 029 dev_auc=0.7404 best=0.7465
+[FT seed=123] epoch 030 dev_auc=0.7460 best=0.7465
+[FT seed=123] epoch 031 dev_auc=0.7423 best=0.7465
+[FT seed=123] epoch 032 dev_auc=0.7514 best=0.7514
+[FT seed=123] epoch 033 dev_auc=0.7485 best=0.7514
+[FT seed=123] epoch 034 dev_auc=0.7442 best=0.7514
+[FT seed=123] epoch 035 dev_auc=0.7522 best=0.7522
+[FT seed=123] epoch 036 dev_auc=0.7531 best=0.7531
+[FT seed=123] epoch 037 dev_auc=0.7508 best=0.7531
+[FT seed=123] epoch 038 dev_auc=0.7492 best=0.7531
+[FT seed=123] epoch 039 dev_auc=0.7474 best=0.7531
+[FT seed=123] epoch 040 dev_auc=0.7506 best=0.7531
+[FT seed=123] epoch 041 dev_auc=0.7486 best=0.7531
+[FT seed=123] epoch 042 dev_auc=0.7496 best=0.7531
+[FT seed=123] epoch 043 dev_auc=0.7514 best=0.7531
+[FT seed=123] epoch 044 dev_auc=0.7500 best=0.7531
+[FT seed=123] epoch 045 dev_auc=0.7486 best=0.7531
+[FT seed=123] epoch 046 dev_auc=0.7473 best=0.7531
+[FT seed=456] epoch 001 dev_auc=0.5394 best=0.5394
+[FT seed=456] epoch 002 dev_auc=0.5736 best=0.5736
+[FT seed=456] epoch 003 dev_auc=0.6360 best=0.6360
+[FT seed=456] epoch 004 dev_auc=0.6639 best=0.6639
+[FT seed=456] epoch 005 dev_auc=0.6916 best=0.6916
+[FT seed=456] epoch 006 dev_auc=0.6999 best=0.6999
+[FT seed=456] epoch 007 dev_auc=0.7136 best=0.7136
+[FT seed=456] epoch 008 dev_auc=0.7170 best=0.7170
+[FT seed=456] epoch 009 dev_auc=0.7202 best=0.7202
+[FT seed=456] epoch 010 dev_auc=0.7240 best=0.7240
+[FT seed=456] epoch 011 dev_auc=0.7182 best=0.7240
+[FT seed=456] epoch 012 dev_auc=0.7307 best=0.7307
+[FT seed=456] epoch 013 dev_auc=0.7329 best=0.7329
+[FT seed=456] epoch 014 dev_auc=0.7279 best=0.7329
+[FT seed=456] epoch 015 dev_auc=0.7368 best=0.7368
+[FT seed=456] epoch 016 dev_auc=0.7393 best=0.7393
+[FT seed=456] epoch 017 dev_auc=0.7298 best=0.7393
+[FT seed=456] epoch 018 dev_auc=0.7384 best=0.7393
+[FT seed=456] epoch 019 dev_auc=0.7442 best=0.7442
+[FT seed=456] epoch 020 dev_auc=0.7421 best=0.7442
+[FT seed=456] epoch 021 dev_auc=0.7355 best=0.7442
+[FT seed=456] epoch 022 dev_auc=0.7394 best=0.7442
+[FT seed=456] epoch 023 dev_auc=0.7473 best=0.7473
+[FT seed=456] epoch 024 dev_auc=0.7408 best=0.7473
+[FT seed=456] epoch 025 dev_auc=0.7406 best=0.7473
+[FT seed=456] epoch 026 dev_auc=0.7443 best=0.7473
+[FT seed=456] epoch 027 dev_auc=0.7451 best=0.7473
+[FT seed=456] epoch 028 dev_auc=0.7485 best=0.7485
+[FT seed=456] epoch 029 dev_auc=0.7530 best=0.7530
+[FT seed=456] epoch 030 dev_auc=0.7463 best=0.7530
+[FT seed=456] epoch 031 dev_auc=0.7471 best=0.7530
+[FT seed=456] epoch 032 dev_auc=0.7506 best=0.7530
+[FT seed=456] epoch 033 dev_auc=0.7536 best=0.7536
+[FT seed=456] epoch 034 dev_auc=0.7509 best=0.7536
+[FT seed=456] epoch 035 dev_auc=0.7539 best=0.7539
+[FT seed=456] epoch 036 dev_auc=0.7517 best=0.7539
+[FT seed=456] epoch 037 dev_auc=0.7509 best=0.7539
+[FT seed=456] epoch 038 dev_auc=0.7535 best=0.7539
+[FT seed=456] epoch 039 dev_auc=0.7563 best=0.7563
+[FT seed=456] epoch 040 dev_auc=0.7542 best=0.7563
+[FT seed=456] epoch 041 dev_auc=0.7563 best=0.7563
+[FT seed=456] epoch 042 dev_auc=0.7544 best=0.7563
+[FT seed=456] epoch 043 dev_auc=0.7566 best=0.7566
+[FT seed=456] epoch 044 dev_auc=0.7558 best=0.7566
+[FT seed=456] epoch 045 dev_auc=0.7581 best=0.7581
+[FT seed=456] epoch 046 dev_auc=0.7542 best=0.7581
+[FT seed=456] epoch 047 dev_auc=0.7586 best=0.7586
+[FT seed=456] epoch 048 dev_auc=0.7548 best=0.7586
+[FT seed=456] epoch 049 dev_auc=0.7581 best=0.7586
+[FT seed=456] epoch 050 dev_auc=0.7581 best=0.7586
+[FT seed=456] epoch 051 dev_auc=0.7567 best=0.7586
+[FT seed=456] epoch 052 dev_auc=0.7580 best=0.7586
+[FT seed=456] epoch 053 dev_auc=0.7577 best=0.7586
+[FT seed=456] epoch 054 dev_auc=0.7578 best=0.7586
+[FT seed=456] epoch 055 dev_auc=0.7574 best=0.7586
+[FT seed=456] epoch 056 dev_auc=0.7567 best=0.7586
+[FT seed=456] epoch 057 dev_auc=0.7567 best=0.7586
+[FTTransformer] AUC=0.7892  F1=0.7489  MCC=0.3890  hard=0.8395  easy=0.7511
+>>> run_ft_transformer DONE (3311s)
+
+##################  [5/5] aggregate_and_plot.py  ##################
+             model  test_auc  test_ap  hard_auc  easy_auc  accuracy  precision   recall       f1      mcc  optimal_threshold
+        GaussianNB  0.589964 0.623275  0.609403  0.573621  0.554033   0.623013 0.413153 0.496831 0.133510               0.05
+       BernoulliNB  0.589392 0.644355  0.616731  0.565270  0.539429   0.538279 0.954469 0.688355 0.044552               0.05
+               KNN  0.626125 0.653408  0.654848  0.611416  0.547967   0.542056 0.978078 0.697535 0.091674               0.20
+      DecisionTree  0.652691 0.644174  0.692383  0.626763  0.620535   0.614329 0.773609 0.684829 0.233090               0.12
+LogisticRegression  0.653281 0.691613  0.664515  0.643446  0.562795   0.551128 0.967960 0.702355 0.139579               0.31
+           SVM_RBF  0.616630 0.652053  0.615907  0.616245  0.534262   0.533664 0.999157 0.695729 0.031664               0.31
+      RandomForest  0.699500 0.734319  0.753458  0.667161  0.600315   0.577033 0.936341 0.714033 0.223602               0.31
+           XGBoost  0.755388 0.790793  0.789924  0.731796  0.645473   0.614212 0.900084 0.730164 0.307673               0.33
+          LightGBM  0.764840 0.799841  0.796312  0.742519  0.665468   0.635388 0.873524 0.735665 0.340007               0.38
+          CatBoost  0.773419 0.808513  0.809813  0.748027  0.676028   0.642901 0.881956 0.743690 0.363477               0.37
+            TabNet  0.737326 0.755487  0.789339  0.698956  0.655134   0.634869 0.830523 0.719635 0.310049               0.10
+     FTTransformer  0.789212 0.819434  0.839514  0.751112  0.691530   0.661389 0.862985 0.748857 0.389039               0.33
+             CARCM  0.852178 0.873127  0.912755  0.800914  0.747697   0.708097 0.895868 0.790992 0.505144               0.30
+wrote /home/saiful/CARCM/benchmarks/results/summary/benchmark_comparison.csv
+wrote benchmark_comparison.tex
+
+All artifacts in /home/saiful/CARCM/benchmarks/results/summary
+>>> aggregate_and_plot DONE (8s)
+
+========================================================
+  PIPELINE COMPLETE
+  Total time : 76m 40s
+  Finished   : Sun Apr 19 12:46:42 AM CDT 2026
+  Summary    : /home/saiful/CARCM/benchmarks/results/summary
+  Logs       : /home/saiful/CARCM/benchmarks/logs
+========================================================

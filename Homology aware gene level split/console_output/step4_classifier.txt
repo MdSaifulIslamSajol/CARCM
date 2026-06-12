@@ -1,0 +1,45 @@
+Using GPU: 5 → CUDA device 0
+======================================================================
+STEP 4: CARCM TRAINING — HOMOLOGY-AWARE SPLIT
+======================================================================
+  DATA_DIR:       /home/saiful/CARCM/Homology aware gene level split/output
+  RESULTS_DIR:    /home/saiful/CARCM/Homology aware gene level split/models
+  CHECKPOINT_DIR: /home/saiful/CARCM/Homology aware gene level split/checkpoints
+  GPU:            5
+
+================================================================================
+RICE PROMOTER CLASSIFIER V7b - HYPERPARAMETER SEARCH
+Run: best
+================================================================================
+
+Configuration:
+  learning_rate: 0.001
+  hidden_dim: 128
+  dropout: 0.4
+  num_seeds: 10
+  batch_size: 128
+  weight_decay: 0.01
+  num_epochs: 150
+  patience: 25
+  run_name: best
+
+Device: cuda
+
+Loading data...
+Traceback (most recent call last):
+  File "/home/saiful/CARCM/Homology aware gene level split/step4_train_classifier.py", line 64, in <module>
+    results = clf_module.run_experiment(config)
+  File "/home/saiful/CARCM/rice_classifier_v7b.py", line 1140, in run_experiment
+    train_df = pd.read_csv(os.path.join(DATA_DIR, 'train.csv'))
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/home/saiful/CARCM/Homology aware gene level split/output/train.csv'
+ERROR conda.cli.main_run:execute(49): `conda run python /home/saiful/CARCM/Homology aware gene level split/step4_train_classifier.py --learning_rate 1e-3 --hidden_dim 128 --dropout 0.4 --batch_size 128 --num_seeds 10 --run_name best` failed. (See above for error)

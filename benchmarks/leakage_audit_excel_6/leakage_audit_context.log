@@ -1,0 +1,51 @@
+========================================================================
+CONTEXT-AWARE LEAKAGE AUDIT
+INPUT: RiceMetaSys_Drought_merged_all_excels_6.csv
+(conflicting-label rows removed)
+Observation unit = (sequence, Variety, Tissue, Stage)
+========================================================================
+
+Split sizes: train=35601  dev=4450  test=4451
+Total rows: 44502
+
+[0] Within-corpus duplication (all rows)
+    Rows sharing exact (seq, Variety, Tissue, Stage) tuple: 0  (0.00%)
+    Rows sharing only sequence (different context): 37573  (84.43%)
+    Unique tuples:     44502
+    Unique sequences:  17042
+    Tuples with conflicting labels across duplicates: 0  (label noise)
+
+[L1] TUPLE-level leakage  (real duplicates across splits)
+    Test rows with exact (seq, V, T, S) tuple in TRAIN:        0/4451 (0.00%)
+    Test rows with exact (seq, V, T, S) tuple in TRAIN or DEV: 0/4451 (0.00%)
+
+[L3] SEQUENCE-ONLY overlap  (seq shared, context differs)
+    Test rows with sequence seen in pool but new (V, T, S):   3646/4451 (81.91%)
+    -> NOT inherently leakage for a CONTEXT-AWARE classifier.
+    Of those, seq always has the SAME label in pool (memorization possible):
+       967/4451 (21.73%) of test rows
+    Of those, seq has FLIPPING labels in pool (context truly needed):
+       2679/4451 (60.19%) of test rows
+
+[L4] NEAR-DUPLICATE sequence (>=80% identity)
+    Test rows whose CD-HIT cluster also contains a pool row: 3660/4451 (82.23%)
+    Additional to exact-sequence overlap: 14/4451 (0.31%)
+
+[5] CLEAN TEST SUBSETS (for sensitivity analysis)
+    No tuple-level leakage (drop L1): 4451/4451 (100.00%)
+    No seq overlap at all (drop L1+L3): 805/4451 (18.09%)
+    No seq cluster overlap (drop L1+L3+L4): 791/4451 (17.77%)
+
+========================================================================
+CORRECTED CONCLUSION  (context-aware)
+========================================================================
+
+  L1 verdict: CLEAN — no tuple-level leakage  —  0.00% of test
+
+  L3 verdict (sequence overlap with different context):
+      3646 rows (81.91% of test)
+      Breakdown:
+        - single-label sequence (memorizable w/o context): 21.73%
+        - flipping-label sequence (context truly needed):  60.19%
+
+  All outputs in /home/saiful/DeepRice/motif_based_classification_ALL_DATA/bin_based_v2/benchmarks/leakage_audit_excel_6

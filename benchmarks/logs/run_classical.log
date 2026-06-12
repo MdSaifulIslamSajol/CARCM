@@ -1,0 +1,24 @@
+Train: (35601, 621)  Test: (4451, 621)  Hard in test: 1767
+
+===== LogisticRegression =====
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+[LogisticRegression] AUC=0.6533  F1=0.7024  MCC=0.1396  hard=0.6645  easy=0.6434
+
+===== SVM_RBF =====
+[SVM_RBF] AUC=0.6166  F1=0.6957  MCC=0.0317  hard=0.6159  easy=0.6162
+
+===== RandomForest =====
+[RandomForest] AUC=0.6995  F1=0.7140  MCC=0.2236  hard=0.7535  easy=0.6672
+
+===== XGBoost =====
+[XGBoost] AUC=0.7554  F1=0.7302  MCC=0.3077  hard=0.7899  easy=0.7318
+
+===== LightGBM =====
+Training until validation scores don't improve for 50 rounds
+Early stopping, best iteration is:
+[343]	valid_0's auc: 0.763155	valid_0's binary_logloss: 0.572187
+[LightGBM] AUC=0.7648  F1=0.7357  MCC=0.3400  hard=0.7963  easy=0.7425
+
+===== CatBoost =====
+[CatBoost] AUC=0.7734  F1=0.7437  MCC=0.3635  hard=0.8098  easy=0.7480

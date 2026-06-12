@@ -1,0 +1,170 @@
+[variety] device = cuda | visible GPUs = 2
+[variety] Loading data ...
+[variety] train=35601  dev=4450  test=4451
+[variety] global interactions: n_vt=26, n_ts=15, n_vs=20
+[variety] train variety counts:
+IR64_Cleaned    14151
+N22_Cleaned3    10066
+Dhaggadeshi      2543
+Nipponbare       2104
+Moroberekan      1485
+IR20             1422
+Bala              755
+IRAT109           750
+ZS97              707
+Tampha            554
+Pokkali           505
+Azucena           461
+Chandan            98
+[variety] >>> variety_curveA_k1_seed42  n_train=1000  (1/36)
+      Early stopping at epoch 19
+[variety] <<< variety_curveA_k1_seed42  AUC=0.6066  MCC=0.140  t=29.4s
+[variety] >>> variety_curveA_k1_seed123  n_train=1000  (2/36)
+      Epoch 20/80 | Loss: 0.3387 | Dev AUC: 0.5682 | Hard AUC: 0.0000
+      Early stopping at epoch 23
+[variety] <<< variety_curveA_k1_seed123  AUC=0.5999  MCC=0.136  t=32.9s
+[variety] >>> variety_curveA_k1_seed2024  n_train=1000  (3/36)
+      Epoch 20/80 | Loss: 0.3153 | Dev AUC: 0.5660 | Hard AUC: 0.0000
+      Early stopping at epoch 23
+[variety] <<< variety_curveA_k1_seed2024  AUC=0.5987  MCC=0.123  t=32.9s
+[variety] >>> variety_curveB_k1_seed42  n_train=1000  (4/36)
+      Early stopping at epoch 19
+[variety] <<< variety_curveB_k1_seed42  AUC=0.6066  MCC=0.140  t=27.6s
+[variety] >>> variety_curveB_k1_seed123  n_train=1000  (5/36)
+      Epoch 20/80 | Loss: 0.3387 | Dev AUC: 0.5682 | Hard AUC: 0.0000
+      Early stopping at epoch 23
+[variety] <<< variety_curveB_k1_seed123  AUC=0.5999  MCC=0.136  t=32.8s
+[variety] >>> variety_curveB_k1_seed2024  n_train=1000  (6/36)
+      Epoch 20/80 | Loss: 0.3153 | Dev AUC: 0.5660 | Hard AUC: 0.0000
+      Early stopping at epoch 23
+[variety] <<< variety_curveB_k1_seed2024  AUC=0.5987  MCC=0.123  t=32.8s
+[variety] >>> variety_curveA_k2_seed42  n_train=2000  (7/36)
+      Epoch 20/80 | Loss: 0.3710 | Dev AUC: 0.6038 | Hard AUC: 0.8036
+      Early stopping at epoch 20
+[variety] <<< variety_curveA_k2_seed42  AUC=0.6308  MCC=0.192  t=35.3s
+[variety] >>> variety_curveA_k2_seed123  n_train=2000  (8/36)
+      Epoch 20/80 | Loss: 0.3644 | Dev AUC: 0.6226 | Hard AUC: 0.6500
+      Early stopping at epoch 27
+[variety] <<< variety_curveA_k2_seed123  AUC=0.6389  MCC=0.192  t=47.4s
+[variety] >>> variety_curveA_k2_seed2024  n_train=2000  (9/36)
+      Epoch 20/80 | Loss: 0.3535 | Dev AUC: 0.6337 | Hard AUC: 0.7600
+      Early stopping at epoch 22
+[variety] <<< variety_curveA_k2_seed2024  AUC=0.6354  MCC=0.178  t=38.8s
+[variety] >>> variety_curveB_k2_seed42  n_train=2000  (10/36)
+      Epoch 20/80 | Loss: 0.3574 | Dev AUC: 0.5710 | Hard AUC: 0.0000
+      Early stopping at epoch 31
+[variety] <<< variety_curveB_k2_seed42  AUC=0.6099  MCC=0.144  t=54.2s
+[variety] >>> variety_curveB_k2_seed123  n_train=2000  (11/36)
+      Epoch 20/80 | Loss: 0.3936 | Dev AUC: 0.5639 | Hard AUC: 0.5972
+      Early stopping at epoch 26
+[variety] <<< variety_curveB_k2_seed123  AUC=0.5951  MCC=0.112  t=45.3s
+[variety] >>> variety_curveB_k2_seed2024  n_train=2000  (12/36)
+      Epoch 20/80 | Loss: 0.3885 | Dev AUC: 0.5861 | Hard AUC: 0.4889
+      Early stopping at epoch 21
+[variety] <<< variety_curveB_k2_seed2024  AUC=0.6151  MCC=0.159  t=37.1s
+[variety] >>> variety_curveA_k3_seed42  n_train=3000  (13/36)
+      Epoch 20/80 | Loss: 0.3703 | Dev AUC: 0.6310 | Hard AUC: 0.9098
+      Early stopping at epoch 22
+[variety] <<< variety_curveA_k3_seed42  AUC=0.6491  MCC=0.189  t=45.8s
+[variety] >>> variety_curveA_k3_seed123  n_train=3000  (14/36)
+      Epoch 20/80 | Loss: 0.4249 | Dev AUC: 0.6331 | Hard AUC: 0.6700
+      Early stopping at epoch 27
+[variety] <<< variety_curveA_k3_seed123  AUC=0.6623  MCC=0.224  t=56.4s
+[variety] >>> variety_curveA_k3_seed2024  n_train=3000  (15/36)
+      Epoch 20/80 | Loss: 0.4456 | Dev AUC: 0.6656 | Hard AUC: 0.8181
+      Early stopping at epoch 37
+[variety] <<< variety_curveA_k3_seed2024  AUC=0.6601  MCC=0.208  t=76.7s
+[variety] >>> variety_curveB_k3_seed42  n_train=3000  (16/36)
+      Epoch 20/80 | Loss: 0.4019 | Dev AUC: 0.6002 | Hard AUC: 0.7548
+      Early stopping at epoch 35
+[variety] <<< variety_curveB_k3_seed42  AUC=0.6136  MCC=0.161  t=72.9s
+[variety] >>> variety_curveB_k3_seed123  n_train=3000  (17/36)
+      Epoch 20/80 | Loss: 0.4544 | Dev AUC: 0.5758 | Hard AUC: 0.5435
+      Epoch 40/80 | Loss: 0.2248 | Dev AUC: 0.5763 | Hard AUC: 0.6584
+      Early stopping at epoch 40
+[variety] <<< variety_curveB_k3_seed123  AUC=0.6116  MCC=0.151  t=83.3s
+[variety] >>> variety_curveB_k3_seed2024  n_train=3000  (18/36)
+      Epoch 20/80 | Loss: 0.4083 | Dev AUC: 0.5790 | Hard AUC: 0.5417
+      Early stopping at epoch 29
+[variety] <<< variety_curveB_k3_seed2024  AUC=0.6075  MCC=0.144  t=60.7s
+[variety] >>> variety_curveA_k4_seed42  n_train=4000  (19/36)
+      Epoch 20/80 | Loss: 0.4932 | Dev AUC: 0.6426 | Hard AUC: 0.7580
+      Early stopping at epoch 27
+[variety] <<< variety_curveA_k4_seed42  AUC=0.6764  MCC=0.237  t=65.7s
+[variety] >>> variety_curveA_k4_seed123  n_train=4000  (20/36)
+      Epoch 20/80 | Loss: 0.4762 | Dev AUC: 0.6520 | Hard AUC: 0.6927
+      Early stopping at epoch 37
+[variety] <<< variety_curveA_k4_seed123  AUC=0.6681  MCC=0.231  t=89.2s
+[variety] >>> variety_curveA_k4_seed2024  n_train=4000  (21/36)
+      Epoch 20/80 | Loss: 0.4924 | Dev AUC: 0.6671 | Hard AUC: 0.7755
+      Epoch 40/80 | Loss: 0.3324 | Dev AUC: 0.6733 | Hard AUC: 0.7866
+      Early stopping at epoch 48
+[variety] <<< variety_curveA_k4_seed2024  AUC=0.6733  MCC=0.241  t=115.3s
+[variety] >>> variety_curveB_k4_seed42  n_train=4000  (22/36)
+      Epoch 20/80 | Loss: 0.4398 | Dev AUC: 0.5787 | Hard AUC: 0.7688
+      Early stopping at epoch 20
+[variety] <<< variety_curveB_k4_seed42  AUC=0.6190  MCC=0.149  t=49.1s
+[variety] >>> variety_curveB_k4_seed123  n_train=4000  (23/36)
+      Epoch 20/80 | Loss: 0.4388 | Dev AUC: 0.5966 | Hard AUC: 0.6983
+      Early stopping at epoch 27
+[variety] <<< variety_curveB_k4_seed123  AUC=0.6225  MCC=0.178  t=65.2s
+[variety] >>> variety_curveB_k4_seed2024  n_train=4000  (24/36)
+      Epoch 20/80 | Loss: 0.4743 | Dev AUC: 0.5935 | Hard AUC: 0.6776
+      Epoch 40/80 | Loss: 0.2834 | Dev AUC: 0.5949 | Hard AUC: 0.6841
+      Early stopping at epoch 57
+[variety] <<< variety_curveB_k4_seed2024  AUC=0.6206  MCC=0.151  t=136.8s
+[variety] >>> variety_curveA_k5_seed42  n_train=5000  (25/36)
+      Epoch 20/80 | Loss: 0.5079 | Dev AUC: 0.6578 | Hard AUC: 0.7938
+      Early stopping at epoch 22
+[variety] <<< variety_curveA_k5_seed42  AUC=0.6737  MCC=0.246  t=60.8s
+[variety] >>> variety_curveA_k5_seed123  n_train=5000  (26/36)
+      Epoch 20/80 | Loss: 0.5090 | Dev AUC: 0.6516 | Hard AUC: 0.7981
+      Early stopping at epoch 36
+[variety] <<< variety_curveA_k5_seed123  AUC=0.6810  MCC=0.232  t=99.1s
+[variety] >>> variety_curveA_k5_seed2024  n_train=5000  (27/36)
+      Epoch 20/80 | Loss: 0.5220 | Dev AUC: 0.6790 | Hard AUC: 0.8347
+      Early stopping at epoch 37
+[variety] <<< variety_curveA_k5_seed2024  AUC=0.6718  MCC=0.234  t=102.3s
+[variety] >>> variety_curveB_k5_seed42  n_train=5000  (28/36)
+      Epoch 20/80 | Loss: 0.5077 | Dev AUC: 0.6121 | Hard AUC: 0.7612
+      Early stopping at epoch 32
+[variety] <<< variety_curveB_k5_seed42  AUC=0.6249  MCC=0.170  t=88.7s
+[variety] >>> variety_curveB_k5_seed123  n_train=5000  (29/36)
+      Epoch 20/80 | Loss: 0.4774 | Dev AUC: 0.6105 | Hard AUC: 0.7036
+      Early stopping at epoch 31
+[variety] <<< variety_curveB_k5_seed123  AUC=0.6170  MCC=0.163  t=85.0s
+[variety] >>> variety_curveB_k5_seed2024  n_train=5000  (30/36)
+      Epoch 20/80 | Loss: 0.4952 | Dev AUC: 0.6009 | Hard AUC: 0.6843
+      Epoch 40/80 | Loss: 0.2777 | Dev AUC: 0.6132 | Hard AUC: 0.7008
+      Epoch 60/80 | Loss: 0.2042 | Dev AUC: 0.6160 | Hard AUC: 0.7039
+      Early stopping at epoch 61
+[variety] <<< variety_curveB_k5_seed2024  AUC=0.6282  MCC=0.173  t=166.8s
+[variety] >>> variety_curveA_k6_seed42  n_train=6000  (31/36)
+      Epoch 20/80 | Loss: 0.5076 | Dev AUC: 0.6678 | Hard AUC: 0.7974
+      Early stopping at epoch 28
+[variety] <<< variety_curveA_k6_seed42  AUC=0.6838  MCC=0.267  t=86.3s
+[variety] >>> variety_curveA_k6_seed123  n_train=6000  (32/36)
+      Epoch 20/80 | Loss: 0.4942 | Dev AUC: 0.6736 | Hard AUC: 0.7781
+      Epoch 40/80 | Loss: 0.3338 | Dev AUC: 0.6814 | Hard AUC: 0.7909
+      Early stopping at epoch 51
+[variety] <<< variety_curveA_k6_seed123  AUC=0.6919  MCC=0.270  t=155.7s
+[variety] >>> variety_curveA_k6_seed2024  n_train=6000  (33/36)
+      Epoch 20/80 | Loss: 0.5212 | Dev AUC: 0.6731 | Hard AUC: 0.8074
+      Epoch 40/80 | Loss: 0.3637 | Dev AUC: 0.6853 | Hard AUC: 0.8301
+      Early stopping at epoch 45
+[variety] <<< variety_curveA_k6_seed2024  AUC=0.6845  MCC=0.254  t=137.5s
+[variety] >>> variety_curveB_k6_seed42  n_train=6000  (34/36)
+      Epoch 20/80 | Loss: 0.5008 | Dev AUC: 0.6065 | Hard AUC: 0.7301
+      Early stopping at epoch 38
+[variety] <<< variety_curveB_k6_seed42  AUC=0.6219  MCC=0.149  t=115.6s
+[variety] >>> variety_curveB_k6_seed123  n_train=6000  (35/36)
+      Epoch 20/80 | Loss: 0.5038 | Dev AUC: 0.6143 | Hard AUC: 0.6796
+      Early stopping at epoch 36
+[variety] <<< variety_curveB_k6_seed123  AUC=0.6272  MCC=0.177  t=110.7s
+[variety] >>> variety_curveB_k6_seed2024  n_train=6000  (36/36)
+      Epoch 20/80 | Loss: 0.5073 | Dev AUC: 0.6142 | Hard AUC: 0.6471
+      Epoch 40/80 | Loss: 0.3306 | Dev AUC: 0.6295 | Hard AUC: 0.6961
+      Epoch 60/80 | Loss: 0.2008 | Dev AUC: 0.6304 | Hard AUC: 0.6927
+      Early stopping at epoch 64
+[variety] <<< variety_curveB_k6_seed2024  AUC=0.6313  MCC=0.177  t=195.6s
+[variety] DONE panel in 46.1 min (36/36 runs).

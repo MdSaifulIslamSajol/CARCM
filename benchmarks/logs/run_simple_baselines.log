@@ -1,0 +1,13 @@
+Train: (35601, 621)  Test: (4451, 621)  Hard in test: 1767
+
+===== DecisionTree =====
+[DecisionTree] AUC=0.6527  F1=0.6848  MCC=0.2331  hard=0.6924  easy=0.6268
+
+===== GaussianNB =====
+[GaussianNB] AUC=0.5900  F1=0.4968  MCC=0.1335  hard=0.6094  easy=0.5736
+
+===== BernoulliNB =====
+[BernoulliNB] AUC=0.5894  F1=0.6884  MCC=0.0446  hard=0.6167  easy=0.5653
+
+===== KNN =====
+[KNN] AUC=0.6261  F1=0.6975  MCC=0.0917  hard=0.6548  easy=0.6114

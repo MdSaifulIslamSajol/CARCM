@@ -1,0 +1,16 @@
+metric,excel_5,excel_6
+Total rows,45024.0,44502.0
+"Unique (seq,V,T,S) tuples",44763.0,44502.0
+Unique promoter sequences,17085.0,17042.0
+Tuples with conflicting labels,261.0,0.0
+L1: Test tuples leaked (exact),43.0,0.0
+L1: % test leaked,0.955,0.0
+L3: Seq overlap (new context),3676.0,3646.0
+L3: % test seq overlap,81.634,81.914
+L3: Single-label (memorizable),934.0,967.0
+L3: Flipping-label (context needed),2742.0,2679.0
+L4: Near-dup (>=80%) in pool,3734.0,3660.0
+L4: % test near-dup,82.922,82.229
+Clean (no tuple leak),4460.0,4451.0
+Clean (no seq overlap),784.0,805.0
+Clean (no near-dup),769.0,791.0

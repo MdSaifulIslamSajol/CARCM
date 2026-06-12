@@ -1,0 +1,171 @@
+================================================================================
+RICE PROMOTER CLASSIFIER V7b - HYPERPARAMETER SEARCH
+Run: fold_1
+================================================================================
+
+Configuration:
+  learning_rate: 0.001
+  hidden_dim: 128
+  dropout: 0.4
+  num_seeds: 10
+  batch_size: 128
+  weight_decay: 0.01
+  num_epochs: 150
+  patience: 25
+  run_name: fold_1
+
+Device: cuda
+
+Loading data...
+  Train: 32040, Dev: 3561, Test: 8901
+  Train hard examples: 17083 (53.3%)
+  Test hard examples: 3359 (37.7%)
+
+================================================================================
+STAGE 1: TRAINING 10 BASE MODELS
+================================================================================
+
+[1/10] Training with seed=42
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7527 | Dev AUC: 0.7669 | Hard AUC: 0.8645
+      Epoch 40/150 | Loss: 0.5867 | Dev AUC: 0.7809 | Hard AUC: 0.8792
+      Epoch 60/150 | Loss: 0.4625 | Dev AUC: 0.7867 | Hard AUC: 0.8805
+      Epoch 80/150 | Loss: 0.3378 | Dev AUC: 0.7943 | Hard AUC: 0.8793
+      Epoch 100/150 | Loss: 0.2833 | Dev AUC: 0.7961 | Hard AUC: 0.8784
+      Epoch 120/150 | Loss: 0.2436 | Dev AUC: 0.7933 | Hard AUC: 0.8776
+      Early stopping at epoch 135
+    Seed 42: Dev AUC = 0.7986
+
+[2/10] Training with seed=1042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7302 | Dev AUC: 0.7795 | Hard AUC: 0.8760
+      Epoch 40/150 | Loss: 0.5682 | Dev AUC: 0.7993 | Hard AUC: 0.9015
+      Epoch 60/150 | Loss: 0.4295 | Dev AUC: 0.8041 | Hard AUC: 0.9049
+      Epoch 80/150 | Loss: 0.3075 | Dev AUC: 0.8096 | Hard AUC: 0.9070
+      Epoch 100/150 | Loss: 0.2448 | Dev AUC: 0.8036 | Hard AUC: 0.9041
+      Early stopping at epoch 105
+    Seed 1042: Dev AUC = 0.8096
+
+[3/10] Training with seed=2042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7041 | Dev AUC: 0.7707 | Hard AUC: 0.8668
+      Epoch 40/150 | Loss: 0.4909 | Dev AUC: 0.7855 | Hard AUC: 0.8884
+      Epoch 60/150 | Loss: 0.3435 | Dev AUC: 0.7920 | Hard AUC: 0.8962
+      Epoch 80/150 | Loss: 0.2002 | Dev AUC: 0.7984 | Hard AUC: 0.9000
+      Epoch 100/150 | Loss: 0.1157 | Dev AUC: 0.7954 | Hard AUC: 0.8983
+      Early stopping at epoch 108
+    Seed 2042: Dev AUC = 0.7999
+
+[4/10] Training with seed=3042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7375 | Dev AUC: 0.7626 | Hard AUC: 0.8658
+      Epoch 40/150 | Loss: 0.5560 | Dev AUC: 0.7890 | Hard AUC: 0.8879
+      Epoch 60/150 | Loss: 0.3697 | Dev AUC: 0.7901 | Hard AUC: 0.8899
+      Early stopping at epoch 62
+    Seed 3042: Dev AUC = 0.7946
+
+[5/10] Training with seed=4042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7643 | Dev AUC: 0.7658 | Hard AUC: 0.8605
+      Epoch 40/150 | Loss: 0.5988 | Dev AUC: 0.7844 | Hard AUC: 0.8844
+      Epoch 60/150 | Loss: 0.4385 | Dev AUC: 0.7917 | Hard AUC: 0.8891
+      Epoch 80/150 | Loss: 0.2652 | Dev AUC: 0.7891 | Hard AUC: 0.8926
+      Early stopping at epoch 80
+    Seed 4042: Dev AUC = 0.7924
+
+[6/10] Training with seed=5042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7234 | Dev AUC: 0.7740 | Hard AUC: 0.8709
+      Epoch 40/150 | Loss: 0.5176 | Dev AUC: 0.7837 | Hard AUC: 0.8852
+      Epoch 60/150 | Loss: 0.3623 | Dev AUC: 0.7903 | Hard AUC: 0.8842
+      Epoch 80/150 | Loss: 0.2212 | Dev AUC: 0.7909 | Hard AUC: 0.8900
+      Epoch 100/150 | Loss: 0.1323 | Dev AUC: 0.7875 | Hard AUC: 0.8904
+      Early stopping at epoch 117
+    Seed 5042: Dev AUC = 0.7930
+
+[7/10] Training with seed=6042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7289 | Dev AUC: 0.7758 | Hard AUC: 0.8640
+      Epoch 40/150 | Loss: 0.5370 | Dev AUC: 0.7882 | Hard AUC: 0.8858
+      Epoch 60/150 | Loss: 0.3740 | Dev AUC: 0.7949 | Hard AUC: 0.8916
+      Epoch 80/150 | Loss: 0.2897 | Dev AUC: 0.7952 | Hard AUC: 0.8914
+      Early stopping at epoch 90
+    Seed 6042: Dev AUC = 0.7968
+
+[8/10] Training with seed=7042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7518 | Dev AUC: 0.7554 | Hard AUC: 0.8468
+      Epoch 40/150 | Loss: 0.5890 | Dev AUC: 0.7837 | Hard AUC: 0.8852
+      Epoch 60/150 | Loss: 0.4534 | Dev AUC: 0.7906 | Hard AUC: 0.8889
+      Epoch 80/150 | Loss: 0.3545 | Dev AUC: 0.7969 | Hard AUC: 0.8946
+      Epoch 100/150 | Loss: 0.2573 | Dev AUC: 0.7977 | Hard AUC: 0.9010
+      Early stopping at epoch 106
+    Seed 7042: Dev AUC = 0.7993
+
+[9/10] Training with seed=8042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7347 | Dev AUC: 0.7691 | Hard AUC: 0.8680
+      Epoch 40/150 | Loss: 0.5484 | Dev AUC: 0.7938 | Hard AUC: 0.8929
+      Epoch 60/150 | Loss: 0.4162 | Dev AUC: 0.7921 | Hard AUC: 0.8897
+      Epoch 80/150 | Loss: 0.3457 | Dev AUC: 0.7982 | Hard AUC: 0.8954
+      Epoch 100/150 | Loss: 0.2465 | Dev AUC: 0.7999 | Hard AUC: 0.8961
+      Epoch 120/150 | Loss: 0.1922 | Dev AUC: 0.8041 | Hard AUC: 0.8982
+      Early stopping at epoch 120
+    Seed 8042: Dev AUC = 0.8053
+
+[10/10] Training with seed=9042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7423 | Dev AUC: 0.7682 | Hard AUC: 0.8577
+      Epoch 40/150 | Loss: 0.5785 | Dev AUC: 0.7746 | Hard AUC: 0.8755
+      Epoch 60/150 | Loss: 0.4661 | Dev AUC: 0.7779 | Hard AUC: 0.8777
+      Epoch 80/150 | Loss: 0.4030 | Dev AUC: 0.7824 | Hard AUC: 0.8757
+      Early stopping at epoch 98
+    Seed 9042: Dev AUC = 0.7864
+
+Total training time: 168.6 minutes
+
+================================================================================
+STAGE 2: ENSEMBLE METHODS
+================================================================================
+
+1. Simple Average: Test AUC = 0.8406 | Hard AUC = 0.9174
+2. Weighted Average: Test AUC = 0.8406 | Hard AUC = 0.9175
+3. Rank Average: Test AUC = 0.8394 | Hard AUC = 0.9167
+4. Meta-Learner: Test AUC = 0.8382 | Hard AUC = 0.9168
+5. Blended: Test AUC = 0.8402 | Hard AUC = 0.9172
+
+✓ Best Method: weighted_avg
+
+================================================================================
+FINAL RESULTS
+================================================================================
+
+  Test AUC:      0.8406
+  Hard AUC:      0.9175
+  Easy AUC:      0.7775
+  Accuracy:      0.7404
+  Precision:     0.7120
+  Recall:        0.8613
+  F1 Score:      0.7795
+  MCC:           0.4833
+  Threshold:     0.35
+
+================================================================================
+GENERATING PUBLICATION-QUALITY FIGURES
+================================================================================
+
+  Generating ROC curves...
+  Generating PR curves...
+  Generating confusion matrix...
+  Generating threshold analysis...
+  Generating calibration curve...
+  Generating ensemble comparison...
+  Generating summary dashboard...
+  Saving detailed results...
+
+================================================================================
+EXPERIMENT COMPLETE: fold_1
+================================================================================
+
+  Results saved to: /home/saiful/CARCM/benchmarks/cross_validation/fold_1/models/fold_1
+  Checkpoints saved to: /home/saiful/CARCM/benchmarks/cross_validation/fold_1/checkpoints

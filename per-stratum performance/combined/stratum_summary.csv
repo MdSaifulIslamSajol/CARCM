@@ -1,0 +1,4 @@
+stratum_type,total_strata,strata_with_auc,mean_carcm_auc,min_carcm_auc,max_carcm_auc,mean_seq_only_auc,mean_delta_auc,pct_carcm_wins
+Variety,13,12,0.8700,0.8000,0.9370,0.5924,0.2775,100.0000
+Tissue,8,8,0.8161,0.7066,0.9282,0.5528,0.2633,100.0000
+Stage,6,6,0.8857,0.8028,0.9547,0.6013,0.2844,100.0000

@@ -1,0 +1,86 @@
+===========================================================================
+CONTEXT PERMUTATION TEST
+"The Context Signal Exists" Test
+===========================================================================
+
+Permutation iterations: 1000
+Ensemble models: 10
+Device: cuda
+
+Loading data...
+Loading 10 ensemble models...
+  Loaded 10 models successfully.
+
+Computing observed AUC (true context pairing)...
+  Observed AUC: 0.8522
+
+Running 1000 permutation iterations...
+  (each iteration: shuffle context → run 10-model ensemble → compute AUC)
+  [   1/1000]  AUC=0.5516  mean=0.5516  elapsed=0.2min  ETA=176.5min
+  [  50/1000]  AUC=0.5334  mean=0.5440  elapsed=7.3min  ETA=138.9min
+  [ 100/1000]  AUC=0.5411  mean=0.5432  elapsed=15.2min  ETA=136.6min
+  [ 150/1000]  AUC=0.5420  mean=0.5427  elapsed=22.4min  ETA=127.2min
+  [ 200/1000]  AUC=0.5625  mean=0.5423  elapsed=29.7min  ETA=118.9min
+  [ 250/1000]  AUC=0.5310  mean=0.5425  elapsed=37.7min  ETA=113.0min
+  [ 300/1000]  AUC=0.5451  mean=0.5425  elapsed=44.9min  ETA=104.8min
+  [ 350/1000]  AUC=0.5498  mean=0.5426  elapsed=52.2min  ETA=97.0min
+  [ 400/1000]  AUC=0.5309  mean=0.5425  elapsed=60.3min  ETA=90.4min
+  [ 450/1000]  AUC=0.5445  mean=0.5426  elapsed=67.6min  ETA=82.6min
+  [ 500/1000]  AUC=0.5435  mean=0.5426  elapsed=74.8min  ETA=74.8min
+  [ 550/1000]  AUC=0.5380  mean=0.5425  elapsed=82.9min  ETA=67.8min
+  [ 600/1000]  AUC=0.5458  mean=0.5424  elapsed=90.1min  ETA=60.1min
+  [ 650/1000]  AUC=0.5496  mean=0.5424  elapsed=97.4min  ETA=52.4min
+  [ 700/1000]  AUC=0.5333  mean=0.5423  elapsed=105.2min  ETA=45.1min
+  [ 750/1000]  AUC=0.5374  mean=0.5421  elapsed=112.5min  ETA=37.5min
+  [ 800/1000]  AUC=0.5323  mean=0.5420  elapsed=120.1min  ETA=30.0min
+  [ 850/1000]  AUC=0.5441  mean=0.5420  elapsed=131.5min  ETA=23.2min
+  [ 900/1000]  AUC=0.5414  mean=0.5420  elapsed=150.0min  ETA=16.7min
+  [ 950/1000]  AUC=0.5410  mean=0.5420  elapsed=157.5min  ETA=8.3min
+  [1000/1000]  AUC=0.5528  mean=0.5420  elapsed=165.1min  ETA=0.0min
+
+===========================================================================
+RESULTS
+===========================================================================
+
+  Observed AUC (true context):     0.8522
+  Permuted AUC (mean ± std):       0.5420 ± 0.0079
+  Permuted AUC (min, max):         [0.5161, 0.5644]
+  ΔAUC (observed − permuted mean): +0.3102
+  Effect size (Cohen's d):         39.18
+  Permutation p-value:             0.000999
+  95% CI of permuted AUC:          [0.5264, 0.5571]
+  Iterations where perm >= obs:    0/1000
+  Total computation time:          165.1 minutes
+
+===========================================================================
+GENERATING FIGURES
+===========================================================================
+  Saved: permutation_histogram.{png,pdf}
+  Saved: permutation_convergence.{png,pdf}
+  Saved: permutation_boxplot.{png,pdf}
+
+===========================================================================
+CONCLUSION
+===========================================================================
+
+  The context permutation test is highly significant (p < 0.001).
+
+  When context one-hots are randomly shuffled at inference time
+  (destroying the true variety/tissue/stage pairing while preserving
+  the marginal distribution), AUC drops from 0.8522 to
+  0.5420 (ΔAUC = +0.3102).
+
+  This confirms that context features carry REAL biological signal
+  at inference time. The model is not merely memorising motif patterns;
+  it actively uses the biological context (variety, tissue, stage)
+  to modulate its predictions.
+
+  The effect size (Cohen's d = 39.18) indicates a
+  LARGE effect — context is a major contributor to prediction quality.
+
+  Distinct from ablation row #6 (permuted-label training):
+    - Row #6 tests whether the model needs real context to LEARN.
+    - This test measures how much context matters at INFERENCE.
+    Both are reported for completeness.
+
+  All results saved to: /home/saiful/CARCM/Permutation test -the context signal exists test/

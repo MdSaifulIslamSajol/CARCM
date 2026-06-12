@@ -1,0 +1,8 @@
+======================================================================
+STEP 6: COMPARISON & REPORT GENERATION
+======================================================================
+No ablation results found. Skipping comparison figure.
+Saved: /home/saiful/CARCM/Homology aware gene level split/homology_split_report.docx
+Saved: /home/saiful/CARCM/Homology aware gene level split/homology_split_report.md
+
+All reports generated successfully.

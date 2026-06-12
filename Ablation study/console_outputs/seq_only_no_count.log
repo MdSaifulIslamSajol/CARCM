@@ -1,0 +1,206 @@
+/home/saiful/anaconda3/envs/mgt_dta/lib/python3.9/site-packages/torch/torch_version.py:3: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import packaging  # type: ignore[attr-defined]
+========================================================================
+ABLATION: id=15  name=seq_only_no_count
+  label : Sequence-only minus Global Motif Counts
+  switches: use_sequence=True  context_dims=[]  interactions=False  bias_replace=False  permute_context=False
+  GPU: 4    seeds: 10    epochs: 150    patience: 25
+========================================================================
+device = cuda
+loading data...
+  splits: train=35601  dev=4450  test=4451
+  contexts: variety=13  tissue=8  stage=6
+  shared interaction vocab: n_vt=26  n_ts=15  n_vs=20
+
+--- seed 1/10  (42) ---
+  params=155,231
+      epoch  10  loss=1.0535  dev_auc=0.5672
+      epoch  20  loss=1.0288  dev_auc=0.5872
+      epoch  30  loss=1.0146  dev_auc=0.5941
+      epoch  40  loss=1.0057  dev_auc=0.5967
+      epoch  50  loss=0.9969  dev_auc=0.5981
+      epoch  60  loss=0.9883  dev_auc=0.6091
+      epoch  70  loss=0.9763  dev_auc=0.6043
+      epoch  80  loss=0.9718  dev_auc=0.6145
+      epoch  90  loss=0.9639  dev_auc=0.6132
+      epoch 100  loss=0.9443  dev_auc=0.6157
+      epoch 110  loss=0.9397  dev_auc=0.6181
+      epoch 120  loss=0.9365  dev_auc=0.6214
+      epoch 130  loss=0.9196  dev_auc=0.6229
+      epoch 140  loss=0.9218  dev_auc=0.6262
+      epoch 150  loss=0.9140  dev_auc=0.6251
+  [seed 42] test_auc=0.6089  pr_auc=0.6373  f1=0.6603  mcc=0.1176  thr=0.30
+
+--- seed 2/10  (1042) ---
+  params=155,231
+      epoch  10  loss=1.0521  dev_auc=0.5620
+      epoch  20  loss=1.0289  dev_auc=0.5806
+      epoch  30  loss=1.0183  dev_auc=0.5861
+      epoch  40  loss=1.0065  dev_auc=0.5864
+      epoch  50  loss=0.9955  dev_auc=0.5976
+      epoch  60  loss=0.9846  dev_auc=0.6014
+      epoch  70  loss=0.9777  dev_auc=0.6054
+      epoch  80  loss=0.9706  dev_auc=0.6060
+      epoch  90  loss=0.9650  dev_auc=0.6049
+      epoch 100  loss=0.9563  dev_auc=0.6053
+      epoch 110  loss=0.9366  dev_auc=0.6082
+      epoch 120  loss=0.9353  dev_auc=0.6105
+      epoch 130  loss=0.9166  dev_auc=0.6161
+      epoch 140  loss=0.9151  dev_auc=0.6145
+      epoch 150  loss=0.9136  dev_auc=0.6139
+  [seed 1042] test_auc=0.6104  pr_auc=0.6372  f1=0.6612  mcc=0.1294  thr=0.30
+
+--- seed 3/10  (2042) ---
+  params=155,231
+      epoch  10  loss=1.0512  dev_auc=0.5616
+      epoch  20  loss=1.0304  dev_auc=0.5671
+      epoch  30  loss=1.0170  dev_auc=0.5855
+      epoch  40  loss=1.0049  dev_auc=0.5899
+      epoch  50  loss=0.9929  dev_auc=0.5916
+      epoch  60  loss=0.9881  dev_auc=0.5932
+      epoch  70  loss=0.9775  dev_auc=0.5943
+      epoch  80  loss=0.9708  dev_auc=0.5986
+      epoch  90  loss=0.9662  dev_auc=0.5992
+      epoch 100  loss=0.9431  dev_auc=0.6044
+      epoch 110  loss=0.9342  dev_auc=0.6045
+      epoch 120  loss=0.9225  dev_auc=0.6066
+      epoch 130  loss=0.9286  dev_auc=0.6064
+      epoch 140  loss=0.9192  dev_auc=0.6093
+      epoch 150  loss=0.9177  dev_auc=0.6052
+  [seed 2042] test_auc=0.6147  pr_auc=0.6428  f1=0.6693  mcc=0.1186  thr=0.30
+
+--- seed 4/10  (3042) ---
+  params=155,231
+      epoch  10  loss=1.0514  dev_auc=0.5754
+      epoch  20  loss=1.0295  dev_auc=0.5788
+      epoch  30  loss=1.0186  dev_auc=0.5858
+      epoch  40  loss=1.0039  dev_auc=0.5905
+      epoch  50  loss=0.9941  dev_auc=0.5965
+      epoch  60  loss=0.9882  dev_auc=0.5963
+      epoch  70  loss=0.9773  dev_auc=0.5989
+      epoch  80  loss=0.9702  dev_auc=0.6028
+      epoch  90  loss=0.9483  dev_auc=0.6073
+      epoch 100  loss=0.9430  dev_auc=0.6089
+      epoch 110  loss=0.9412  dev_auc=0.6098
+      epoch 120  loss=0.9269  dev_auc=0.6093
+      epoch 130  loss=0.9243  dev_auc=0.6116
+      epoch 140  loss=0.9171  dev_auc=0.6141
+      epoch 150  loss=0.9123  dev_auc=0.6132
+  [seed 3042] test_auc=0.6156  pr_auc=0.6441  f1=0.6657  mcc=0.1229  thr=0.30
+
+--- seed 5/10  (4042) ---
+  params=155,231
+      epoch  10  loss=1.0502  dev_auc=0.5726
+      epoch  20  loss=1.0312  dev_auc=0.5871
+      epoch  30  loss=1.0170  dev_auc=0.5835
+      epoch  40  loss=0.9998  dev_auc=0.5917
+      epoch  50  loss=0.9933  dev_auc=0.5976
+      epoch  60  loss=0.9853  dev_auc=0.5987
+      epoch  70  loss=0.9753  dev_auc=0.6000
+      epoch  80  loss=0.9726  dev_auc=0.6043
+      epoch  90  loss=0.9639  dev_auc=0.6026
+      epoch 100  loss=0.9591  dev_auc=0.6074
+      epoch 110  loss=0.9488  dev_auc=0.6095
+      epoch 120  loss=0.9426  dev_auc=0.6097
+      epoch 130  loss=0.9411  dev_auc=0.6131
+      epoch 140  loss=0.9319  dev_auc=0.6109
+      epoch 150  loss=0.9247  dev_auc=0.6132
+  [seed 4042] test_auc=0.6096  pr_auc=0.6445  f1=0.6740  mcc=0.1077  thr=0.30
+
+--- seed 6/10  (5042) ---
+  params=155,231
+      epoch  10  loss=1.0516  dev_auc=0.5621
+      epoch  20  loss=1.0313  dev_auc=0.5736
+      epoch  30  loss=1.0175  dev_auc=0.5814
+      epoch  40  loss=1.0093  dev_auc=0.5847
+      epoch  50  loss=0.9967  dev_auc=0.5895
+      epoch  60  loss=0.9767  dev_auc=0.5938
+      epoch  70  loss=0.9711  dev_auc=0.5964
+      epoch  80  loss=0.9630  dev_auc=0.5979
+      epoch  90  loss=0.9554  dev_auc=0.5965
+      epoch 100  loss=0.9522  dev_auc=0.6007
+      epoch 110  loss=0.9503  dev_auc=0.5940
+      epoch 120  loss=0.9325  dev_auc=0.5986
+      epoch 130  loss=0.9248  dev_auc=0.6013
+      epoch 140  loss=0.9193  dev_auc=0.6016
+      epoch 150  loss=0.9203  dev_auc=0.6010
+  [seed 5042] test_auc=0.6174  pr_auc=0.6526  f1=0.6661  mcc=0.1214  thr=0.30
+
+--- seed 7/10  (6042) ---
+  params=155,231
+      epoch  10  loss=1.0498  dev_auc=0.5730
+      epoch  20  loss=1.0266  dev_auc=0.5865
+      epoch  30  loss=1.0125  dev_auc=0.5958
+      epoch  40  loss=1.0038  dev_auc=0.5980
+      epoch  50  loss=0.9950  dev_auc=0.6007
+      epoch  60  loss=0.9844  dev_auc=0.6053
+      epoch  70  loss=0.9757  dev_auc=0.6064
+      epoch  80  loss=0.9713  dev_auc=0.6101
+      epoch  90  loss=0.9624  dev_auc=0.6082
+      epoch 100  loss=0.9478  dev_auc=0.6122
+      epoch 110  loss=0.9327  dev_auc=0.6130
+      epoch 120  loss=0.9241  dev_auc=0.6129
+      epoch 130  loss=0.9213  dev_auc=0.6121
+      epoch 140  loss=0.9148  dev_auc=0.6124
+      early stop @ epoch 140
+  [seed 6042] test_auc=0.6130  pr_auc=0.6424  f1=0.6602  mcc=0.1156  thr=0.30
+
+--- seed 8/10  (7042) ---
+  params=155,231
+      epoch  10  loss=1.0510  dev_auc=0.5661
+      epoch  20  loss=1.0315  dev_auc=0.5820
+      epoch  30  loss=1.0173  dev_auc=0.5873
+      epoch  40  loss=1.0079  dev_auc=0.5914
+      epoch  50  loss=0.9975  dev_auc=0.5915
+      epoch  60  loss=0.9880  dev_auc=0.5977
+      epoch  70  loss=0.9773  dev_auc=0.6063
+      epoch  80  loss=0.9726  dev_auc=0.6078
+      epoch  90  loss=0.9602  dev_auc=0.6070
+      epoch 100  loss=0.9444  dev_auc=0.6095
+      epoch 110  loss=0.9340  dev_auc=0.6128
+      epoch 120  loss=0.9318  dev_auc=0.6157
+      epoch 130  loss=0.9269  dev_auc=0.6118
+      epoch 140  loss=0.9176  dev_auc=0.6131
+      epoch 150  loss=0.9083  dev_auc=0.6141
+  [seed 7042] test_auc=0.6126  pr_auc=0.6405  f1=0.6630  mcc=0.1119  thr=0.30
+
+--- seed 9/10  (8042) ---
+  params=155,231
+      epoch  10  loss=1.0537  dev_auc=0.5566
+      epoch  20  loss=1.0310  dev_auc=0.5787
+      epoch  30  loss=1.0164  dev_auc=0.5838
+      epoch  40  loss=1.0041  dev_auc=0.5877
+      epoch  50  loss=0.9989  dev_auc=0.5914
+      epoch  60  loss=0.9891  dev_auc=0.5894
+      epoch  70  loss=0.9788  dev_auc=0.5999
+      epoch  80  loss=0.9738  dev_auc=0.6032
+      epoch  90  loss=0.9682  dev_auc=0.5980
+      epoch 100  loss=0.9458  dev_auc=0.6042
+      epoch 110  loss=0.9427  dev_auc=0.6089
+      epoch 120  loss=0.9373  dev_auc=0.6105
+      epoch 130  loss=0.9301  dev_auc=0.6114
+      epoch 140  loss=0.9191  dev_auc=0.6118
+      epoch 150  loss=0.9075  dev_auc=0.6115
+  [seed 8042] test_auc=0.6077  pr_auc=0.6373  f1=0.6647  mcc=0.1156  thr=0.30
+
+--- seed 10/10  (9042) ---
+  params=155,231
+      epoch  10  loss=1.0525  dev_auc=0.5656
+      epoch  20  loss=1.0288  dev_auc=0.5733
+      epoch  30  loss=1.0188  dev_auc=0.5875
+      epoch  40  loss=1.0081  dev_auc=0.5895
+      epoch  50  loss=0.9947  dev_auc=0.5939
+      epoch  60  loss=0.9831  dev_auc=0.5981
+      epoch  70  loss=0.9821  dev_auc=0.5966
+      epoch  80  loss=0.9622  dev_auc=0.6041
+      epoch  90  loss=0.9538  dev_auc=0.6062
+      epoch 100  loss=0.9428  dev_auc=0.6056
+      epoch 110  loss=0.9335  dev_auc=0.6077
+      early stop @ epoch 113
+  [seed 9042] test_auc=0.6105  pr_auc=0.6451  f1=0.6742  mcc=0.0834  thr=0.30
+
+========================================================================
+DONE  config=seq_only_no_count  seeds=10  elapsed=170.1 min
+per-seed AUC: mean=0.6120  std=0.0032
+results in: /home/saiful/CARCM/Ablation study/results/seq_only_no_count
+========================================================================

@@ -1,0 +1,228 @@
+[tissue] device = cuda | visible GPUs = 4
+[tissue] Loading data ...
+[tissue] train=35601  dev=4450  test=4451
+[tissue] global interactions: n_vt=26, n_ts=15, n_vs=20
+[tissue] train tissue counts:
+Seedling         7320
+Root             7262
+Panicle          6885
+Leaf             6098
+Flag Leaf        2877
+Inflorescence    1981
+Anther           1831
+Pistil           1347
+[tissue] >>> tissue_curveA_k1_seed42  n_train=900  (1/48)
+      Early stopping at epoch 17
+[tissue] <<< tissue_curveA_k1_seed42  AUC=0.5711  MCC=0.072  t=30.2s
+[tissue] >>> tissue_curveA_k1_seed123  n_train=900  (2/48)
+      Epoch 20/80 | Loss: 0.2324 | Dev AUC: 0.5226 | Hard AUC: 0.0000
+      Early stopping at epoch 20
+[tissue] <<< tissue_curveA_k1_seed123  AUC=0.5719  MCC=0.071  t=30.1s
+[tissue] >>> tissue_curveA_k1_seed2024  n_train=900  (3/48)
+      Epoch 20/80 | Loss: 0.3169 | Dev AUC: 0.5427 | Hard AUC: 0.0000
+      Early stopping at epoch 36
+[tissue] <<< tissue_curveA_k1_seed2024  AUC=0.5561  MCC=0.075  t=59.3s
+[tissue] >>> tissue_curveB_k1_seed42  n_train=900  (4/48)
+      Early stopping at epoch 17
+[tissue] <<< tissue_curveB_k1_seed42  AUC=0.5711  MCC=0.072  t=26.1s
+[tissue] >>> tissue_curveB_k1_seed123  n_train=900  (5/48)
+      Epoch 20/80 | Loss: 0.2324 | Dev AUC: 0.5226 | Hard AUC: 0.0000
+      Early stopping at epoch 20
+[tissue] <<< tissue_curveB_k1_seed123  AUC=0.5719  MCC=0.071  t=30.3s
+[tissue] >>> tissue_curveB_k1_seed2024  n_train=900  (6/48)
+      Epoch 20/80 | Loss: 0.3169 | Dev AUC: 0.5427 | Hard AUC: 0.0000
+      Early stopping at epoch 36
+[tissue] <<< tissue_curveB_k1_seed2024  AUC=0.5561  MCC=0.075  t=58.5s
+[tissue] >>> tissue_curveA_k2_seed42  n_train=1800  (7/48)
+      Epoch 20/80 | Loss: 0.3429 | Dev AUC: 0.5953 | Hard AUC: 0.6818
+      Early stopping at epoch 33
+[tissue] <<< tissue_curveA_k2_seed42  AUC=0.6052  MCC=0.147  t=62.8s
+[tissue] >>> tissue_curveA_k2_seed123  n_train=1800  (8/48)
+      Early stopping at epoch 18
+[tissue] <<< tissue_curveA_k2_seed123  AUC=0.6051  MCC=0.137  t=32.8s
+[tissue] >>> tissue_curveA_k2_seed2024  n_train=1800  (9/48)
+      Early stopping at epoch 19
+[tissue] <<< tissue_curveA_k2_seed2024  AUC=0.6056  MCC=0.139  t=38.1s
+[tissue] >>> tissue_curveB_k2_seed42  n_train=1800  (10/48)
+      Epoch 20/80 | Loss: 0.3298 | Dev AUC: 0.5450 | Hard AUC: 0.0000
+      Epoch 40/80 | Loss: 0.1034 | Dev AUC: 0.5449 | Hard AUC: 0.0000
+      Early stopping at epoch 49
+[tissue] <<< tissue_curveB_k2_seed42  AUC=0.5546  MCC=0.052  t=91.6s
+[tissue] >>> tissue_curveB_k2_seed123  n_train=1800  (11/48)
+      Early stopping at epoch 18
+[tissue] <<< tissue_curveB_k2_seed123  AUC=0.5727  MCC=0.101  t=32.9s
+[tissue] >>> tissue_curveB_k2_seed2024  n_train=1800  (12/48)
+      Epoch 20/80 | Loss: 0.2803 | Dev AUC: 0.5525 | Hard AUC: 0.0000
+      Early stopping at epoch 24
+[tissue] <<< tissue_curveB_k2_seed2024  AUC=0.5703  MCC=0.088  t=45.7s
+[tissue] >>> tissue_curveA_k3_seed42  n_train=2700  (13/48)
+      Epoch 20/80 | Loss: 0.3422 | Dev AUC: 0.6397 | Hard AUC: 0.6846
+      Early stopping at epoch 26
+[tissue] <<< tissue_curveA_k3_seed42  AUC=0.6544  MCC=0.199  t=59.0s
+[tissue] >>> tissue_curveA_k3_seed123  n_train=2700  (14/48)
+      Epoch 20/80 | Loss: 0.3250 | Dev AUC: 0.6251 | Hard AUC: 0.6973
+      Early stopping at epoch 23
+[tissue] <<< tissue_curveA_k3_seed123  AUC=0.6541  MCC=0.174  t=50.3s
+[tissue] >>> tissue_curveA_k3_seed2024  n_train=2700  (15/48)
+      Epoch 20/80 | Loss: 0.3566 | Dev AUC: 0.6118 | Hard AUC: 0.6182
+      Early stopping at epoch 21
+[tissue] <<< tissue_curveA_k3_seed2024  AUC=0.6536  MCC=0.191  t=47.0s
+[tissue] >>> tissue_curveB_k3_seed42  n_train=2700  (16/48)
+      Epoch 20/80 | Loss: 0.3004 | Dev AUC: 0.5516 | Hard AUC: 0.0000
+      Epoch 40/80 | Loss: 0.1635 | Dev AUC: 0.5459 | Hard AUC: 0.0000
+      Early stopping at epoch 47
+[tissue] <<< tissue_curveB_k3_seed42  AUC=0.5651  MCC=0.065  t=104.5s
+[tissue] >>> tissue_curveB_k3_seed123  n_train=2700  (17/48)
+      Epoch 20/80 | Loss: 0.3041 | Dev AUC: 0.5517 | Hard AUC: 0.7679
+      Epoch 40/80 | Loss: 0.1760 | Dev AUC: 0.5546 | Hard AUC: 0.7857
+      Early stopping at epoch 51
+[tissue] <<< tissue_curveB_k3_seed123  AUC=0.5602  MCC=0.083  t=112.4s
+[tissue] >>> tissue_curveB_k3_seed2024  n_train=2700  (18/48)
+      Epoch 20/80 | Loss: 0.2845 | Dev AUC: 0.5555 | Hard AUC: 0.0000
+      Epoch 40/80 | Loss: 0.1307 | Dev AUC: 0.5584 | Hard AUC: 0.0000
+      Early stopping at epoch 40
+[tissue] <<< tissue_curveB_k3_seed2024  AUC=0.5741  MCC=0.098  t=88.7s
+[tissue] >>> tissue_curveA_k4_seed42  n_train=3600  (19/48)
+      Epoch 20/80 | Loss: 0.4203 | Dev AUC: 0.6634 | Hard AUC: 0.7535
+      Epoch 40/80 | Loss: 0.2453 | Dev AUC: 0.6662 | Hard AUC: 0.7784
+      Early stopping at epoch 46
+[tissue] <<< tissue_curveA_k4_seed42  AUC=0.6731  MCC=0.226  t=100.9s
+[tissue] >>> tissue_curveA_k4_seed123  n_train=3600  (20/48)
+      Epoch 20/80 | Loss: 0.4461 | Dev AUC: 0.6424 | Hard AUC: 0.7101
+      Early stopping at epoch 33
+[tissue] <<< tissue_curveA_k4_seed123  AUC=0.6650  MCC=0.183  t=57.0s
+[tissue] >>> tissue_curveA_k4_seed2024  n_train=3600  (21/48)
+      Epoch 20/80 | Loss: 0.3779 | Dev AUC: 0.6592 | Hard AUC: 0.8457
+      Early stopping at epoch 25
+[tissue] <<< tissue_curveA_k4_seed2024  AUC=0.6619  MCC=0.212  t=55.2s
+[tissue] >>> tissue_curveB_k4_seed42  n_train=3600  (22/48)
+      Epoch 20/80 | Loss: 0.3304 | Dev AUC: 0.5536 | Hard AUC: 0.7143
+      Epoch 40/80 | Loss: 0.1717 | Dev AUC: 0.5610 | Hard AUC: 0.8000
+      Early stopping at epoch 55
+[tissue] <<< tissue_curveB_k4_seed42  AUC=0.5719  MCC=0.098  t=141.2s
+[tissue] >>> tissue_curveB_k4_seed123  n_train=3600  (23/48)
+      Epoch 20/80 | Loss: 0.3443 | Dev AUC: 0.5568 | Hard AUC: 0.8143
+      Epoch 40/80 | Loss: 0.1571 | Dev AUC: 0.5625 | Hard AUC: 0.9000
+      Early stopping at epoch 52
+[tissue] <<< tissue_curveB_k4_seed123  AUC=0.5668  MCC=0.087  t=122.7s
+[tissue] >>> tissue_curveB_k4_seed2024  n_train=3600  (24/48)
+      Epoch 20/80 | Loss: 0.2988 | Dev AUC: 0.5642 | Hard AUC: 0.6623
+      Early stopping at epoch 31
+[tissue] <<< tissue_curveB_k4_seed2024  AUC=0.5710  MCC=0.085  t=117.8s
+[tissue] >>> tissue_curveA_k5_seed42  n_train=4500  (25/48)
+      Epoch 20/80 | Loss: 0.4860 | Dev AUC: 0.6801 | Hard AUC: 0.7164
+      Epoch 40/80 | Loss: 0.2709 | Dev AUC: 0.6817 | Hard AUC: 0.7004
+      Early stopping at epoch 41
+[tissue] <<< tissue_curveA_k5_seed42  AUC=0.6829  MCC=0.244  t=120.1s
+[tissue] >>> tissue_curveA_k5_seed123  n_train=4500  (26/48)
+      Epoch 20/80 | Loss: 0.5146 | Dev AUC: 0.6709 | Hard AUC: 0.7704
+      Early stopping at epoch 24
+[tissue] <<< tissue_curveA_k5_seed123  AUC=0.6809  MCC=0.250  t=69.4s
+[tissue] >>> tissue_curveA_k5_seed2024  n_train=4500  (27/48)
+      Epoch 20/80 | Loss: 0.4830 | Dev AUC: 0.6626 | Hard AUC: 0.7009
+      Early stopping at epoch 24
+[tissue] <<< tissue_curveA_k5_seed2024  AUC=0.6688  MCC=0.210  t=69.3s
+[tissue] >>> tissue_curveB_k5_seed42  n_train=4500  (28/48)
+      Epoch 20/80 | Loss: 0.3391 | Dev AUC: 0.5588 | Hard AUC: 0.5104
+      Epoch 40/80 | Loss: 0.1927 | Dev AUC: 0.5598 | Hard AUC: 0.7083
+      Early stopping at epoch 47
+[tissue] <<< tissue_curveB_k5_seed42  AUC=0.5755  MCC=0.096  t=134.1s
+[tissue] >>> tissue_curveB_k5_seed123  n_train=4500  (29/48)
+      Epoch 20/80 | Loss: 0.3470 | Dev AUC: 0.5704 | Hard AUC: 0.8182
+      Epoch 40/80 | Loss: 0.2078 | Dev AUC: 0.5725 | Hard AUC: 0.7727
+      Epoch 60/80 | Loss: 0.1401 | Dev AUC: 0.5743 | Hard AUC: 0.7500
+      Early stopping at epoch 70
+[tissue] <<< tissue_curveB_k5_seed123  AUC=0.5783  MCC=0.088  t=199.1s
+[tissue] >>> tissue_curveB_k5_seed2024  n_train=4500  (30/48)
+      Epoch 20/80 | Loss: 0.3066 | Dev AUC: 0.5620 | Hard AUC: 0.6077
+      Early stopping at epoch 23
+[tissue] <<< tissue_curveB_k5_seed2024  AUC=0.5704  MCC=0.097  t=66.7s
+[tissue] >>> tissue_curveA_k6_seed42  n_train=5400  (31/48)
+      Epoch 20/80 | Loss: 0.5234 | Dev AUC: 0.6759 | Hard AUC: 0.7508
+      Early stopping at epoch 36
+[tissue] <<< tissue_curveA_k6_seed42  AUC=0.6879  MCC=0.235  t=138.9s
+[tissue] >>> tissue_curveA_k6_seed123  n_train=5400  (32/48)
+      Epoch 20/80 | Loss: 0.5134 | Dev AUC: 0.6814 | Hard AUC: 0.7948
+      Early stopping at epoch 39
+[tissue] <<< tissue_curveA_k6_seed123  AUC=0.6799  MCC=0.240  t=123.0s
+[tissue] >>> tissue_curveA_k6_seed2024  n_train=5400  (33/48)
+      Epoch 20/80 | Loss: 0.5275 | Dev AUC: 0.6616 | Hard AUC: 0.7158
+      Early stopping at epoch 25
+[tissue] <<< tissue_curveA_k6_seed2024  AUC=0.6809  MCC=0.242  t=81.8s
+[tissue] >>> tissue_curveB_k6_seed42  n_train=5400  (34/48)
+      Epoch 20/80 | Loss: 0.3480 | Dev AUC: 0.5575 | Hard AUC: 0.5615
+      Epoch 40/80 | Loss: 0.2115 | Dev AUC: 0.5643 | Hard AUC: 0.6845
+      Early stopping at epoch 56
+[tissue] <<< tissue_curveB_k6_seed42  AUC=0.5741  MCC=0.107  t=178.5s
+[tissue] >>> tissue_curveB_k6_seed123  n_train=5400  (35/48)
+      Epoch 20/80 | Loss: 0.3405 | Dev AUC: 0.5689 | Hard AUC: 0.7937
+      Epoch 40/80 | Loss: 0.1982 | Dev AUC: 0.5706 | Hard AUC: 0.7500
+      Early stopping at epoch 52
+[tissue] <<< tissue_curveB_k6_seed123  AUC=0.5786  MCC=0.099  t=164.8s
+[tissue] >>> tissue_curveB_k6_seed2024  n_train=5400  (36/48)
+      Epoch 20/80 | Loss: 0.3347 | Dev AUC: 0.5633 | Hard AUC: 0.6429
+      Early stopping at epoch 38
+[tissue] <<< tissue_curveB_k6_seed2024  AUC=0.5725  MCC=0.106  t=123.1s
+[tissue] >>> tissue_curveA_k7_seed42  n_train=6300  (37/48)
+      Epoch 20/80 | Loss: 0.5452 | Dev AUC: 0.6734 | Hard AUC: 0.7539
+      Early stopping at epoch 23
+[tissue] <<< tissue_curveA_k7_seed42  AUC=0.6901  MCC=0.257  t=78.7s
+[tissue] >>> tissue_curveA_k7_seed123  n_train=6300  (38/48)
+      Epoch 20/80 | Loss: 0.5751 | Dev AUC: 0.6885 | Hard AUC: 0.8247
+      Early stopping at epoch 38
+[tissue] <<< tissue_curveA_k7_seed123  AUC=0.6967  MCC=0.264  t=132.8s
+[tissue] >>> tissue_curveA_k7_seed2024  n_train=6300  (39/48)
+      Epoch 20/80 | Loss: 0.5593 | Dev AUC: 0.6817 | Hard AUC: 0.7896
+      Epoch 40/80 | Loss: 0.3598 | Dev AUC: 0.6790 | Hard AUC: 0.8035
+      Early stopping at epoch 44
+[tissue] <<< tissue_curveA_k7_seed2024  AUC=0.6907  MCC=0.272  t=153.9s
+[tissue] >>> tissue_curveB_k7_seed42  n_train=6300  (40/48)
+      Epoch 20/80 | Loss: 0.3601 | Dev AUC: 0.5627 | Hard AUC: 0.4857
+      Epoch 40/80 | Loss: 0.2160 | Dev AUC: 0.5750 | Hard AUC: 0.5057
+      Epoch 60/80 | Loss: 0.1199 | Dev AUC: 0.5744 | Hard AUC: 0.5771
+      Early stopping at epoch 69
+[tissue] <<< tissue_curveB_k7_seed42  AUC=0.5771  MCC=0.100  t=239.2s
+[tissue] >>> tissue_curveB_k7_seed123  n_train=6300  (41/48)
+      Epoch 20/80 | Loss: 0.3418 | Dev AUC: 0.5649 | Hard AUC: 0.7797
+      Epoch 40/80 | Loss: 0.2093 | Dev AUC: 0.5746 | Hard AUC: 0.7378
+      Epoch 60/80 | Loss: 0.1324 | Dev AUC: 0.5781 | Hard AUC: 0.7867
+      Early stopping at epoch 65
+[tissue] <<< tissue_curveB_k7_seed123  AUC=0.5811  MCC=0.095  t=226.6s
+[tissue] >>> tissue_curveB_k7_seed2024  n_train=6300  (42/48)
+      Epoch 20/80 | Loss: 0.3282 | Dev AUC: 0.5719 | Hard AUC: 0.6018
+      Epoch 40/80 | Loss: 0.2019 | Dev AUC: 0.5753 | Hard AUC: 0.6728
+      Epoch 60/80 | Loss: 0.1002 | Dev AUC: 0.5720 | Hard AUC: 0.7071
+      Early stopping at epoch 61
+[tissue] <<< tissue_curveB_k7_seed2024  AUC=0.5775  MCC=0.117  t=212.0s
+[tissue] >>> tissue_curveA_k8_seed42  n_train=7200  (43/48)
+      Epoch 20/80 | Loss: 0.5791 | Dev AUC: 0.6956 | Hard AUC: 0.7690
+      Epoch 40/80 | Loss: 0.3958 | Dev AUC: 0.6876 | Hard AUC: 0.7770
+      Epoch 60/80 | Loss: 0.2497 | Dev AUC: 0.6958 | Hard AUC: 0.7949
+      Early stopping at epoch 70
+[tissue] <<< tissue_curveA_k8_seed42  AUC=0.7051  MCC=0.275  t=265.9s
+[tissue] >>> tissue_curveA_k8_seed123  n_train=7200  (44/48)
+      Epoch 20/80 | Loss: 0.6035 | Dev AUC: 0.6992 | Hard AUC: 0.8673
+      Epoch 40/80 | Loss: 0.4318 | Dev AUC: 0.6970 | Hard AUC: 0.8841
+      Early stopping at epoch 44
+[tissue] <<< tissue_curveA_k8_seed123  AUC=0.7098  MCC=0.307  t=168.0s
+[tissue] >>> tissue_curveA_k8_seed2024  n_train=7200  (45/48)
+      Epoch 20/80 | Loss: 0.5733 | Dev AUC: 0.6883 | Hard AUC: 0.8180
+      Early stopping at epoch 31
+[tissue] <<< tissue_curveA_k8_seed2024  AUC=0.7047  MCC=0.290  t=121.1s
+[tissue] >>> tissue_curveB_k8_seed42  n_train=7200  (46/48)
+      Epoch 20/80 | Loss: 0.3663 | Dev AUC: 0.5676 | Hard AUC: 0.6288
+      Epoch 40/80 | Loss: 0.2322 | Dev AUC: 0.5723 | Hard AUC: 0.6673
+      Early stopping at epoch 54
+[tissue] <<< tissue_curveB_k8_seed42  AUC=0.5855  MCC=0.118  t=205.6s
+[tissue] >>> tissue_curveB_k8_seed123  n_train=7200  (47/48)
+      Epoch 20/80 | Loss: 0.3490 | Dev AUC: 0.5737 | Hard AUC: 0.6073
+      Epoch 40/80 | Loss: 0.2178 | Dev AUC: 0.5793 | Hard AUC: 0.6538
+      Epoch 60/80 | Loss: 0.0961 | Dev AUC: 0.5825 | Hard AUC: 0.6113
+      Early stopping at epoch 71
+[tissue] <<< tissue_curveB_k8_seed123  AUC=0.5927  MCC=0.126  t=217.6s
+[tissue] >>> tissue_curveB_k8_seed2024  n_train=7200  (48/48)
+      Epoch 20/80 | Loss: 0.3517 | Dev AUC: 0.5731 | Hard AUC: 0.5800
+      Epoch 40/80 | Loss: 0.2149 | Dev AUC: 0.5708 | Hard AUC: 0.6540
+      Early stopping at epoch 51
+[tissue] <<< tissue_curveB_k8_seed2024  AUC=0.5790  MCC=0.109  t=191.6s
+[tissue] DONE panel in 87.9 min (48/48 runs).

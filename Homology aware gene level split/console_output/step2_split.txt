@@ -1,0 +1,20 @@
+======================================================================
+STEP 2: STRATIFIED CLUSTER-LEVEL TRAIN/DEV/TEST SPLIT
+======================================================================
+Traceback (most recent call last):
+  File "/home/saiful/CARCM/Homology aware gene level split/step2_cluster_split.py", line 206, in <module>
+    main()
+  File "/home/saiful/CARCM/Homology aware gene level split/step2_cluster_split.py", line 28, in main
+    df = pd.read_csv(os.path.join(BASE, "samples_with_clusters.csv"))
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/home/saiful/anaconda3/envs/dnabert/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/home/saiful/CARCM/Homology aware gene level split/samples_with_clusters.csv'
+ERROR conda.cli.main_run:execute(49): `conda run python /home/saiful/CARCM/Homology aware gene level split/step2_cluster_split.py` failed. (See above for error)

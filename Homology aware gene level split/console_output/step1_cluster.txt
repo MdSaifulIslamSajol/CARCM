@@ -1,0 +1,2 @@
+Terminated
+ERROR conda.cli.main_run:execute(49): `conda run python /home/saiful/CARCM/Homology aware gene level split/step1_match_rapids_and_cluster.py` failed. (See above for error)

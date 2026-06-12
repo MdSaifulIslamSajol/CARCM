@@ -1,0 +1,150 @@
+==============================================================================
+ CARCM ABLATION STUDY
+==============================================================================
+ conda env       : dnabert
+ num_seeds       : 5
+ num_epochs      : 80    patience : 15
+ ablation root   : /home/saiful/CARCM/Ablation study
+ log dir         : /home/saiful/CARCM/Ablation study/console_outputs
+ results dir     : /home/saiful/CARCM/Ablation study/results
+ GPU schedule    : wave 1 -> [full=2, sequence_only=3, seq_variety=4, seq_tissue=6]
+                   wave 2 -> [seq_stage=2, permuted_labels=3, context_only=4, param_matched_bias=6]
+==============================================================================
+ start: Thu Apr 30 05:05:24 PM CDT 2026
+
+
+============================ WAVE 1 ============================
+wave1 PIDs: [launch] cfg=full  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/full.log
+2321978 [launch] cfg=sequence_only  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/sequence_only.log
+2321980 [launch] cfg=seq_variety  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_variety.log
+2321982 [launch] cfg=seq_tissue  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_tissue.log
+2321984
+./run_ablation.sh: line 79: wait: `[launch] cfg=full  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/full.log
+2321978': not a pid or valid job spec
+[ERROR] wave-1 PID [launch] cfg=full  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/full.log
+2321978 exited non-zero
+./run_ablation.sh: line 79: wait: `[launch] cfg=sequence_only  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/sequence_only.log
+2321980': not a pid or valid job spec
+[ERROR] wave-1 PID [launch] cfg=sequence_only  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/sequence_only.log
+2321980 exited non-zero
+./run_ablation.sh: line 79: wait: `[launch] cfg=seq_variety  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_variety.log
+2321982': not a pid or valid job spec
+[ERROR] wave-1 PID [launch] cfg=seq_variety  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_variety.log
+2321982 exited non-zero
+./run_ablation.sh: line 79: wait: `[launch] cfg=seq_tissue  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_tissue.log
+2321984': not a pid or valid job spec
+[ERROR] wave-1 PID [launch] cfg=seq_tissue  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_tissue.log
+2321984 exited non-zero
+wave 1 complete: Thu Apr 30 05:05:24 PM CDT 2026
+
+============================ WAVE 2 ============================
+wave2 PIDs: [launch] cfg=seq_stage  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_stage.log
+2321987 [launch] cfg=permuted_labels  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/permuted_labels.log
+2321989 [launch] cfg=context_only  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/context_only.log
+2321991 [launch] cfg=param_matched_bias  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/param_matched_bias.log
+2321993
+./run_ablation.sh: line 94: wait: `[launch] cfg=seq_stage  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_stage.log
+2321987': not a pid or valid job spec
+[ERROR] wave-2 PID [launch] cfg=seq_stage  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_stage.log
+2321987 exited non-zero
+./run_ablation.sh: line 94: wait: `[launch] cfg=permuted_labels  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/permuted_labels.log
+2321989': not a pid or valid job spec
+[ERROR] wave-2 PID [launch] cfg=permuted_labels  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/permuted_labels.log
+2321989 exited non-zero
+./run_ablation.sh: line 94: wait: `[launch] cfg=context_only  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/context_only.log
+2321991': not a pid or valid job spec
+[ERROR] wave-2 PID [launch] cfg=context_only  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/context_only.log
+2321991 exited non-zero
+./run_ablation.sh: line 94: wait: `[launch] cfg=param_matched_bias  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/param_matched_bias.log
+2321993': not a pid or valid job spec
+[ERROR] wave-2 PID [launch] cfg=param_matched_bias  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/param_matched_bias.log
+2321993 exited non-zero
+wave 2 complete: Thu Apr 30 05:05:24 PM CDT 2026
+
+============================ AGGREGATE ============================
+aggregate complete: Thu Apr 30 05:05:26 PM CDT 2026
+
+==============================================================================
+ ABLATION STUDY DONE  -- Thu Apr 30 05:05:26 PM CDT 2026
+  CSV     : /home/saiful/CARCM/Ablation study/results/aggregate_metrics.csv
+  CSV     : /home/saiful/CARCM/Ablation study/results/per_seed_long.csv
+  CSV     : /home/saiful/CARCM/Ablation study/results/delong_full_pairwise.csv
+  Figure  : /home/saiful/CARCM/Ablation study/figures/ablation_delta_auc.{png,pdf}
+  Figure  : /home/saiful/CARCM/Ablation study/figures/ablation_metric_grid.{png,pdf}
+  Report  : /home/saiful/CARCM/Ablation study/report/ablation_report.{md,docx}
+==============================================================================
+==============================================================================
+ CARCM ABLATION STUDY
+==============================================================================
+ conda env       : dnabert
+ num_seeds       : 10
+ num_epochs      : 150    patience : 25
+ ablation root   : /home/saiful/CARCM/Ablation study
+ log dir         : /home/saiful/CARCM/Ablation study/console_outputs
+ results dir     : /home/saiful/CARCM/Ablation study/results
+ GPU schedule    : wave 1 -> [full=2, sequence_only=3, seq_variety=4, seq_tissue=6]
+                   wave 2 -> [seq_stage=2, permuted_labels=3, context_only=4, param_matched_bias=6]
+==============================================================================
+ start: Thu Apr 30 10:16:38 PM CDT 2026
+
+
+============================ WAVE 1 ============================
+[launch] cfg=full  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/full.log
+[launch] cfg=sequence_only  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/sequence_only.log
+[launch] cfg=seq_variety  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_variety.log
+[launch] cfg=seq_tissue  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_tissue.log
+wave1 PIDs: 2683862 2683864 2683866 2683868
+./run_ablation.sh: line 80: wait: pid 2683862 is not a child of this shell
+[ERROR] wave-1 PID 2683862 exited non-zero
+./run_ablation.sh: line 80: wait: pid 2683864 is not a child of this shell
+[ERROR] wave-1 PID 2683864 exited non-zero
+./run_ablation.sh: line 80: wait: pid 2683866 is not a child of this shell
+[ERROR] wave-1 PID 2683866 exited non-zero
+./run_ablation.sh: line 80: wait: pid 2683868 is not a child of this shell
+[ERROR] wave-1 PID 2683868 exited non-zero
+wave 1 complete: Thu Apr 30 10:16:38 PM CDT 2026
+
+============================ WAVE 2 ============================
+[launch] cfg=seq_stage  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/seq_stage.log
+[launch] cfg=permuted_labels  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/permuted_labels.log
+[launch] cfg=context_only  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/context_only.log
+[launch] cfg=param_matched_bias  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/param_matched_bias.log
+wave2 PIDs: 2683871 2683873 2683875 2683877
+./run_ablation.sh: line 95: wait: pid 2683871 is not a child of this shell
+[ERROR] wave-2 PID 2683871 exited non-zero
+./run_ablation.sh: line 95: wait: pid 2683873 is not a child of this shell
+[ERROR] wave-2 PID 2683873 exited non-zero
+./run_ablation.sh: line 95: wait: pid 2683875 is not a child of this shell
+[ERROR] wave-2 PID 2683875 exited non-zero
+./run_ablation.sh: line 95: wait: pid 2683877 is not a child of this shell
+[ERROR] wave-2 PID 2683877 exited non-zero
+wave 2 complete: Thu Apr 30 10:16:38 PM CDT 2026
+
+============================ WAVE 3 (feature LOO) ============================
+[launch] cfg=no_binned  gpu=2  log=/home/saiful/CARCM/Ablation study/console_outputs/no_binned.log
+[launch] cfg=no_positional  gpu=3  log=/home/saiful/CARCM/Ablation study/console_outputs/no_positional.log
+[launch] cfg=no_count  gpu=4  log=/home/saiful/CARCM/Ablation study/console_outputs/no_count.log
+[launch] cfg=no_cooc  gpu=6  log=/home/saiful/CARCM/Ablation study/console_outputs/no_cooc.log
+wave3 PIDs: 2683880 2683882 2683884 2683886
+./run_ablation.sh: line 110: wait: pid 2683880 is not a child of this shell
+[ERROR] wave-3 PID 2683880 exited non-zero
+./run_ablation.sh: line 110: wait: pid 2683882 is not a child of this shell
+[ERROR] wave-3 PID 2683882 exited non-zero
+./run_ablation.sh: line 110: wait: pid 2683884 is not a child of this shell
+[ERROR] wave-3 PID 2683884 exited non-zero
+./run_ablation.sh: line 110: wait: pid 2683886 is not a child of this shell
+[ERROR] wave-3 PID 2683886 exited non-zero
+wave 3 complete: Thu Apr 30 10:16:38 PM CDT 2026
+
+============================ AGGREGATE ============================
+aggregate complete: Thu Apr 30 10:16:40 PM CDT 2026
+
+==============================================================================
+ ABLATION STUDY DONE  -- Thu Apr 30 10:16:40 PM CDT 2026
+  CSV     : /home/saiful/CARCM/Ablation study/results/aggregate_metrics.csv
+  CSV     : /home/saiful/CARCM/Ablation study/results/per_seed_long.csv
+  CSV     : /home/saiful/CARCM/Ablation study/results/delong_full_pairwise.csv
+  Figure  : /home/saiful/CARCM/Ablation study/figures/ablation_delta_auc.{png,pdf}
+  Figure  : /home/saiful/CARCM/Ablation study/figures/ablation_metric_grid.{png,pdf}
+  Report  : /home/saiful/CARCM/Ablation study/report/ablation_report.{md,docx}
+==============================================================================

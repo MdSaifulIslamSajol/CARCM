@@ -1,0 +1,134 @@
+================================================================================
+RICE PROMOTER CLASSIFIER V7b - HYPERPARAMETER SEARCH
+Run: best
+================================================================================
+
+Configuration:
+  learning_rate: 0.001
+  hidden_dim: 128
+  dropout: 0.4
+  num_seeds: 10
+  batch_size: 128
+  weight_decay: 0.01
+  num_epochs: 150
+  patience: 25
+  run_name: best
+
+Device: cuda
+
+Loading data...
+  Train: 31126, Dev: 4545, Test: 8831
+  Train hard examples: 19388 (62.3%)
+  Test hard examples: 0 (0.0%)
+
+================================================================================
+STAGE 1: TRAINING 10 BASE MODELS
+================================================================================
+
+[1/10] Training with seed=42
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7143 | Dev AUC: 0.6880 | Hard AUC: 0.0000
+      Early stopping at epoch 28
+    Seed 42: Dev AUC = 0.7079
+
+[2/10] Training with seed=1042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7364 | Dev AUC: 0.6855 | Hard AUC: 0.0000
+      Early stopping at epoch 30
+    Seed 1042: Dev AUC = 0.7131
+
+[3/10] Training with seed=2042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7140 | Dev AUC: 0.6927 | Hard AUC: 0.0000
+      Early stopping at epoch 31
+    Seed 2042: Dev AUC = 0.7144
+
+[4/10] Training with seed=3042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.6977 | Dev AUC: 0.6880 | Hard AUC: 0.0000
+      Early stopping at epoch 32
+    Seed 3042: Dev AUC = 0.7110
+
+[5/10] Training with seed=4042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7177 | Dev AUC: 0.6895 | Hard AUC: 0.0000
+      Early stopping at epoch 28
+    Seed 4042: Dev AUC = 0.7088
+
+[6/10] Training with seed=5042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7068 | Dev AUC: 0.6932 | Hard AUC: 0.0000
+      Early stopping at epoch 29
+    Seed 5042: Dev AUC = 0.7156
+
+[7/10] Training with seed=6042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7244 | Dev AUC: 0.6934 | Hard AUC: 0.0000
+      Early stopping at epoch 29
+    Seed 6042: Dev AUC = 0.7125
+
+[8/10] Training with seed=7042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7402 | Dev AUC: 0.6799 | Hard AUC: 0.0000
+      Early stopping at epoch 31
+    Seed 7042: Dev AUC = 0.7073
+
+[9/10] Training with seed=8042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7256 | Dev AUC: 0.6774 | Hard AUC: 0.0000
+      Early stopping at epoch 28
+    Seed 8042: Dev AUC = 0.7082
+
+[10/10] Training with seed=9042
+    Parameters: 430,367
+      Epoch 20/150 | Loss: 0.7320 | Dev AUC: 0.7058 | Hard AUC: 0.0000
+      Early stopping at epoch 32
+    Seed 9042: Dev AUC = 0.7089
+
+Total training time: 40.0 minutes
+
+================================================================================
+STAGE 2: ENSEMBLE METHODS
+================================================================================
+
+1. Simple Average: Test AUC = 0.7199 | Hard AUC = 0.5000
+2. Weighted Average: Test AUC = 0.7199 | Hard AUC = 0.5000
+3. Rank Average: Test AUC = 0.7202 | Hard AUC = 0.5000
+4. Meta-Learner: Test AUC = 0.7177 | Hard AUC = 0.5000
+5. Blended: Test AUC = 0.7198 | Hard AUC = 0.5000
+
+✓ Best Method: rank_avg
+
+================================================================================
+FINAL RESULTS
+================================================================================
+
+  Test AUC:      0.7202
+  Hard AUC:      0.5000
+  Easy AUC:      0.7202
+  Accuracy:      0.6402
+  Precision:     0.6199
+  Recall:        0.8397
+  F1 Score:      0.7132
+  MCC:           0.2811
+  Threshold:     0.30
+
+================================================================================
+GENERATING PUBLICATION-QUALITY FIGURES
+================================================================================
+
+  Generating ROC curves...
+  Generating PR curves...
+  Generating confusion matrix...
+  Generating threshold analysis...
+  Generating calibration curve...
+  Generating ensemble comparison...
+  Generating summary dashboard...
+  Saving detailed results...
+
+================================================================================
+EXPERIMENT COMPLETE: best
+================================================================================
+
+  Results saved to: /home/saiful/CARCM/Homology aware gene level split/models/best
+  Checkpoints saved to: /home/saiful/CARCM/Homology aware gene level split/checkpoints

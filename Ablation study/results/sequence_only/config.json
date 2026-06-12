@@ -1,0 +1,22 @@
+{
+  "learning_rate": 0.001,
+  "hidden_dim": 128,
+  "dropout": 0.4,
+  "batch_size": 128,
+  "weight_decay": 0.01,
+  "num_epochs": 150,
+  "patience": 25,
+  "num_seeds": 10,
+  "ablation": {
+    "id": 2,
+    "name": "sequence_only",
+    "label": "Sequence-only (context branch removed)",
+    "use_sequence": true,
+    "context_dims": [],
+    "use_interactions": false,
+    "bias_replace": false,
+    "permute_context": false
+  },
+  "data_dir": "/home/saiful/CARCM/output/",
+  "gpu": 3
+}

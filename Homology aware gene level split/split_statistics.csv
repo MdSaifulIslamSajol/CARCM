@@ -1,0 +1,4 @@
+split,n_samples,n_genes,n_clusters,pct_up,n_varieties,n_tissues,n_stages
+train,31126,11932,11821,53.33804536400437,13,8,6
+dev,4545,1711,1688,53.003300330033,13,8,6
+test,8831,3399,3366,53.27822443664364,13,8,6

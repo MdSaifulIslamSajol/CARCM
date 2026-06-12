@@ -1,0 +1,2 @@
+total_rows,train_rows,dev_rows,test_rows,unique_tuples,unique_sequences,conflicting_label_tuples,test_L1_tuple_in_pool,pct_test_L1,test_seq_overlap_new_ctx,test_memorizable_seq,test_flip_label_seq,test_near80_in_pool,test_near80_additional
+44502,35601,4450,4451,44502,17042,0,0,0.0,3646,967,2679,3660,14

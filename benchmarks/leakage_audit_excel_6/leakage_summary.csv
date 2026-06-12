@@ -1,0 +1,2 @@
+total_rows,train_rows,dev_rows,test_rows,unique_sequences,exact_match_cross_split_seqs,cdhit_identity_threshold,cdhit_total_clusters,cdhit_multi_member_clusters,cdhit_mixed_split_clusters,test_rows_in_mixed_clusters,train_rows_in_mixed_clusters,pct_test_at_risk
+44502,35601,4450,4451,17042,5145,0.8,16877,134,80,68,321,1.528

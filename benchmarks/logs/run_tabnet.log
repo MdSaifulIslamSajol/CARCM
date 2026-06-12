@@ -1,0 +1,120 @@
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/pytorch_tabnet/abstract_model.py:82: UserWarning: Device used : cuda
+  warnings.warn(f"Device used : {self.device}")
+epoch 0  | loss: 1.22127 | dev_auc: 0.49752 |  0:00:04s
+epoch 1  | loss: 0.70711 | dev_auc: 0.49599 |  0:00:07s
+epoch 2  | loss: 0.69381 | dev_auc: 0.51047 |  0:00:11s
+epoch 3  | loss: 0.6917  | dev_auc: 0.5013  |  0:00:17s
+epoch 4  | loss: 0.69192 | dev_auc: 0.52554 |  0:00:21s
+epoch 5  | loss: 0.69045 | dev_auc: 0.51854 |  0:00:26s
+epoch 6  | loss: 0.69076 | dev_auc: 0.52107 |  0:00:29s
+epoch 7  | loss: 0.68903 | dev_auc: 0.53397 |  0:00:33s
+epoch 8  | loss: 0.69012 | dev_auc: 0.53589 |  0:00:36s
+epoch 9  | loss: 0.68937 | dev_auc: 0.52398 |  0:00:41s
+epoch 10 | loss: 0.68859 | dev_auc: 0.52336 |  0:00:45s
+epoch 11 | loss: 0.68805 | dev_auc: 0.52327 |  0:00:51s
+epoch 12 | loss: 0.68752 | dev_auc: 0.52837 |  0:00:54s
+epoch 13 | loss: 0.6874  | dev_auc: 0.5229  |  0:00:59s
+epoch 14 | loss: 0.68784 | dev_auc: 0.52703 |  0:01:02s
+epoch 15 | loss: 0.68684 | dev_auc: 0.52205 |  0:01:06s
+epoch 16 | loss: 0.68596 | dev_auc: 0.53886 |  0:01:09s
+epoch 17 | loss: 0.6868  | dev_auc: 0.53541 |  0:01:15s
+epoch 18 | loss: 0.68667 | dev_auc: 0.54124 |  0:01:20s
+epoch 19 | loss: 0.68573 | dev_auc: 0.53034 |  0:01:23s
+epoch 20 | loss: 0.68615 | dev_auc: 0.54063 |  0:01:27s
+epoch 21 | loss: 0.68583 | dev_auc: 0.54118 |  0:01:30s
+epoch 22 | loss: 0.68488 | dev_auc: 0.53785 |  0:01:35s
+epoch 23 | loss: 0.68522 | dev_auc: 0.54377 |  0:01:39s
+epoch 24 | loss: 0.68383 | dev_auc: 0.5464  |  0:01:44s
+epoch 25 | loss: 0.68324 | dev_auc: 0.55103 |  0:01:48s
+epoch 26 | loss: 0.68226 | dev_auc: 0.54852 |  0:01:52s
+epoch 27 | loss: 0.68135 | dev_auc: 0.55688 |  0:01:55s
+epoch 28 | loss: 0.67989 | dev_auc: 0.56334 |  0:01:59s
+epoch 29 | loss: 0.68029 | dev_auc: 0.56285 |  0:02:04s
+epoch 30 | loss: 0.68047 | dev_auc: 0.56636 |  0:02:09s
+epoch 31 | loss: 0.67868 | dev_auc: 0.58046 |  0:02:12s
+epoch 32 | loss: 0.67716 | dev_auc: 0.57962 |  0:02:16s
+epoch 33 | loss: 0.673   | dev_auc: 0.59326 |  0:02:20s
+epoch 34 | loss: 0.66933 | dev_auc: 0.60035 |  0:02:24s
+epoch 35 | loss: 0.66345 | dev_auc: 0.60911 |  0:02:29s
+epoch 36 | loss: 0.6612  | dev_auc: 0.61903 |  0:02:33s
+epoch 37 | loss: 0.65511 | dev_auc: 0.62976 |  0:02:36s
+epoch 38 | loss: 0.64905 | dev_auc: 0.6304  |  0:02:41s
+epoch 39 | loss: 0.64501 | dev_auc: 0.64604 |  0:02:46s
+epoch 40 | loss: 0.64405 | dev_auc: 0.63071 |  0:02:51s
+epoch 41 | loss: 0.64996 | dev_auc: 0.62668 |  0:02:55s
+epoch 42 | loss: 0.65056 | dev_auc: 0.63091 |  0:02:58s
+epoch 43 | loss: 0.64863 | dev_auc: 0.64992 |  0:03:03s
+epoch 44 | loss: 0.64515 | dev_auc: 0.62641 |  0:03:08s
+epoch 45 | loss: 0.65277 | dev_auc: 0.6442  |  0:03:11s
+epoch 46 | loss: 0.64743 | dev_auc: 0.66494 |  0:03:15s
+epoch 47 | loss: 0.63992 | dev_auc: 0.65652 |  0:03:20s
+epoch 48 | loss: 0.63791 | dev_auc: 0.66446 |  0:03:24s
+epoch 49 | loss: 0.63491 | dev_auc: 0.6687  |  0:03:27s
+epoch 50 | loss: 0.62285 | dev_auc: 0.68371 |  0:03:32s
+epoch 51 | loss: 0.6132  | dev_auc: 0.69012 |  0:03:37s
+epoch 52 | loss: 0.60893 | dev_auc: 0.68845 |  0:03:40s
+epoch 53 | loss: 0.59875 | dev_auc: 0.70249 |  0:03:44s
+epoch 54 | loss: 0.59065 | dev_auc: 0.70356 |  0:03:47s
+epoch 55 | loss: 0.5828  | dev_auc: 0.70866 |  0:03:51s
+epoch 56 | loss: 0.57179 | dev_auc: 0.71725 |  0:03:56s
+epoch 57 | loss: 0.56199 | dev_auc: 0.71625 |  0:03:59s
+epoch 58 | loss: 0.55082 | dev_auc: 0.72127 |  0:04:03s
+epoch 59 | loss: 0.54044 | dev_auc: 0.71874 |  0:04:08s
+epoch 60 | loss: 0.53418 | dev_auc: 0.71288 |  0:04:11s
+epoch 61 | loss: 0.52881 | dev_auc: 0.72111 |  0:04:16s
+epoch 62 | loss: 0.50719 | dev_auc: 0.72526 |  0:04:19s
+epoch 63 | loss: 0.49618 | dev_auc: 0.72001 |  0:04:22s
+epoch 64 | loss: 0.48831 | dev_auc: 0.72458 |  0:04:26s
+epoch 65 | loss: 0.48847 | dev_auc: 0.72654 |  0:04:30s
+epoch 66 | loss: 0.46608 | dev_auc: 0.72397 |  0:04:33s
+epoch 67 | loss: 0.45886 | dev_auc: 0.72584 |  0:04:39s
+epoch 68 | loss: 0.45002 | dev_auc: 0.73043 |  0:04:44s
+epoch 69 | loss: 0.42924 | dev_auc: 0.73749 |  0:04:47s
+epoch 70 | loss: 0.4018  | dev_auc: 0.73784 |  0:04:50s
+epoch 71 | loss: 0.37777 | dev_auc: 0.73497 |  0:04:54s
+epoch 72 | loss: 0.36692 | dev_auc: 0.74425 |  0:04:58s
+epoch 73 | loss: 0.35266 | dev_auc: 0.74412 |  0:05:02s
+epoch 74 | loss: 0.34544 | dev_auc: 0.74922 |  0:05:05s
+epoch 75 | loss: 0.32837 | dev_auc: 0.74543 |  0:05:11s
+epoch 76 | loss: 0.3154  | dev_auc: 0.74296 |  0:05:16s
+epoch 77 | loss: 0.29122 | dev_auc: 0.75178 |  0:05:19s
+epoch 78 | loss: 0.28137 | dev_auc: 0.75159 |  0:05:23s
+epoch 79 | loss: 0.26903 | dev_auc: 0.7547  |  0:05:26s
+epoch 80 | loss: 0.24824 | dev_auc: 0.75319 |  0:05:31s
+epoch 81 | loss: 0.23969 | dev_auc: 0.75056 |  0:05:35s
+epoch 82 | loss: 0.22649 | dev_auc: 0.75683 |  0:05:39s
+epoch 83 | loss: 0.2094  | dev_auc: 0.75047 |  0:05:43s
+epoch 84 | loss: 0.20137 | dev_auc: 0.7543  |  0:05:46s
+epoch 85 | loss: 0.19486 | dev_auc: 0.75557 |  0:05:51s
+epoch 86 | loss: 0.18642 | dev_auc: 0.75701 |  0:05:54s
+epoch 87 | loss: 0.17604 | dev_auc: 0.76112 |  0:05:59s
+epoch 88 | loss: 0.17008 | dev_auc: 0.75906 |  0:06:04s
+epoch 89 | loss: 0.1615  | dev_auc: 0.75808 |  0:06:09s
+epoch 90 | loss: 0.15329 | dev_auc: 0.75679 |  0:06:14s
+epoch 91 | loss: 0.15357 | dev_auc: 0.75146 |  0:06:17s
+epoch 92 | loss: 0.14344 | dev_auc: 0.75029 |  0:06:23s
+epoch 93 | loss: 0.13456 | dev_auc: 0.75298 |  0:06:26s
+epoch 94 | loss: 0.13731 | dev_auc: 0.75626 |  0:06:31s
+epoch 95 | loss: 0.125   | dev_auc: 0.75169 |  0:06:34s
+epoch 96 | loss: 0.12836 | dev_auc: 0.74877 |  0:06:38s
+epoch 97 | loss: 0.11859 | dev_auc: 0.75323 |  0:06:41s
+epoch 98 | loss: 0.12677 | dev_auc: 0.75537 |  0:06:44s
+epoch 99 | loss: 0.11232 | dev_auc: 0.74695 |  0:06:48s
+epoch 100| loss: 0.10352 | dev_auc: 0.75344 |  0:06:51s
+epoch 101| loss: 0.09934 | dev_auc: 0.7537  |  0:06:54s
+epoch 102| loss: 0.09525 | dev_auc: 0.7504  |  0:06:58s
+epoch 103| loss: 0.08967 | dev_auc: 0.74637 |  0:07:01s
+epoch 104| loss: 0.08441 | dev_auc: 0.75107 |  0:07:04s
+epoch 105| loss: 0.08855 | dev_auc: 0.75319 |  0:07:08s
+epoch 106| loss: 0.08564 | dev_auc: 0.74965 |  0:07:11s
+epoch 107| loss: 0.08389 | dev_auc: 0.7438  |  0:07:15s
+epoch 108| loss: 0.08212 | dev_auc: 0.7488  |  0:07:19s
+epoch 109| loss: 0.07776 | dev_auc: 0.75135 |  0:07:24s
+epoch 110| loss: 0.07542 | dev_auc: 0.75313 |  0:07:27s
+epoch 111| loss: 0.07685 | dev_auc: 0.75284 |  0:07:31s
+/home/saiful/anaconda3/envs/dnabert_bench/lib/python3.10/site-packages/pytorch_tabnet/callbacks.py:172: UserWarning: Best weights from best epoch are automatically used!
+  warnings.warn(wrn_msg)
+epoch 112| loss: 0.07222 | dev_auc: 0.75279 |  0:07:34s
+
+Early stopping occurred at epoch 112 with best_epoch = 87 and best_dev_auc = 0.76112
+[TabNet] AUC=0.7373  F1=0.7196  MCC=0.3100  hard=0.7893  easy=0.6990

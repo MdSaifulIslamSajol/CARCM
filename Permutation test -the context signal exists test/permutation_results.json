@@ -1,0 +1,15 @@
+{
+  "observed_auc": 0.852169105330994,
+  "permuted_mean": 0.5419542238412389,
+  "permuted_std": 0.007918343289966557,
+  "permuted_min": 0.5160982060223207,
+  "permuted_max": 0.5644050924405056,
+  "delta_auc": 0.31021488148975507,
+  "effect_size_cohens_d": 39.17674065518638,
+  "p_value": 0.000999000999000999,
+  "ci_95_lower": 0.526387966227764,
+  "ci_95_upper": 0.557098250026159,
+  "n_permutations": 1000,
+  "n_perm_gte_observed": 0,
+  "total_time_minutes": 165.1
+}

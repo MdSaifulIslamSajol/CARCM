@@ -1,0 +1,45 @@
+========================================================================
+LEAKAGE AUDIT  —  FINAL REPORT (CONTEXT-AWARE)
+INPUT: RiceMetaSys_Drought_merged_all_excels_6.csv
+(conflicting-label rows removed)
+Observation unit = (promoter_sequence, Variety, Tissue, Stage)
+CD-HIT-EST identity threshold: 80%  (word=5)
+========================================================================
+
+Split sizes: train=35601  dev=4450  test=4451
+Unique tuples (observation units): 44502
+Unique promoter sequences: 17042
+
+--- L1: TUPLE-LEVEL LEAKAGE (exact same input to model) ---
+  Test rows with exact (seq, V, T, S) in TRAIN:        0/4451 (0.00%)
+  Test rows with exact (seq, V, T, S) in TRAIN or DEV: 0/4451 (0.00%)
+  Tuples with conflicting labels: 0
+
+--- SEQUENCE SHARING (informational — NOT leakage for this model) ---
+  The same promoter can appear with different (V, T, S) contexts.
+  This is expected biological variation, not data leakage.
+  Test rows sharing sequence with pool (different context): 3646/4451 (81.91%)
+    - Same-label sequences (memorization possible):  967/4451 (21.73%)
+    - Flipping-label sequences (context truly needed): 2679/4451 (60.19%)
+  Of 17042 unique sequences:
+    single-label: 10615 (62.3%)
+    label-flipping: 6427 (37.7%)
+
+--- NEAR-DUPLICATE SEQUENCES (informational — >=80% identity) ---
+  CD-HIT produced 16877 clusters from 17042 unique seqs.
+  Test rows with near-dup sequence in pool: 3660/4451 (82.23%)
+  Additional to exact-sequence overlap:      14/4451 (0.31%)
+  Note: these have DIFFERENT contexts — not leakage for this model.
+
+========================================================================
+CONCLUSION (CONTEXT-AWARE MODEL)
+========================================================================
+
+  Verdict: CLEAN — zero tuple-level leakage
+
+  • L1 (real leakage): 0.00% of test rows share exact (seq, V, T, S) tuple with training pool.
+  • Conflicting-label tuples: 0
+  • Sequence sharing (NOT leakage): 3646/4451 (81.91%) test rows share a promoter sequence but have different biological context.
+  • 37.7% of sequences flip labels across contexts — the model MUST learn context to predict correctly.
+
+All outputs in /home/saiful/DeepRice/motif_based_classification_ALL_DATA/bin_based_v2/benchmarks/leakage_audit_excel_6

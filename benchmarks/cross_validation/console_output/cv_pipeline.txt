@@ -1,0 +1,118 @@
+======================================================================
+5-FOLD CROSS-VALIDATION — FEATURE EXTRACTION & SPLITTING
+======================================================================
+Loading data from: /home/saiful/DeepRice/motif_based_classification_ALL_DATA/data_preprocess/RiceMetaSys_Drought_merged_all_excels_6.csv
+  Original shape: (44502, 5)
+  Cleaned shape: (44502, 6)
+
+  Variety distribution:
+Variety
+IR64_Cleaned    17618
+N22_Cleaned3    12597
+Dhaggadeshi      3176
+Nipponbare       2622
+Moroberekan      1879
+IR20             1769
+IRAT109           956
+Bala              923
+ZS97              910
+Tampha            719
+Pokkali           624
+Azucena           581
+Chandan           128
+Name: count, dtype: int64
+
+  Tissue distribution:
+Tissue
+Seedling         9186
+Root             9056
+Panicle          8600
+Leaf             7541
+Flag Leaf        3643
+Inflorescence    2459
+Anther           2315
+Pistil           1702
+Name: count, dtype: int64
+
+  Stage distribution:
+Stage
+Reproductive Stage          25774
+Vegetative Stage             7052
+Seedling Stage               5762
+Panicle Elongation Stage     2799
+Tillering Stage              2234
+Booting Stage                 881
+Name: count, dtype: int64
+
+  Label distribution (0=Down, 1=Up):
+label
+1    23716
+0    20786
+Name: count, dtype: int64
+
+  Promoter length: min=1000, max=1000, mean=1000, median=1000
+
+Finding top 50 co-occurring motif pairs...
+  Top 10 co-occurring pairs:
+    cooc_HSE_core_HSE_core: 5000 sequences
+    cooc_CACTFTPPCA1_HSE_core: 4999 sequences
+    cooc_AACA_HSE_core: 4995 sequences
+    cooc_CAAC_HSE_core: 4994 sequences
+    cooc_AAAG_HSE_core: 4987 sequences
+    cooc_CAAT_HSE_core: 4982 sequences
+    cooc_AACA_CACTFTPPCA1: 4982 sequences
+    cooc_CACTFTPPCA1_CACTFTPPCA1: 4977 sequences
+    cooc_CAAC_CACTFTPPCA1: 4977 sequences
+    cooc_AAAG_CACTFTPPCA1: 4974 sequences
+
+Extracting positional features for 44502 sequences...
+  Features: 5 bins × 54 motifs + positions + gradients + co-occurrence
+  Processed 5000/44502 sequences (11.2%)...
+  Processed 10000/44502 sequences (22.5%)...
+  Processed 15000/44502 sequences (33.7%)...
+  Processed 20000/44502 sequences (44.9%)...
+  Processed 25000/44502 sequences (56.2%)...
+  Processed 30000/44502 sequences (67.4%)...
+  Processed 35000/44502 sequences (78.6%)...
+  Processed 40000/44502 sequences (89.9%)...
+  Created 594 features
+
+Creating context features...
+  Varieties: 13
+  Tissues: 8
+  Stages: 6
+
+Full feature matrix: (44502, 622)
+
+======================================================================
+CREATING 5-FOLD STRATIFIED CROSS-VALIDATION SPLITS
+======================================================================
+
+  Fold 0:
+    Train:  32040  (Up=17075, Down=14965)
+    Dev:     3561  (Up= 1898, Down= 1663)
+    Test:    8901  (Up= 4743, Down= 4158)
+
+  Fold 1:
+    Train:  32040  (Up=17074, Down=14966)
+    Dev:     3561  (Up= 1898, Down= 1663)
+    Test:    8901  (Up= 4744, Down= 4157)
+
+  Fold 2:
+    Train:  32041  (Up=17075, Down=14966)
+    Dev:     3561  (Up= 1898, Down= 1663)
+    Test:    8900  (Up= 4743, Down= 4157)
+
+  Fold 3:
+    Train:  32041  (Up=17075, Down=14966)
+    Dev:     3561  (Up= 1898, Down= 1663)
+    Test:    8900  (Up= 4743, Down= 4157)
+
+  Fold 4:
+    Train:  32041  (Up=17075, Down=14966)
+    Dev:     3561  (Up= 1898, Down= 1663)
+    Test:    8900  (Up= 4743, Down= 4157)
+
+======================================================================
+CV PIPELINE COMPLETE — 5 folds saved to /home/saiful/CARCM/benchmarks/cross_validation/fold_*/output/
+======================================================================
