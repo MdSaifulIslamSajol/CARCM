@@ -1,0 +1,113 @@
+========================================================================
+TRANSFER LEARNING — drought → salt
+========================================================================
+Device: cuda | seeds: 5 | hidden 128 dropout 0.5 batch 128
+drought (44502, 685) | salt (3232, 685) | n_motifs 60 n_cooc 50
+drought: train 40051 dev 4451 | salt: train 2585 dev 323 test 324
+
+[1/5] seed=42
+        scratch epoch 25/150  dev AUC 0.5941  (best 0.6019)
+    scratch        : salt-dev AUC 0.6019
+        pretrain epoch 25/100  dev AUC 0.7670  (best 0.7747)
+        pretrain epoch 50/100  dev AUC 0.8102  (best 0.8102)
+        pretrain epoch 75/100  dev AUC 0.8139  (best 0.8217)
+        pretrain epoch 100/100  dev AUC 0.8253  (best 0.8253)
+    pretrain(drought): drought-dev AUC 0.8253
+        ft_full epoch 25/150  dev AUC 0.7836  (best 0.8087)
+    transfer_full  : salt-dev AUC 0.8087
+        ft_frozen epoch 25/150  dev AUC 0.7803  (best 0.7827)
+        ft_frozen epoch 50/150  dev AUC 0.7988  (best 0.8004)
+        ft_frozen epoch 75/150  dev AUC 0.8049  (best 0.8061)
+    transfer_frozen: salt-dev AUC 0.8061
+
+[2/5] seed=1042
+        scratch epoch 25/150  dev AUC 0.6286  (best 0.6286)
+        scratch epoch 50/150  dev AUC 0.6453  (best 0.6461)
+        scratch epoch 75/150  dev AUC 0.6812  (best 0.6838)
+    scratch        : salt-dev AUC 0.6838
+        pretrain epoch 25/100  dev AUC 0.7797  (best 0.7801)
+        pretrain epoch 50/100  dev AUC 0.8026  (best 0.8029)
+        pretrain epoch 75/100  dev AUC 0.8152  (best 0.8158)
+        pretrain epoch 100/100  dev AUC 0.8143  (best 0.8173)
+    pretrain(drought): drought-dev AUC 0.8173
+        ft_full epoch 25/150  dev AUC 0.7753  (best 0.7864)
+    transfer_full  : salt-dev AUC 0.7864
+        ft_frozen epoch 25/150  dev AUC 0.7178  (best 0.7178)
+        ft_frozen epoch 50/150  dev AUC 0.7420  (best 0.7458)
+        ft_frozen epoch 75/150  dev AUC 0.7580  (best 0.7580)
+        ft_frozen epoch 100/150  dev AUC 0.7651  (best 0.7664)
+        ft_frozen epoch 125/150  dev AUC 0.7682  (best 0.7682)
+        ft_frozen epoch 150/150  dev AUC 0.7680  (best 0.7702)
+    transfer_frozen: salt-dev AUC 0.7702
+
+[3/5] seed=2042
+        scratch epoch 25/150  dev AUC 0.6238  (best 0.6238)
+        scratch epoch 50/150  dev AUC 0.6586  (best 0.6586)
+        scratch epoch 75/150  dev AUC 0.6673  (best 0.6821)
+        scratch epoch 100/150  dev AUC 0.6834  (best 0.6873)
+    scratch        : salt-dev AUC 0.6873
+        pretrain epoch 25/100  dev AUC 0.7761  (best 0.7769)
+        pretrain epoch 50/100  dev AUC 0.8015  (best 0.8015)
+        pretrain epoch 75/100  dev AUC 0.8132  (best 0.8132)
+        pretrain epoch 100/100  dev AUC 0.8175  (best 0.8180)
+    pretrain(drought): drought-dev AUC 0.8180
+        ft_full epoch 25/150  dev AUC 0.7999  (best 0.8044)
+    transfer_full  : salt-dev AUC 0.8044
+        ft_frozen epoch 25/150  dev AUC 0.7831  (best 0.7831)
+        ft_frozen epoch 50/150  dev AUC 0.8015  (best 0.8015)
+        ft_frozen epoch 75/150  dev AUC 0.8061  (best 0.8061)
+        ft_frozen epoch 100/150  dev AUC 0.8086  (best 0.8094)
+        ft_frozen epoch 125/150  dev AUC 0.8082  (best 0.8099)
+        ft_frozen epoch 150/150  dev AUC 0.8083  (best 0.8099)
+    transfer_frozen: salt-dev AUC 0.8099
+
+[4/5] seed=3042
+        scratch epoch 25/150  dev AUC 0.6179  (best 0.6249)
+    scratch        : salt-dev AUC 0.6249
+        pretrain epoch 25/100  dev AUC 0.7764  (best 0.7764)
+        pretrain epoch 50/100  dev AUC 0.7952  (best 0.7993)
+        pretrain epoch 75/100  dev AUC 0.8056  (best 0.8056)
+        pretrain epoch 100/100  dev AUC 0.8072  (best 0.8074)
+    pretrain(drought): drought-dev AUC 0.8074
+        ft_full epoch 25/150  dev AUC 0.7527  (best 0.7679)
+    transfer_full  : salt-dev AUC 0.7679
+        ft_frozen epoch 25/150  dev AUC 0.7411  (best 0.7411)
+        ft_frozen epoch 50/150  dev AUC 0.7525  (best 0.7525)
+        ft_frozen epoch 75/150  dev AUC 0.7601  (best 0.7630)
+        ft_frozen epoch 100/150  dev AUC 0.7684  (best 0.7708)
+        ft_frozen epoch 125/150  dev AUC 0.7737  (best 0.7737)
+        ft_frozen epoch 150/150  dev AUC 0.7744  (best 0.7749)
+    transfer_frozen: salt-dev AUC 0.7749
+
+[5/5] seed=4042
+        scratch epoch 25/150  dev AUC 0.6186  (best 0.6186)
+        scratch epoch 50/150  dev AUC 0.6385  (best 0.6465)
+        scratch epoch 75/150  dev AUC 0.6455  (best 0.6592)
+    scratch        : salt-dev AUC 0.6592
+        pretrain epoch 25/100  dev AUC 0.7795  (best 0.7813)
+        pretrain epoch 50/100  dev AUC 0.8052  (best 0.8099)
+        pretrain epoch 75/100  dev AUC 0.8093  (best 0.8139)
+    pretrain(drought): drought-dev AUC 0.8139
+        ft_full epoch 25/150  dev AUC 0.7800  (best 0.7879)
+    transfer_full  : salt-dev AUC 0.7879
+        ft_frozen epoch 25/150  dev AUC 0.7345  (best 0.7368)
+        ft_frozen epoch 50/150  dev AUC 0.7500  (best 0.7500)
+        ft_frozen epoch 75/150  dev AUC 0.7603  (best 0.7603)
+        ft_frozen epoch 100/150  dev AUC 0.7644  (best 0.7656)
+        ft_frozen epoch 125/150  dev AUC 0.7676  (best 0.7681)
+        ft_frozen epoch 150/150  dev AUC 0.7709  (best 0.7725)
+    transfer_frozen: salt-dev AUC 0.7725
+
+Total time: 85.6 min
+
+========================================================================
+RESULTS  (salt test set, ensemble of 5 seeds)
+========================================================================
+condition            AUC  PR-AUC      F1     MCC     Acc    Prec     Rec
+scratch           0.6505  0.6634  0.7193  0.2544  0.6265  0.6055  0.8857
+transfer_full     0.8291  0.8656  0.7766  0.4777  0.7407  0.7264  0.8343
+transfer_frozen   0.8220  0.8633  0.7647  0.4518  0.7284  0.7186  0.8171
+
+ΔAUC (transfer_full − scratch): +0.1785
+Saved results to /home/saiful/DeepRice_Salt/CARCM_Salt/transfer_learning_ir64fix/results/
+Saved tl_comparison.png

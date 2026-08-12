@@ -1,0 +1,101 @@
+======================================================================
+POSITIONAL MOTIF ANALYSIS PIPELINE  —  SALT / SALINITY
+======================================================================
+Loading data from: /home/saiful/DeepRice_Salt/data_preprocess/RiceMetaSys_Salt_merged_all_excels_6.csv
+  Original shape: (3232, 5)
+  Cleaned shape: (3232, 6)
+
+  Variety distribution:
+Variety
+Agami    1563
+MI48      907
+IR64      561
+CSR27     201
+Name: count, dtype: int64
+
+  Tissue distribution:
+Tissue
+Root        1774
+Seedling    1108
+Leaf         350
+Name: count, dtype: int64
+
+  Stage distribution:
+Stage
+Vegetative Stage    1774
+Seedling Stage      1458
+Name: count, dtype: int64
+
+  Label distribution (0=Down, 1=Up):
+label
+1    1746
+0    1486
+Name: count, dtype: int64
+
+  Promoter length: min=1000, max=1000, mean=1000, median=1000
+
+Finding top 50 co-occurring motif pairs...
+  Top 10 co-occurring pairs:
+    cooc_HSE_core_HSE_core: 3232 sequences
+    cooc_CACTFTPPCA1_HSE_core: 3232 sequences
+    cooc_CAAC_HSE_core: 3231 sequences
+    cooc_AACA_HSE_core: 3228 sequences
+    cooc_DOF_core_HSE_core: 3223 sequences
+    cooc_CAAT_HSE_core: 3221 sequences
+    cooc_AACA_CACTFTPPCA1: 3220 sequences
+    cooc_CAAC_CACTFTPPCA1: 3218 sequences
+    cooc_CACTFTPPCA1_DOF_core: 3215 sequences
+    cooc_CACTFTPPCA1_CACTFTPPCA1: 3211 sequences
+
+Extracting positional features for 3232 sequences...
+  Features: 5 bins × 47 motifs + positions + gradients + co-occurrence
+  Processed 1000/3232 sequences (30.9%)...
+  Processed 2000/3232 sequences (61.9%)...
+  Processed 3000/3232 sequences (92.8%)...
+  Created 524 features
+
+Creating context features...
+  Varieties: 4
+  Tissues: 3
+  Stages: 2
+
+Final feature matrix shape: (3232, 534)
+
+======================================================================
+FEATURE SUMMARY
+======================================================================
+  Binned counts:      235 features
+  Relative positions: 47 features
+  First positions:    47 features
+  Last positions:     47 features
+  Density gradients:  47 features
+  Global counts:      47 features
+  Co-occurrence:      50 features
+  Sequence stats:     4 features
+  Context (Variety):  4 features
+  Context (Tissue):   3 features
+  Context (Stage):    2 features
+  TOTAL:              533 features (excluding label)
+
+======================================================================
+SPLITTING DATA
+======================================================================
+  Train: 2585 (80.0%)
+  Dev:   323 (10.0%)
+  Test:  324 (10.0%)
+
+  Label distribution:
+    Train: Up=1396 Down=1189
+    Dev:   Up=175 Down=148
+    Test:  Up=175 Down=149
+
+======================================================================
+SAVING DATA
+======================================================================
+  Saved train.csv, dev.csv, test.csv to /home/saiful/DeepRice_Salt/CARCM_Salt/output/
+  Saved feature_names.txt, feature_groups.json, motif_definitions.json
+  N motifs (salinity): 47
+
+======================================================================
+PIPELINE COMPLETE!
+======================================================================

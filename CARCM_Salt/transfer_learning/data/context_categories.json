@@ -1,0 +1,38 @@
+{
+  "varieties": [
+    "Agami",
+    "Azucena",
+    "Bala",
+    "CSR27",
+    "Chandan",
+    "Dhaggadeshi",
+    "IR20",
+    "IR64",
+    "IRAT109",
+    "MI48",
+    "Moroberekan",
+    "N22",
+    "Nipponbare",
+    "Pokkali",
+    "Tampha",
+    "ZS97"
+  ],
+  "tissues": [
+    "Anther",
+    "Flag Leaf",
+    "Inflorescence",
+    "Leaf",
+    "Panicle",
+    "Pistil",
+    "Root",
+    "Seedling"
+  ],
+  "stages": [
+    "Booting Stage",
+    "Panicle Elongation Stage",
+    "Reproductive Stage",
+    "Seedling Stage",
+    "Tillering Stage",
+    "Vegetative Stage"
+  ]
+}

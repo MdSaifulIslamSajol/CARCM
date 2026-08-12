@@ -1,0 +1,34 @@
+[0] baseline -> GPU 0  (lr=3e-4 hd=128 do=0.4 bs=128 seeds=10)
+[1] lr_1e-4 -> GPU 1  (lr=1e-4 hd=128 do=0.4 bs=128 seeds=10)
+[2] lr_5e-4 -> GPU 2  (lr=5e-4 hd=128 do=0.4 bs=128 seeds=10)
+[3] lr_1e-3 -> GPU 3  (lr=1e-3 hd=128 do=0.4 bs=128 seeds=10)
+[4] hd_64 -> GPU 4  (lr=3e-4 hd=64 do=0.4 bs=128 seeds=10)
+[5] hd_256 -> GPU 5  (lr=3e-4 hd=256 do=0.4 bs=128 seeds=10)
+[6] do_0.3 -> GPU 6  (lr=3e-4 hd=128 do=0.3 bs=128 seeds=10)
+[7] do_0.5 -> GPU 7  (lr=3e-4 hd=128 do=0.5 bs=128 seeds=10)
+[8] bs_64 -> GPU 0  (lr=3e-4 hd=128 do=0.4 bs=64 seeds=10)
+[9] bs_256 -> GPU 1  (lr=3e-4 hd=128 do=0.4 bs=256 seeds=10)
+[10] ns_5 -> GPU 2  (lr=3e-4 hd=128 do=0.4 bs=128 seeds=5)
+[11] ns_15 -> GPU 3  (lr=3e-4 hd=128 do=0.4 bs=128 seeds=15)
+[12] combined_opt1 -> GPU 4  (lr=1e-4 hd=128 do=0.5 bs=128 seeds=10)
+[13] combined_opt2 -> GPU 5  (lr=3e-4 hd=256 do=0.5 bs=64 seeds=10)
+[14] combined_opt3 -> GPU 6  (lr=5e-4 hd=64 do=0.3 bs=256 seeds=10)
+
+Launched 15 jobs. Waiting...
+  ok: job 0
+  ok: job 1
+  ok: job 2
+  ok: job 3
+  ok: job 4
+  ok: job 5
+  ok: job 6
+  ok: job 7
+  ok: job 8
+  ok: job 9
+  ok: job 10
+  ok: job 11
+  ok: job 12
+  ok: job 13
+  ok: job 14
+
+ALL DONE

@@ -1,0 +1,274 @@
+
+########## FEATURE EXTRACTION @ NUM_BINS=20 ##########
+
+======================================================================
+POSITIONAL MOTIF ANALYSIS PIPELINE  —  SALT / SALINITY
+======================================================================
+Loading data from: /home/saiful/DeepRice_Salt/data_preprocess/RiceMetaSys_Salt_merged_all_excels_6.csv
+  Original shape: (3232, 5)
+  Cleaned shape: (3232, 6)
+
+  Variety distribution:
+Variety
+Agami    1563
+MI48      907
+IR64      561
+CSR27     201
+Name: count, dtype: int64
+
+  Tissue distribution:
+Tissue
+Root        1774
+Seedling    1108
+Leaf         350
+Name: count, dtype: int64
+
+  Stage distribution:
+Stage
+Vegetative Stage    1774
+Seedling Stage      1458
+Name: count, dtype: int64
+
+  Label distribution (0=Down, 1=Up):
+label
+1    1746
+0    1486
+Name: count, dtype: int64
+
+  Promoter length: min=1000, max=1000, mean=1000, median=1000
+
+Finding top 50 co-occurring motif pairs...
+  Top 10 co-occurring pairs:
+    cooc_HSE_core_HSE_core: 3232 sequences
+    cooc_CACTFTPPCA1_HSE_core: 3232 sequences
+    cooc_CAAC_HSE_core: 3231 sequences
+    cooc_AACA_HSE_core: 3228 sequences
+    cooc_DOF_core_HSE_core: 3223 sequences
+    cooc_CAAT_HSE_core: 3221 sequences
+    cooc_AACA_CACTFTPPCA1: 3220 sequences
+    cooc_CAAC_CACTFTPPCA1: 3218 sequences
+    cooc_CACTFTPPCA1_DOF_core: 3215 sequences
+    cooc_CACTFTPPCA1_CACTFTPPCA1: 3211 sequences
+
+Extracting positional features for 3232 sequences...
+  Features: 20 bins × 47 motifs + positions + gradients + co-occurrence
+  Processed 1000/3232 sequences (30.9%)...
+  Processed 2000/3232 sequences (61.9%)...
+  Processed 3000/3232 sequences (92.8%)...
+  Created 1229 features
+
+Creating context features...
+  Varieties: 4
+  Tissues: 3
+  Stages: 2
+
+Final feature matrix shape: (3232, 1239)
+
+======================================================================
+FEATURE SUMMARY
+======================================================================
+  Binned counts:      940 features
+  Relative positions: 47 features
+  First positions:    47 features
+  Last positions:     47 features
+  Density gradients:  47 features
+  Global counts:      47 features
+  Co-occurrence:      50 features
+  Sequence stats:     4 features
+  Context (Variety):  4 features
+  Context (Tissue):   3 features
+  Context (Stage):    2 features
+  TOTAL:              1238 features (excluding label)
+
+======================================================================
+SPLITTING DATA
+======================================================================
+  Train: 2585 (80.0%)
+  Dev:   323 (10.0%)
+  Test:  324 (10.0%)
+
+  Label distribution:
+    Train: Up=1396 Down=1189
+    Dev:   Up=175 Down=148
+    Test:  Up=175 Down=149
+
+======================================================================
+SAVING DATA
+======================================================================
+  Saved train.csv, dev.csv, test.csv to /home/saiful/DeepRice_Salt/CARCM_Salt/output_bins20/
+  Saved feature_names.txt, feature_groups.json, motif_definitions.json
+  N motifs (salinity): 47
+
+======================================================================
+PIPELINE COMPLETE!
+======================================================================
+
+########## CLASSIFIER (winning config) @ NUM_BINS=20 ##########
+
+================================================================================
+RICE PROMOTER CLASSIFIER V7b - HYPERPARAMETER SEARCH
+Run: bins20
+================================================================================
+
+Configuration:
+  learning_rate: 0.0001
+  hidden_dim: 128
+  dropout: 0.5
+  num_seeds: 10
+  batch_size: 128
+  weight_decay: 0.01
+  num_epochs: 150
+  patience: 25
+  run_name: bins20
+
+Device: cuda
+
+Loading data...
+  Train: 2585, Dev: 323, Test: 324
+  Train hard examples: 196 (7.6%)
+  Test hard examples: 3 (0.9%)
+
+================================================================================
+STAGE 1: TRAINING 10 BASE MODELS
+================================================================================
+
+[1/10] Training with seed=42
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7328 | Dev AUC: 0.6036 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.6855 | Dev AUC: 0.6456 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6200 | Dev AUC: 0.6725 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.5514 | Dev AUC: 0.6902 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.5175 | Dev AUC: 0.6929 | Hard AUC: 0.0000
+      Epoch 120/150 | Loss: 0.4905 | Dev AUC: 0.6943 | Hard AUC: 0.0000
+      Epoch 140/150 | Loss: 0.4437 | Dev AUC: 0.6969 | Hard AUC: 0.0000
+      Early stopping at epoch 141
+    Seed 42: Dev AUC = 0.7036
+
+[2/10] Training with seed=1042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7242 | Dev AUC: 0.5995 | Hard AUC: 0.0000
+      Early stopping at epoch 32
+    Seed 1042: Dev AUC = 0.6120
+
+[3/10] Training with seed=2042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7191 | Dev AUC: 0.5960 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7134 | Dev AUC: 0.6101 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.7022 | Dev AUC: 0.6322 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.6841 | Dev AUC: 0.6681 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.6431 | Dev AUC: 0.6963 | Hard AUC: 0.0000
+      Epoch 120/150 | Loss: 0.6030 | Dev AUC: 0.7027 | Hard AUC: 0.0000
+      Epoch 140/150 | Loss: 0.5712 | Dev AUC: 0.7078 | Hard AUC: 0.0000
+    Seed 2042: Dev AUC = 0.7169
+
+[4/10] Training with seed=3042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7211 | Dev AUC: 0.6049 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7007 | Dev AUC: 0.6166 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6439 | Dev AUC: 0.6887 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.5742 | Dev AUC: 0.6846 | Hard AUC: 0.0000
+      Early stopping at epoch 88
+    Seed 3042: Dev AUC = 0.6940
+
+[5/10] Training with seed=4042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7212 | Dev AUC: 0.5938 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7036 | Dev AUC: 0.6465 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6572 | Dev AUC: 0.6716 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.5940 | Dev AUC: 0.6710 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.5346 | Dev AUC: 0.6782 | Hard AUC: 0.0000
+      Epoch 120/150 | Loss: 0.5200 | Dev AUC: 0.6781 | Hard AUC: 0.0000
+      Epoch 140/150 | Loss: 0.4974 | Dev AUC: 0.6798 | Hard AUC: 0.0000
+    Seed 4042: Dev AUC = 0.6859
+
+[6/10] Training with seed=5042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7291 | Dev AUC: 0.6027 | Hard AUC: 0.0000
+      Early stopping at epoch 29
+    Seed 5042: Dev AUC = 0.6390
+
+[7/10] Training with seed=6042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7259 | Dev AUC: 0.5929 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7106 | Dev AUC: 0.6146 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6996 | Dev AUC: 0.6439 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.6649 | Dev AUC: 0.6629 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.6471 | Dev AUC: 0.6886 | Hard AUC: 0.0000
+      Epoch 120/150 | Loss: 0.6010 | Dev AUC: 0.6808 | Hard AUC: 0.0000
+      Early stopping at epoch 135
+    Seed 6042: Dev AUC = 0.6929
+
+[8/10] Training with seed=7042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7265 | Dev AUC: 0.5773 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7103 | Dev AUC: 0.6029 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6983 | Dev AUC: 0.6102 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.6764 | Dev AUC: 0.6369 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.6528 | Dev AUC: 0.6598 | Hard AUC: 0.0000
+      Epoch 120/150 | Loss: 0.6130 | Dev AUC: 0.6669 | Hard AUC: 0.0000
+      Epoch 140/150 | Loss: 0.5940 | Dev AUC: 0.6752 | Hard AUC: 0.0000
+    Seed 7042: Dev AUC = 0.6752
+
+[9/10] Training with seed=8042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7274 | Dev AUC: 0.6028 | Hard AUC: 0.0000
+      Early stopping at epoch 33
+    Seed 8042: Dev AUC = 0.6212
+
+[10/10] Training with seed=9042
+    Parameters: 417,189
+      Epoch 20/150 | Loss: 0.7250 | Dev AUC: 0.5998 | Hard AUC: 0.0000
+      Epoch 40/150 | Loss: 0.7126 | Dev AUC: 0.6370 | Hard AUC: 0.0000
+      Epoch 60/150 | Loss: 0.6574 | Dev AUC: 0.6758 | Hard AUC: 0.0000
+      Epoch 80/150 | Loss: 0.5970 | Dev AUC: 0.6901 | Hard AUC: 0.0000
+      Epoch 100/150 | Loss: 0.5590 | Dev AUC: 0.7050 | Hard AUC: 0.0000
+      Early stopping at epoch 113
+    Seed 9042: Dev AUC = 0.7099
+
+Total training time: 17.2 minutes
+
+================================================================================
+STAGE 2: ENSEMBLE METHODS
+================================================================================
+
+1. Simple Average: Test AUC = 0.6643 | Hard AUC = nan
+2. Weighted Average: Test AUC = 0.6642 | Hard AUC = nan
+3. Rank Average: Test AUC = 0.6614 | Hard AUC = nan
+4. Meta-Learner: Test AUC = 0.6537 | Hard AUC = nan
+5. Blended: Test AUC = 0.6625 | Hard AUC = nan
+
+✓ Best Method: simple_avg
+
+================================================================================
+FINAL RESULTS
+================================================================================
+
+  Test AUC:      0.6643
+  Hard AUC:      nan
+  Easy AUC:      0.6604
+  Accuracy:      0.6543
+  Precision:     0.6275
+  Recall:        0.8857
+  F1 Score:      0.7346
+  MCC:           0.3141
+  Threshold:     0.43
+
+================================================================================
+GENERATING PUBLICATION-QUALITY FIGURES
+================================================================================
+
+  Generating ROC curves...
+  Generating PR curves...
+  Generating confusion matrix...
+  Generating threshold analysis...
+  Generating calibration curve...
+  Generating ensemble comparison...
+  Generating summary dashboard...
+  Saving detailed results...
+
+================================================================================
+EXPERIMENT COMPLETE: bins20
+================================================================================
+
+  Results saved to: /home/saiful/DeepRice_Salt/CARCM_Salt/models_carcm_salt/bins20
+  Checkpoints saved to: /home/saiful/DeepRice_Salt/CARCM_Salt/checkpoints/

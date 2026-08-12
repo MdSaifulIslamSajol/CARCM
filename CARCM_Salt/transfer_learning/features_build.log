@@ -1,0 +1,179 @@
+======================================================================
+TRANSFER LEARNING — SHARED FEATURE SPACE (drought + salt)
+======================================================================
+Shared motif set: 60 motifs (drought 54 ∪ salinity 47)
+
+--- Loading drought ---
+Loading data from: /home/saiful/DeepRice/motif_based_classification_ALL_DATA/data_preprocess/RiceMetaSys_Drought_merged_all_excels_6.csv
+  Original shape: (44502, 5)
+  Cleaned shape: (44502, 6)
+
+  Variety distribution:
+Variety
+IR64_Cleaned    17618
+N22_Cleaned3    12597
+Dhaggadeshi      3176
+Nipponbare       2622
+Moroberekan      1879
+IR20             1769
+IRAT109           956
+Bala              923
+ZS97              910
+Tampha            719
+Pokkali           624
+Azucena           581
+Chandan           128
+Name: count, dtype: int64
+
+  Tissue distribution:
+Tissue
+Seedling         9186
+Root             9056
+Panicle          8600
+Leaf             7541
+Flag Leaf        3643
+Inflorescence    2459
+Anther           2315
+Pistil           1702
+Name: count, dtype: int64
+
+  Stage distribution:
+Stage
+Reproductive Stage          25774
+Vegetative Stage             7052
+Seedling Stage               5762
+Panicle Elongation Stage     2799
+Tillering Stage              2234
+Booting Stage                 881
+Name: count, dtype: int64
+
+  Label distribution (0=Down, 1=Up):
+label
+1    23716
+0    20786
+Name: count, dtype: int64
+
+  Promoter length: min=1000, max=1000, mean=1000, median=1000
+
+--- Loading salt ---
+Loading data from: /home/saiful/DeepRice_Salt/data_preprocess/RiceMetaSys_Salt_merged_all_excels_6.csv
+  Original shape: (3232, 5)
+  Cleaned shape: (3232, 6)
+
+  Variety distribution:
+Variety
+Agami    1563
+MI48      907
+IR64      561
+CSR27     201
+Name: count, dtype: int64
+
+  Tissue distribution:
+Tissue
+Root        1774
+Seedling    1108
+Leaf         350
+Name: count, dtype: int64
+
+  Stage distribution:
+Stage
+Vegetative Stage    1774
+Seedling Stage      1458
+Name: count, dtype: int64
+
+  Label distribution (0=Down, 1=Up):
+label
+1    1746
+0    1486
+Name: count, dtype: int64
+
+  Promoter length: min=1000, max=1000, mean=1000, median=1000
+
+--- Top co-occurrence pairs (from drought) ---
+
+Finding top 50 co-occurring motif pairs...
+  Top 10 co-occurring pairs:
+    cooc_HSE_core_HSE_core: 5000 sequences
+    cooc_CACTFTPPCA1_HSE_core: 4999 sequences
+    cooc_AACA_HSE_core: 4995 sequences
+    cooc_CAAC_HSE_core: 4994 sequences
+    cooc_AAAG_DOF_core: 4989 sequences
+    cooc_AAAG_HSE_core: 4987 sequences
+    cooc_DOF_core_HSE_core: 4987 sequences
+    cooc_CAAT_HSE_core: 4982 sequences
+    cooc_AACA_CACTFTPPCA1: 4982 sequences
+    cooc_CACTFTPPCA1_CACTFTPPCA1: 4977 sequences
+
+--- Extracting drought positional features (this is the slow step) ---
+
+Extracting positional features for 44502 sequences...
+  Features: 5 bins × 60 motifs + positions + gradients + co-occurrence
+  Processed 1000/44502 sequences (2.2%)...
+  Processed 2000/44502 sequences (4.5%)...
+  Processed 3000/44502 sequences (6.7%)...
+  Processed 4000/44502 sequences (9.0%)...
+  Processed 5000/44502 sequences (11.2%)...
+  Processed 6000/44502 sequences (13.5%)...
+  Processed 7000/44502 sequences (15.7%)...
+  Processed 8000/44502 sequences (18.0%)...
+  Processed 9000/44502 sequences (20.2%)...
+  Processed 10000/44502 sequences (22.5%)...
+  Processed 11000/44502 sequences (24.7%)...
+  Processed 12000/44502 sequences (27.0%)...
+  Processed 13000/44502 sequences (29.2%)...
+  Processed 14000/44502 sequences (31.5%)...
+  Processed 15000/44502 sequences (33.7%)...
+  Processed 16000/44502 sequences (36.0%)...
+  Processed 17000/44502 sequences (38.2%)...
+  Processed 18000/44502 sequences (40.4%)...
+  Processed 19000/44502 sequences (42.7%)...
+  Processed 20000/44502 sequences (44.9%)...
+  Processed 21000/44502 sequences (47.2%)...
+  Processed 22000/44502 sequences (49.4%)...
+  Processed 23000/44502 sequences (51.7%)...
+  Processed 24000/44502 sequences (53.9%)...
+  Processed 25000/44502 sequences (56.2%)...
+  Processed 26000/44502 sequences (58.4%)...
+  Processed 27000/44502 sequences (60.7%)...
+  Processed 28000/44502 sequences (62.9%)...
+  Processed 29000/44502 sequences (65.2%)...
+  Processed 30000/44502 sequences (67.4%)...
+  Processed 31000/44502 sequences (69.7%)...
+  Processed 32000/44502 sequences (71.9%)...
+  Processed 33000/44502 sequences (74.2%)...
+  Processed 34000/44502 sequences (76.4%)...
+  Processed 35000/44502 sequences (78.6%)...
+  Processed 36000/44502 sequences (80.9%)...
+  Processed 37000/44502 sequences (83.1%)...
+  Processed 38000/44502 sequences (85.4%)...
+  Processed 39000/44502 sequences (87.6%)...
+  Processed 40000/44502 sequences (89.9%)...
+  Processed 41000/44502 sequences (92.1%)...
+  Processed 42000/44502 sequences (94.4%)...
+  Processed 43000/44502 sequences (96.6%)...
+  Processed 44000/44502 sequences (98.9%)...
+  Created 654 features
+
+--- Extracting salt positional features ---
+
+Extracting positional features for 3232 sequences...
+  Features: 5 bins × 60 motifs + positions + gradients + co-occurrence
+  Processed 1000/3232 sequences (30.9%)...
+  Processed 2000/3232 sequences (61.9%)...
+  Processed 3000/3232 sequences (92.8%)...
+  Created 654 features
+
+Cultivars shared by drought and salt after normalisation: ['IR64']
+
+Shared context vocab: Variety=16 Tissue=8 Stage=6
+
+Drought feature matrix: (44502, 685)
+Salt    feature matrix: (3232, 685)
+
+Saved:
+  /home/saiful/DeepRice_Salt/CARCM_Salt/transfer_learning_ir64fix/data/drought_features.parquet
+  /home/saiful/DeepRice_Salt/CARCM_Salt/transfer_learning_ir64fix/data/salt_features.parquet
+  shared_feature_groups.json, context_categories.json, shared_motifs.json
+  n_motifs (shared) = 60
+
+DONE.
