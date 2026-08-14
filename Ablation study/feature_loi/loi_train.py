@@ -263,7 +263,8 @@ def main():
         with open(os.path.join(out_dir, "history", f"seed_{seed}.json"), "w") as f:
             json.dump({k: [float(x) for x in v] for k, v in history.items()}, f)
 
-        m = metric_pack(test_labels, test_preds)
+        m = metric_pack(test_labels, test_preds,
+                        dev_labels=dev_labels, dev_preds=dev_preds)
         m.update({"seed": int(seed), "dev_auc": float(dev_auc), "n_params": int(n_params)})
         rows.append(m)
         print(f"  [seed {seed}] test_auc={m['auc']:.4f}  pr_auc={m['pr_auc']:.4f}  "

@@ -28,6 +28,7 @@ from sklearn.metrics import (
     precision_recall_curve, average_precision_score, f1_score
 )
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
 from scipy.stats import rankdata
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -446,6 +447,10 @@ def set_seed(seed):
     import random
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
+    # See rice_classifier_v7b.set_seed: without these, repeated runs of the same
+    # configuration drift by roughly 0.002 test AUC.
+    torch.backends.cudnn.benchmark = False
+    os.environ["PYTHONHASHSEED"] = str(seed)
 
 
 def hard_weighted_bce_loss(pred, target, is_hard, hard_weight=2.0):
@@ -755,33 +760,44 @@ def main():
     
     meta_model = LogisticRegression(C=1.0, max_iter=1000, random_state=42)
     meta_model.fit(meta_train_features, dev_labels)
-    
+
     meta_test_preds = meta_model.predict_proba(meta_test_features)[:, 1]
+    # The meta-learner is fitted on dev, so its dev score is computed out-of-fold
+    # to keep the selection below fair.
+    meta_dev_preds = cross_val_predict(
+        LogisticRegression(C=1.0, max_iter=1000, random_state=42),
+        meta_train_features, dev_labels,
+        cv=StratifiedKFold(5, shuffle=True, random_state=42),
+        method='predict_proba')[:, 1]
     meta_auc = roc_auc_score(test_labels, meta_test_preds)
     meta_hard = roc_auc_score(test_labels[test_hard_mask], meta_test_preds[test_hard_mask])
     print(f"   Test AUC: {meta_auc:.4f} | Hard AUC: {meta_hard:.4f}")
-    
+
     # Method 5: Blended (Weighted avg + Rank avg)
+    blended_dev = 0.5 * weighted_avg_dev + 0.5 * rank_avg_dev
     blended_test = 0.5 * weighted_avg_test + 0.5 * rank_avg_test
     blended_auc = roc_auc_score(test_labels, blended_test)
     blended_hard = roc_auc_score(test_labels[test_hard_mask], blended_test[test_hard_mask])
     print(f"\n5. Blended (Weighted + Rank):")
     print(f"   Test AUC: {blended_auc:.4f} | Hard AUC: {blended_hard:.4f}")
-    
-    # Select best ensemble method
+
+    # Select best ensemble method -- on DEV AUC, never on test.
     ensemble_results = {
-        'simple_avg': (simple_avg_auc, simple_avg_hard, simple_avg_test),
-        'weighted_avg': (weighted_avg_auc, weighted_avg_hard, weighted_avg_test),
-        'rank_avg': (rank_avg_auc, rank_avg_hard, rank_avg_test),
-        'meta_learner': (meta_auc, meta_hard, meta_test_preds),
-        'blended': (blended_auc, blended_hard, blended_test)
+        'simple_avg': (simple_avg_auc, simple_avg_hard, simple_avg_test, simple_avg_dev),
+        'weighted_avg': (weighted_avg_auc, weighted_avg_hard, weighted_avg_test, weighted_avg_dev),
+        'rank_avg': (rank_avg_auc, rank_avg_hard, rank_avg_test, rank_avg_dev),
+        'meta_learner': (meta_auc, meta_hard, meta_test_preds, meta_dev_preds),
+        'blended': (blended_auc, blended_hard, blended_test, blended_dev)
     }
-    
-    best_method = max(ensemble_results.items(), key=lambda x: x[1][0])
-    best_name, (best_auc, best_hard_auc, best_preds) = best_method
-    
-    print(f"\n✓ Best Method: {best_name}")
-    print(f"  Test AUC: {best_auc:.4f} | Hard AUC: {best_hard_auc:.4f}")
+
+    ensemble_dev_aucs = {k: roc_auc_score(dev_labels, v[3])
+                         for k, v in ensemble_results.items()}
+    best_name = max(ensemble_dev_aucs, key=ensemble_dev_aucs.get)
+    best_auc, best_hard_auc, best_preds, best_dev_preds = ensemble_results[best_name]
+
+    print(f"\n✓ Best Method (selected on dev AUC): {best_name}")
+    print(f"  Dev AUC: {ensemble_dev_aucs[best_name]:.4f} | "
+          f"Test AUC: {best_auc:.4f} | Hard AUC: {best_hard_auc:.4f}")
     
     # ==========================================================================
     # FINAL RESULTS
@@ -793,7 +809,9 @@ def main():
     easy_mask = ~test_hard_mask
     easy_auc = roc_auc_score(test_labels[easy_mask], best_preds[easy_mask])
     
-    opt_thresh, opt_f1 = find_optimal_threshold(best_preds, test_labels)
+    # Threshold tuned on the development split, then applied to test.
+    opt_thresh, _ = find_optimal_threshold(best_dev_preds, dev_labels)
+    opt_f1 = f1_score(test_labels, (best_preds > opt_thresh).astype(int))
     pred_opt = (best_preds > opt_thresh).astype(int)
     prec, rec, _, _ = precision_recall_fscore_support(test_labels, pred_opt, average='binary')
     
@@ -839,9 +857,11 @@ def main():
         'n_base_models': len(BASE_SEEDS),
         'base_seeds': BASE_SEEDS,
         'base_dev_aucs': base_dev_aucs,
-        'ensemble_methods': {name: {'test_auc': float(auc), 'hard_auc': float(hard)} 
-                            for name, (auc, hard, _) in ensemble_results.items()},
+        'ensemble_methods': {name: {'dev_auc': float(ensemble_dev_aucs[name]),
+                                    'test_auc': float(auc), 'hard_auc': float(hard)}
+                             for name, (auc, hard, _, _) in ensemble_results.items()},
         'best_method': best_name,
+        'best_dev_auc': float(ensemble_dev_aucs[best_name]),
         'best_test_auc': float(best_auc),
         'best_hard_auc': float(best_hard_auc),
         'best_easy_auc': float(easy_auc),

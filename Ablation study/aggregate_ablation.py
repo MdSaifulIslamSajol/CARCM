@@ -87,13 +87,16 @@ def best_ensemble(test_preds_per_seed, dev_preds_per_seed, dev_labels, test_labe
     """
     Replicates v7b's 5-method ensemble selection: build simple-mean, dev-AUC-weighted,
     rank-mean, meta-learner, and blended ensembles, then return the one with the
-    highest test AUC (mirroring v7b's behaviour for headline numbers).
+    highest DEVELOPMENT AUC (mirroring v7b's behaviour for headline numbers).
+
+    The strategy is chosen on the development split only; the test split is scored
+    once, after the choice is frozen.
 
     Inputs:
       test_preds_per_seed : (n_seeds, n_test)
       dev_preds_per_seed  : (n_seeds, n_dev)
-      dev_labels          : (n_dev,) — needed for the meta-learner
-      test_labels         : (n_test,) — needed to pick the best
+      dev_labels          : (n_dev,) — needed for the meta-learner and for selection
+      test_labels         : (n_test,) — scored only after selection, for reporting
       per_seed_dev_aucs   : optional precomputed per-seed dev AUC (for weighted_avg);
                             recomputed if None.
 
@@ -102,14 +105,19 @@ def best_ensemble(test_preds_per_seed, dev_preds_per_seed, dev_labels, test_labe
                             "meta_learner" | "blended")
       preds               : (n_test,) — chosen ensemble's test predictions
       all_methods         : dict of {name: preds} for all 5 methods
+      aucs                : dict of {name: {"dev_auc": float, "test_auc": float}}
+      dev_preds           : (n_dev,) — chosen ensemble's dev predictions, so the
+                            caller can tune its decision threshold on dev
     """
     from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import cross_val_predict, StratifiedKFold
     from sklearn.metrics import roc_auc_score
     from scipy.stats import rankdata
 
     n_seeds = test_preds_per_seed.shape[0]
 
     # 1) simple average
+    simple_dev = dev_preds_per_seed.mean(axis=0)
     simple_avg = test_preds_per_seed.mean(axis=0)
     # 2) dev-AUC-weighted average
     if per_seed_dev_aucs is None:
@@ -119,18 +127,29 @@ def best_ensemble(test_preds_per_seed, dev_preds_per_seed, dev_labels, test_labe
              for s in range(n_seeds)]
         )
     w = per_seed_dev_aucs / max(per_seed_dev_aucs.sum(), 1e-12)
+    weighted_dev = np.average(dev_preds_per_seed, axis=0, weights=w)
     weighted_avg = np.average(test_preds_per_seed, axis=0, weights=w)
     # 3) rank average (rank predictions per seed, normalize, average)
+    rank_dev = np.array([rankdata(p) / len(p) for p in dev_preds_per_seed]).mean(axis=0)
     rank_test = np.array([rankdata(p) / len(p) for p in test_preds_per_seed])
     rank_avg = rank_test.mean(axis=0)
-    # 4) meta-learner: logistic regression on dev predictions
+    # 4) meta-learner: logistic regression on dev predictions. Because it is
+    #    fitted on dev, its dev score is computed out-of-fold so that it does not
+    #    win the selection on an in-sample advantage.
     try:
         meta = LogisticRegression(C=1.0, max_iter=1000)
         meta.fit(dev_preds_per_seed.T, dev_labels)
         meta_preds = meta.predict_proba(test_preds_per_seed.T)[:, 1]
+        meta_dev = cross_val_predict(
+            LogisticRegression(C=1.0, max_iter=1000),
+            dev_preds_per_seed.T, dev_labels,
+            cv=StratifiedKFold(5, shuffle=True, random_state=42),
+            method="predict_proba")[:, 1]
     except Exception:
         meta_preds = simple_avg.copy()
+        meta_dev = simple_dev.copy()
     # 5) blended (matches v7b's recipe)
+    blended_dev = 0.4 * weighted_dev + 0.3 * rank_dev + 0.3 * meta_dev
     blended = 0.4 * weighted_avg + 0.3 * rank_avg + 0.3 * meta_preds
 
     methods = {
@@ -140,9 +159,21 @@ def best_ensemble(test_preds_per_seed, dev_preds_per_seed, dev_labels, test_labe
         "meta_learner": meta_preds,
         "blended": blended,
     }
-    aucs = {n: float(roc_auc_score(test_labels, p)) for n, p in methods.items()}
-    best = max(aucs, key=aucs.get)
-    return best, methods[best], methods, aucs
+    dev_methods = {
+        "simple_avg": simple_dev,
+        "weighted_avg": weighted_dev,
+        "rank_avg": rank_dev,
+        "meta_learner": meta_dev,
+        "blended": blended_dev,
+    }
+    aucs = {
+        n: {"dev_auc": float(roc_auc_score(dev_labels, dev_methods[n])),
+            "test_auc": float(roc_auc_score(test_labels, p))}
+        for n, p in methods.items()
+    }
+    # Selection uses the development split only.
+    best = max(aucs, key=lambda n: aucs[n]["dev_auc"])
+    return best, methods[best], methods, aucs, dev_methods[best]
 
 
 def load_test_labels(results_root):
@@ -197,6 +228,8 @@ def aggregate(args):
     # ---------- 2. Build v7b-style 5-method ensemble per config ----------
     test_labels = load_test_labels(results_root)
     ensemble = {}
+    ensemble_dev = {}          # dev-side prediction of each config's chosen ensemble
+    ensemble_dev_labels = {}
     ensemble_method_used = {}
     ensemble_method_aucs = {}
     for cfg in ABLATION_CONFIGS:
@@ -218,10 +251,12 @@ def aggregate(args):
             ensemble_method_aucs[cfg["name"]] = {}
             continue
         dev_labels = np.load(dev_labels_path)
-        best_name, best_preds, _, method_aucs = best_ensemble(
+        best_name, best_preds, _, method_aucs, best_dev_preds = best_ensemble(
             test_preds, dev_preds, dev_labels, test_labels
         )
         ensemble[cfg["name"]] = best_preds
+        ensemble_dev[cfg["name"]] = best_dev_preds
+        ensemble_dev_labels[cfg["name"]] = dev_labels
         ensemble_method_used[cfg["name"]] = best_name
         ensemble_method_aucs[cfg["name"]] = method_aucs
 
@@ -249,7 +284,9 @@ def aggregate(args):
         {
             "name": n,
             "best_method": ensemble_method_used.get(n, ""),
-            **ensemble_method_aucs.get(n, {}),
+            **{f"{m}_{k}": v
+               for m, d in ensemble_method_aucs.get(n, {}).items()
+               for k, v in d.items()},
         }
         for n in ensemble
     ]).to_csv(os.path.join(results_root, "ensemble_selection.csv"), index=False)
@@ -273,7 +310,10 @@ def aggregate(args):
         # Ensemble metrics for the row's mean prediction (used as the canonical
         # prediction in the DeLong test).
         if cfg["name"] in ensemble:
-            ens_m = metric_pack(test_labels, ensemble[cfg["name"]])
+            ens_m = metric_pack(
+                test_labels, ensemble[cfg["name"]],
+                dev_labels=ensemble_dev_labels.get(cfg["name"]),
+                dev_preds=ensemble_dev.get(cfg["name"]))
             row["auc_ensemble"] = ens_m["auc"]
             row["pr_auc_ensemble"] = ens_m["pr_auc"]
             row["f1_ensemble"] = ens_m["f1"]

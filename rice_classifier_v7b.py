@@ -20,8 +20,11 @@ import os
 import sys
 import argparse
 
-# GPU Configuration
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+# GPU Configuration (honours an externally set CUDA_VISIBLE_DEVICES, else GPU 5)
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "5")
+
+# Must be set before CUDA/cuBLAS initialises for --deterministic to work.
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import torch
 import torch.nn as nn
@@ -38,6 +41,7 @@ from sklearn.metrics import (
     precision_score, recall_score, matthews_corrcoef
 )
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
 from sklearn.calibration import calibration_curve
 from scipy.stats import rankdata
 import matplotlib.pyplot as plt
@@ -93,6 +97,14 @@ def parse_args():
                         help='Early stopping patience (default: 25)')
     parser.add_argument('--run_name', type=str, default=None,
                         help='Custom run name (default: auto-generated)')
+    parser.add_argument('--deterministic', action='store_true',
+                        help='Request deterministic CUDA kernels (slower). NOTE: '
+                             'this reduces but does not eliminate run-to-run '
+                             'variation on this model under torch 1.10; repeated '
+                             'runs still differ by ~0.002 test AUC. Data loading, '
+                             'batch order and weight initialisation are exactly '
+                             'reproducible; the residual variation is in GPU '
+                             'forward/backward compute.')
     return parser.parse_args()
 
 
@@ -479,6 +491,9 @@ class ContextEnhancedGatedFusionV5(nn.Module):
 # TRAINING FUNCTIONS
 # =============================================================================
 
+DETERMINISTIC = False   # set by --deterministic
+
+
 def set_seed(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -486,6 +501,34 @@ def set_seed(seed):
     import random
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
+    # These make data loading, batch order and weight initialisation exactly
+    # reproducible (verified by hashing batches and initial weights across runs).
+    # They do NOT make training bitwise reproducible: repeated runs of the same
+    # configuration still differ by ~0.002 test AUC, and enabling
+    # torch.use_deterministic_algorithms via --deterministic does not remove it
+    # under torch 1.10. The residual variation is in GPU forward/backward compute.
+    torch.backends.cudnn.benchmark = False
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    if DETERMINISTIC:
+        torch.use_deterministic_algorithms(True)
+
+
+def make_loader_rng(seed):
+    """Deterministic shuffling/worker seeding for DataLoader.
+
+    Returns (generator, worker_init_fn) to pass to DataLoader so that batch order
+    and per-worker RNG are reproducible across runs.
+    """
+    g = torch.Generator()
+    g.manual_seed(seed)
+
+    def _worker_init(worker_id):
+        worker_seed = seed + worker_id
+        np.random.seed(worker_seed)
+        import random
+        random.seed(worker_seed)
+
+    return g, _worker_init
 
 
 def hard_weighted_bce_loss(pred, target, is_hard, hard_weight=2.0):
@@ -1030,6 +1073,7 @@ def save_detailed_results(results, output_dir, config_name):
     json_results = {
         'config': results['config'],
         'metrics': {
+            'dev_auc': float(results['dev_auc']),
             'test_auc': float(results['test_auc']),
             'hard_auc': float(results['hard_auc']),
             'easy_auc': float(results['easy_auc']),
@@ -1176,9 +1220,12 @@ def run_experiment(config):
         context_info=test_context, hard_examples=test_hard, scaler=train_dataset.scaler
     )
     
-    # Create dataloaders
-    train_loader = DataLoader(train_dataset, batch_size=config['batch_size'], 
-                              shuffle=True, num_workers=4, pin_memory=True)
+    # Create dataloaders. The training loader shuffles, so it gets a seeded
+    # generator and worker init to keep batch order reproducible across runs.
+    loader_gen, loader_worker_init = make_loader_rng(42)
+    train_loader = DataLoader(train_dataset, batch_size=config['batch_size'],
+                              shuffle=True, num_workers=4, pin_memory=True,
+                              generator=loader_gen, worker_init_fn=loader_worker_init)
     dev_loader = DataLoader(dev_dataset, batch_size=config['batch_size'], 
                             shuffle=False, num_workers=4, pin_memory=True)
     test_loader = DataLoader(test_dataset, batch_size=config['batch_size'], 
@@ -1270,75 +1317,84 @@ def run_experiment(config):
     all_dev_preds = np.array(all_dev_preds)
     
     ensemble_results = {}
-    
+
+    # Each strategy is built on BOTH the dev and test splits. Strategy selection
+    # and threshold tuning use the dev split only; the test split is scored once,
+    # after both choices are frozen.
+
     # 1. Simple Average
+    simple_dev = all_dev_preds.mean(axis=0)
     simple_avg = all_test_preds.mean(axis=0)
-    simple_auc = roc_auc_score(test_labels, simple_avg)
-    simple_hard_auc = roc_auc_score(test_labels[test_hard_mask], simple_avg[test_hard_mask])
-    ensemble_results['simple_avg'] = {'test_auc': simple_auc, 'hard_auc': simple_hard_auc}
-    print(f"\n1. Simple Average: Test AUC = {simple_auc:.4f} | Hard AUC = {simple_hard_auc:.4f}")
-    
-    # 2. Weighted Average
+
+    # 2. Weighted Average (weights from per-seed dev AUC)
     dev_aucs = np.array(list(base_aucs.values()))
     weights = dev_aucs / dev_aucs.sum()
+    weighted_dev = np.average(all_dev_preds, axis=0, weights=weights)
     weighted_avg = np.average(all_test_preds, axis=0, weights=weights)
-    weighted_auc = roc_auc_score(test_labels, weighted_avg)
-    weighted_hard_auc = roc_auc_score(test_labels[test_hard_mask], weighted_avg[test_hard_mask])
-    ensemble_results['weighted_avg'] = {'test_auc': weighted_auc, 'hard_auc': weighted_hard_auc}
-    print(f"2. Weighted Average: Test AUC = {weighted_auc:.4f} | Hard AUC = {weighted_hard_auc:.4f}")
-    
+
     # 3. Rank Average
+    rank_dev = np.array([rankdata(p) / len(p) for p in all_dev_preds]).mean(axis=0)
     rank_preds = np.array([rankdata(p) / len(p) for p in all_test_preds])
     rank_avg = rank_preds.mean(axis=0)
-    rank_auc = roc_auc_score(test_labels, rank_avg)
-    rank_hard_auc = roc_auc_score(test_labels[test_hard_mask], rank_avg[test_hard_mask])
-    ensemble_results['rank_avg'] = {'test_auc': rank_auc, 'hard_auc': rank_hard_auc}
-    print(f"3. Rank Average: Test AUC = {rank_auc:.4f} | Hard AUC = {rank_hard_auc:.4f}")
-    
-    # 4. Meta-Learner
+
+    # 4. Meta-Learner. It is fitted on the dev split, so its in-sample dev score
+    # would be optimistically biased and would unfairly win the selection. It is
+    # therefore scored on dev via 5-fold out-of-fold prediction, while the model
+    # applied to test remains the full-dev fit.
     meta_X_train = all_dev_preds.T
     meta_X_test = all_test_preds.T
     meta_learner = LogisticRegression(C=1.0, max_iter=1000)
     meta_learner.fit(meta_X_train, dev_labels)
     meta_preds = meta_learner.predict_proba(meta_X_test)[:, 1]
-    meta_auc = roc_auc_score(test_labels, meta_preds)
-    meta_hard_auc = roc_auc_score(test_labels[test_hard_mask], meta_preds[test_hard_mask])
-    ensemble_results['meta_learner'] = {'test_auc': meta_auc, 'hard_auc': meta_hard_auc}
-    print(f"4. Meta-Learner: Test AUC = {meta_auc:.4f} | Hard AUC = {meta_hard_auc:.4f}")
-    
+    meta_dev = cross_val_predict(
+        LogisticRegression(C=1.0, max_iter=1000), meta_X_train, dev_labels,
+        cv=StratifiedKFold(5, shuffle=True, random_state=42),
+        method='predict_proba')[:, 1]
+
     # 5. Blended
+    blended_dev = 0.4 * weighted_dev + 0.3 * rank_dev + 0.3 * meta_dev
     blended = 0.4 * weighted_avg + 0.3 * rank_avg + 0.3 * meta_preds
-    blended_auc = roc_auc_score(test_labels, blended)
-    blended_hard_auc = roc_auc_score(test_labels[test_hard_mask], blended[test_hard_mask])
-    ensemble_results['blended'] = {'test_auc': blended_auc, 'hard_auc': blended_hard_auc}
-    print(f"5. Blended: Test AUC = {blended_auc:.4f} | Hard AUC = {blended_hard_auc:.4f}")
-    
-    # Find best method
-    best_method = max(ensemble_results, key=lambda x: ensemble_results[x]['test_auc'])
-    
-    if best_method == 'simple_avg':
-        final_preds = simple_avg
-    elif best_method == 'weighted_avg':
-        final_preds = weighted_avg
-    elif best_method == 'rank_avg':
-        final_preds = rank_avg
-    elif best_method == 'meta_learner':
-        final_preds = meta_preds
-    else:
-        final_preds = blended
-    
-    print(f"\n✓ Best Method: {best_method}")
-    
-    # Find optimal threshold
+
+    dev_preds_by_method = {
+        'simple_avg': simple_dev, 'weighted_avg': weighted_dev,
+        'rank_avg': rank_dev, 'meta_learner': meta_dev, 'blended': blended_dev,
+    }
+    test_preds_by_method = {
+        'simple_avg': simple_avg, 'weighted_avg': weighted_avg,
+        'rank_avg': rank_avg, 'meta_learner': meta_preds, 'blended': blended,
+    }
+
+    for i, name in enumerate(['simple_avg', 'weighted_avg', 'rank_avg',
+                              'meta_learner', 'blended'], start=1):
+        tp = test_preds_by_method[name]
+        ensemble_results[name] = {
+            'dev_auc': roc_auc_score(dev_labels, dev_preds_by_method[name]),
+            'test_auc': roc_auc_score(test_labels, tp),
+            'hard_auc': roc_auc_score(test_labels[test_hard_mask], tp[test_hard_mask]),
+        }
+        print(f"\n{i}. {name}: Dev AUC = {ensemble_results[name]['dev_auc']:.4f} | "
+              f"Test AUC = {ensemble_results[name]['test_auc']:.4f} | "
+              f"Hard AUC = {ensemble_results[name]['hard_auc']:.4f}")
+
+    # Find best method -- selected on DEV AUC
+    best_method = max(ensemble_results, key=lambda x: ensemble_results[x]['dev_auc'])
+    final_preds = test_preds_by_method[best_method]
+    final_dev_preds = dev_preds_by_method[best_method]
+
+    print(f"\n✓ Best Method (selected on dev AUC): {best_method}")
+
+    # Find optimal threshold -- tuned on DEV
     best_f1 = 0
     best_thresh = 0.5
     for t in np.arange(0.3, 0.7, 0.01):
-        pred_binary = (final_preds >= t).astype(int)
-        f1 = f1_score(test_labels, pred_binary)
+        pred_binary = (final_dev_preds >= t).astype(int)
+        f1 = f1_score(dev_labels, pred_binary)
         if f1 > best_f1:
             best_f1 = f1
             best_thresh = t
-    
+
+    print(f"✓ Threshold (tuned on dev): {best_thresh:.2f} (dev F1 = {best_f1:.4f})")
+
     # Compute final metrics
     pred_binary = (final_preds >= best_thresh).astype(int)
     easy_mask = ~test_hard_mask
@@ -1346,6 +1402,7 @@ def run_experiment(config):
     final_results = {
         'config': config,
         'run_name': run_name,
+        'dev_auc': roc_auc_score(dev_labels, final_dev_preds),
         'test_auc': roc_auc_score(test_labels, final_preds),
         'hard_auc': roc_auc_score(test_labels[test_hard_mask], final_preds[test_hard_mask]),
         'easy_auc': roc_auc_score(test_labels[easy_mask], final_preds[easy_mask]),
@@ -1426,7 +1483,11 @@ def run_experiment(config):
 
 if __name__ == "__main__":
     args = parse_args()
-    
+
+    DETERMINISTIC = args.deterministic
+    if DETERMINISTIC:
+        print("Deterministic mode: CUDA kernels forced deterministic (slower).")
+
     config = {
         'learning_rate': args.learning_rate,
         'hidden_dim': args.hidden_dim,

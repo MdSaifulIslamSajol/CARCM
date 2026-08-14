@@ -37,7 +37,7 @@ plt.rcParams.update({
     'grid.alpha': 0.3
 })
 
-RESULTS_DIR = "/home/saiful/DeepRice/motif_based_classification_ALL_DATA/bin_based_v2/models_v7b/"
+RESULTS_DIR = "/home/saiful/CARCM/models_carcm/"
 
 
 def load_all_results():
@@ -60,6 +60,10 @@ def load_all_results():
                     'dropout': data['config']['dropout'],
                     'batch_size': data['config']['batch_size'],
                     'num_seeds': data['config']['num_seeds'],
+                    # Runs produced before dev-based selection was introduced do
+                    # not carry a dev AUC; they are kept for reporting but cannot
+                    # take part in the dev-based ranking below.
+                    'dev_auc': data['metrics'].get('dev_auc', np.nan),
                     'test_auc': data['metrics']['test_auc'],
                     'hard_auc': data['metrics']['hard_auc'],
                     'easy_auc': data['metrics']['easy_auc'],
@@ -149,7 +153,7 @@ def plot_hyperparameter_sensitivity(df):
     
     # All configurations comparison
     ax = axes[1, 2]
-    df_sorted = df.sort_values('test_auc', ascending=True)
+    df_sorted = df.sort_values('dev_auc', ascending=True)
     y_pos = range(len(df_sorted))
     colors = ['green' if 'baseline' in name else 'steelblue' for name in df_sorted['run_name']]
     ax.barh(y_pos, df_sorted['test_auc'], color=colors, alpha=0.8)
@@ -175,7 +179,7 @@ def plot_metrics_comparison(df):
     metrics = ['test_auc', 'hard_auc', 'accuracy', 'f1']
     titles = ['Test AUC', 'Hard AUC', 'Accuracy', 'F1 Score']
     
-    df_sorted = df.sort_values('test_auc', ascending=False)
+    df_sorted = df.sort_values('dev_auc', ascending=False)
     x = range(len(df_sorted))
     
     for ax, metric, title in zip(axes.flat, metrics, titles):
@@ -245,7 +249,7 @@ def plot_radar_comparison(df):
     """Create radar chart comparing top configurations."""
     
     # Select top 5 configurations
-    df_top = df.nlargest(5, 'test_auc')
+    df_top = df.nlargest(5, 'dev_auc')
     
     metrics = ['test_auc', 'hard_auc', 'accuracy', 'precision', 'recall', 'f1', 'mcc']
     metric_labels = ['Test AUC', 'Hard AUC', 'Accuracy', 'Precision', 'Recall', 'F1', 'MCC']
@@ -321,7 +325,7 @@ def plot_easy_vs_hard(df):
 def create_latex_table(df):
     """Create LaTeX table for publication."""
     
-    df_sorted = df.sort_values('test_auc', ascending=False)
+    df_sorted = df.sort_values('dev_auc', ascending=False)
     
     # Select columns for table
     cols = ['run_name', 'learning_rate', 'hidden_dim', 'dropout', 
@@ -348,8 +352,8 @@ def create_summary_dashboard(df):
     fig = plt.figure(figsize=(20, 14))
     gs = GridSpec(3, 4, figure=fig, hspace=0.3, wspace=0.3)
     
-    # Best configuration metrics
-    best = df.loc[df['test_auc'].idxmax()]
+    # Best configuration -- selected on dev AUC, never on test
+    best = df.loc[df['dev_auc'].idxmax()]
     
     # 1. Metrics bar chart
     ax1 = fig.add_subplot(gs[0, 0:2])
@@ -364,7 +368,7 @@ def create_summary_dashboard(df):
     
     # 2. All configs ranked
     ax2 = fig.add_subplot(gs[0, 2:4])
-    df_sorted = df.sort_values('test_auc', ascending=True)
+    df_sorted = df.sort_values('dev_auc', ascending=True)
     y_pos = range(len(df_sorted))
     colors = ['gold' if name == best['run_name'] else 'steelblue' for name in df_sorted['run_name']]
     ax2.barh(y_pos, df_sorted['test_auc'], color=colors)
@@ -466,14 +470,23 @@ def main():
         return
     
     print(f"Found {len(df)} experiment results.")
-    
+
+    n_legacy = int(df['dev_auc'].isna().sum())
+    if n_legacy:
+        print(f"  Note: {n_legacy} run(s) predate dev-based selection and carry no "
+              f"dev AUC; they are reported but excluded from the ranking.")
+    if df['dev_auc'].notna().sum() == 0:
+        print("No run carries a dev AUC; re-run the experiments with the current "
+              "code before aggregating.")
+        return
+
     # Save summary CSV
-    df_sorted = df.sort_values('test_auc', ascending=False)
+    df_sorted = df.sort_values('dev_auc', ascending=False)
     df_sorted.to_csv(os.path.join(RESULTS_DIR, 'all_experiments_summary.csv'), index=False)
     print("\nSaved: all_experiments_summary.csv")
-    
-    # Print best configuration
-    best = df.loc[df['test_auc'].idxmax()]
+
+    # Print best configuration -- selected on dev AUC, never on test
+    best = df.loc[df['dev_auc'].idxmax()]
     print(f"\nBest Configuration: {best['run_name']}")
     print(f"  Test AUC: {best['test_auc']:.4f}")
     print(f"  Hard AUC: {best['hard_auc']:.4f}")

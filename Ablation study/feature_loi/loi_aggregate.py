@@ -137,6 +137,8 @@ def aggregate(args):
     ensemble = {}
     method_used = {}
     method_aucs = {}
+    ensemble_dev = {}          # dev-side prediction of each config's chosen ensemble
+    ensemble_dev_labels = {}
     for cfg in all_cfgs:
         test_preds = load_predictions(cfg["_results_root"], cfg["name"], split="test")
         dev_preds = load_predictions(cfg["_results_root"], cfg["name"], split="dev")
@@ -149,15 +151,19 @@ def aggregate(args):
             continue
         dev_labels_path = os.path.join(cfg["_results_root"], cfg["name"], "dev_labels.npy")
         dev_labels = np.load(dev_labels_path)
-        best_name, best_preds, _, mauc = best_ensemble(
+        best_name, best_preds, _, mauc, best_dev_preds = best_ensemble(
             test_preds, dev_preds, dev_labels, test_labels
         )
         ensemble[cfg["name"]] = best_preds
+        ensemble_dev[cfg["name"]] = best_dev_preds
+        ensemble_dev_labels[cfg["name"]] = dev_labels
         method_used[cfg["name"]] = best_name
         method_aucs[cfg["name"]] = mauc
 
     pd.DataFrame([
-        {"name": n, "best_method": method_used.get(n, ""), **method_aucs.get(n, {})}
+        {"name": n, "best_method": method_used.get(n, ""),
+         **{f"{m}_{k}": v for m, d in method_aucs.get(n, {}).items()
+            for k, v in d.items()}}
         for n in ensemble
     ]).to_csv(os.path.join(results_root, "loi_ensemble_selection.csv"), index=False)
 
@@ -179,7 +185,10 @@ def aggregate(args):
             row[f"{metric}_hi"] = hi
             row[f"{metric}_str"] = f"{m:.4f} [{lo:.4f}, {hi:.4f}]"
         if cfg["name"] in ensemble:
-            ens_m = metric_pack(test_labels, ensemble[cfg["name"]])
+            ens_m = metric_pack(
+                test_labels, ensemble[cfg["name"]],
+                dev_labels=ensemble_dev_labels.get(cfg["name"]),
+                dev_preds=ensemble_dev.get(cfg["name"]))
             row["auc_ensemble"] = ens_m["auc"]
             row["pr_auc_ensemble"] = ens_m["pr_auc"]
             row["f1_ensemble"] = ens_m["f1"]

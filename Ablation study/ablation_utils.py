@@ -129,24 +129,33 @@ def seed_mean_ci(values, ci=95):
 # Per-prediction metric pack (used for both per-seed and ensemble)
 # =============================================================================
 
-def metric_pack(labels, preds, threshold=None):
+def metric_pack(labels, preds, threshold=None, dev_labels=None, dev_preds=None):
     """
     Returns dict with auc, pr_auc, f1, mcc.
-    f1 and mcc are computed at the F1-optimal threshold scanned in [0.3, 0.7]
-    if `threshold` is None.
+
+    f1 and mcc are computed at a decision threshold that is tuned on the
+    DEVELOPMENT split (`dev_labels` / `dev_preds`) by scanning [0.3, 0.7] for the
+    F1 optimum, then applied to `labels` / `preds`. Tuning on the evaluation
+    split itself would pick the operating point using the same data the metrics
+    are reported on. An explicit `threshold` overrides tuning; if no development
+    predictions are supplied the threshold falls back to 0.5.
     """
     labels = np.asarray(labels).astype(int)
     preds = np.asarray(preds, dtype=float)
     auc = float(roc_auc_score(labels, preds))
     ap = float(average_precision_score(labels, preds))
     if threshold is None:
-        best_t, best_f1 = 0.5, -1.0
-        for t in np.arange(0.30, 0.71, 0.01):
-            yhat = (preds >= t).astype(int)
-            f1 = f1_score(labels, yhat, zero_division=0)
-            if f1 > best_f1:
-                best_f1, best_t = f1, t
-        threshold = best_t
+        if dev_labels is not None and dev_preds is not None:
+            dl = np.asarray(dev_labels).astype(int)
+            dp = np.asarray(dev_preds, dtype=float)
+            best_t, best_f1 = 0.5, -1.0
+            for t in np.arange(0.30, 0.71, 0.01):
+                f1 = f1_score(dl, (dp >= t).astype(int), zero_division=0)
+                if f1 > best_f1:
+                    best_f1, best_t = f1, t
+            threshold = best_t
+        else:
+            threshold = 0.5
     yhat = (preds >= threshold).astype(int)
     f1 = float(f1_score(labels, yhat, zero_division=0))
     mcc = float(matthews_corrcoef(labels, yhat))
