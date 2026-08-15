@@ -17,7 +17,10 @@ conda run -n dnabert --no-capture-output python tl_features.py
 
 echo ""
 echo "############ STEP 2: transfer learning (GPU $GPU) ############"
-conda run -n dnabert --no-capture-output python tl_transfer.py --gpu "$GPU" --num_seeds 5
+# Hyperparameters are the ones selected on the salt development set
+# (hidden 256, dropout 0.4, lr 3e-4) and reported in the manuscript.
+conda run -n dnabert --no-capture-output python tl_transfer.py --gpu "$GPU" --num_seeds 5 \
+    --hidden_dim 256 --dropout 0.4 --scratch_lr 3e-4 --finetune_lr 3e-4 --batch_size 128
 
 echo ""
 echo "DONE — results in transfer_learning/results/"

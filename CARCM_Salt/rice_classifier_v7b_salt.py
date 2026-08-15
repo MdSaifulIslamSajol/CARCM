@@ -43,6 +43,7 @@ from sklearn.metrics import (
     precision_score, recall_score, matthews_corrcoef
 )
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
 from sklearn.calibration import calibration_curve
 from scipy.stats import rankdata
 import matplotlib.pyplot as plt
@@ -1281,75 +1282,72 @@ def run_experiment(config):
     all_dev_preds = np.array(all_dev_preds)
     
     ensemble_results = {}
-    
+
+    # Strategy selection and threshold tuning use the DEV split only; the test
+    # split is scored once, after both choices are frozen.
+
     # 1. Simple Average
+    simple_dev = all_dev_preds.mean(axis=0)
     simple_avg = all_test_preds.mean(axis=0)
-    simple_auc = roc_auc_score(test_labels, simple_avg)
-    simple_hard_auc = roc_auc_score(test_labels[test_hard_mask], simple_avg[test_hard_mask])
-    ensemble_results['simple_avg'] = {'test_auc': simple_auc, 'hard_auc': simple_hard_auc}
-    print(f"\n1. Simple Average: Test AUC = {simple_auc:.4f} | Hard AUC = {simple_hard_auc:.4f}")
-    
-    # 2. Weighted Average
+
+    # 2. Weighted Average (weights from per-seed dev AUC)
     dev_aucs = np.array(list(base_aucs.values()))
     weights = dev_aucs / dev_aucs.sum()
+    weighted_dev = np.average(all_dev_preds, axis=0, weights=weights)
     weighted_avg = np.average(all_test_preds, axis=0, weights=weights)
-    weighted_auc = roc_auc_score(test_labels, weighted_avg)
-    weighted_hard_auc = roc_auc_score(test_labels[test_hard_mask], weighted_avg[test_hard_mask])
-    ensemble_results['weighted_avg'] = {'test_auc': weighted_auc, 'hard_auc': weighted_hard_auc}
-    print(f"2. Weighted Average: Test AUC = {weighted_auc:.4f} | Hard AUC = {weighted_hard_auc:.4f}")
-    
+
     # 3. Rank Average
-    rank_preds = np.array([rankdata(p) / len(p) for p in all_test_preds])
-    rank_avg = rank_preds.mean(axis=0)
-    rank_auc = roc_auc_score(test_labels, rank_avg)
-    rank_hard_auc = roc_auc_score(test_labels[test_hard_mask], rank_avg[test_hard_mask])
-    ensemble_results['rank_avg'] = {'test_auc': rank_auc, 'hard_auc': rank_hard_auc}
-    print(f"3. Rank Average: Test AUC = {rank_auc:.4f} | Hard AUC = {rank_hard_auc:.4f}")
-    
-    # 4. Meta-Learner
-    meta_X_train = all_dev_preds.T
-    meta_X_test = all_test_preds.T
+    rank_dev = np.array([rankdata(p) / len(p) for p in all_dev_preds]).mean(axis=0)
+    rank_avg = np.array([rankdata(p) / len(p) for p in all_test_preds]).mean(axis=0)
+
+    # 4. Meta-Learner (fitted on dev, so scored on dev out-of-fold)
     meta_learner = LogisticRegression(C=1.0, max_iter=1000)
-    meta_learner.fit(meta_X_train, dev_labels)
-    meta_preds = meta_learner.predict_proba(meta_X_test)[:, 1]
-    meta_auc = roc_auc_score(test_labels, meta_preds)
-    meta_hard_auc = roc_auc_score(test_labels[test_hard_mask], meta_preds[test_hard_mask])
-    ensemble_results['meta_learner'] = {'test_auc': meta_auc, 'hard_auc': meta_hard_auc}
-    print(f"4. Meta-Learner: Test AUC = {meta_auc:.4f} | Hard AUC = {meta_hard_auc:.4f}")
-    
+    meta_learner.fit(all_dev_preds.T, dev_labels)
+    meta_preds = meta_learner.predict_proba(all_test_preds.T)[:, 1]
+    meta_dev = cross_val_predict(
+        LogisticRegression(C=1.0, max_iter=1000), all_dev_preds.T, dev_labels,
+        cv=StratifiedKFold(5, shuffle=True, random_state=42),
+        method='predict_proba')[:, 1]
+
     # 5. Blended
+    blended_dev = 0.4 * weighted_dev + 0.3 * rank_dev + 0.3 * meta_dev
     blended = 0.4 * weighted_avg + 0.3 * rank_avg + 0.3 * meta_preds
-    blended_auc = roc_auc_score(test_labels, blended)
-    blended_hard_auc = roc_auc_score(test_labels[test_hard_mask], blended[test_hard_mask])
-    ensemble_results['blended'] = {'test_auc': blended_auc, 'hard_auc': blended_hard_auc}
-    print(f"5. Blended: Test AUC = {blended_auc:.4f} | Hard AUC = {blended_hard_auc:.4f}")
-    
-    # Find best method
-    best_method = max(ensemble_results, key=lambda x: ensemble_results[x]['test_auc'])
-    
-    if best_method == 'simple_avg':
-        final_preds = simple_avg
-    elif best_method == 'weighted_avg':
-        final_preds = weighted_avg
-    elif best_method == 'rank_avg':
-        final_preds = rank_avg
-    elif best_method == 'meta_learner':
-        final_preds = meta_preds
-    else:
-        final_preds = blended
-    
-    print(f"\n✓ Best Method: {best_method}")
-    
-    # Find optimal threshold
+
+    dev_preds_by_method = {'simple_avg': simple_dev, 'weighted_avg': weighted_dev,
+                           'rank_avg': rank_dev, 'meta_learner': meta_dev,
+                           'blended': blended_dev}
+    test_preds_by_method = {'simple_avg': simple_avg, 'weighted_avg': weighted_avg,
+                            'rank_avg': rank_avg, 'meta_learner': meta_preds,
+                            'blended': blended}
+
+    for i, name in enumerate(['simple_avg', 'weighted_avg', 'rank_avg',
+                              'meta_learner', 'blended'], start=1):
+        tp = test_preds_by_method[name]
+        ensemble_results[name] = {
+            'dev_auc': roc_auc_score(dev_labels, dev_preds_by_method[name]),
+            'test_auc': roc_auc_score(test_labels, tp),
+            'hard_auc': roc_auc_score(test_labels[test_hard_mask], tp[test_hard_mask]),
+        }
+        print(f"\n{i}. {name}: Dev AUC = {ensemble_results[name]['dev_auc']:.4f} | "
+              f"Test AUC = {ensemble_results[name]['test_auc']:.4f} | "
+              f"Hard AUC = {ensemble_results[name]['hard_auc']:.4f}")
+
+    # Find best method -- selected on DEV AUC
+    best_method = max(ensemble_results, key=lambda x: ensemble_results[x]['dev_auc'])
+    final_preds = test_preds_by_method[best_method]
+    final_dev_preds = dev_preds_by_method[best_method]
+    print(f"\n✓ Best Method (selected on dev AUC): {best_method}")
+
+    # Find optimal threshold -- tuned on DEV
     best_f1 = 0
     best_thresh = 0.5
     for t in np.arange(0.3, 0.7, 0.01):
-        pred_binary = (final_preds >= t).astype(int)
-        f1 = f1_score(test_labels, pred_binary)
+        f1 = f1_score(dev_labels, (final_dev_preds >= t).astype(int))
         if f1 > best_f1:
             best_f1 = f1
             best_thresh = t
-    
+    print(f"✓ Threshold (tuned on dev): {best_thresh:.2f} (dev F1 = {best_f1:.4f})")
+
     # Compute final metrics
     pred_binary = (final_preds >= best_thresh).astype(int)
     easy_mask = ~test_hard_mask

@@ -42,11 +42,11 @@ warnings.filterwarnings("ignore")
 parser = argparse.ArgumentParser()
 parser.add_argument("--gpu", type=str, default="0")
 parser.add_argument("--num_seeds", type=int, default=5)
-parser.add_argument("--hidden_dim", type=int, default=128)
-parser.add_argument("--dropout", type=float, default=0.5)
+parser.add_argument("--hidden_dim", type=int, default=256)
+parser.add_argument("--dropout", type=float, default=0.4)
 parser.add_argument("--batch_size", type=int, default=128)
-parser.add_argument("--finetune_lr", type=float, default=1e-4)   # winning config
-parser.add_argument("--scratch_lr", type=float, default=1e-4)
+parser.add_argument("--finetune_lr", type=float, default=3e-4)   # dev-selected config
+parser.add_argument("--scratch_lr", type=float, default=3e-4)
 parser.add_argument("--pretrain_lr", type=float, default=3e-4)
 parser.add_argument("--pretrain_epochs", type=int, default=100)
 parser.add_argument("--pretrain_patience", type=int, default=12)
@@ -351,12 +351,21 @@ def train_model(model, train_loader, dev_loader, device, lr, epochs, patience,
     return best_auc
 
 
-def metrics_from_preds(y_true, y_prob):
-    best_f1, best_t = 0, 0.5
-    for t in np.arange(0.3, 0.7, 0.01):
-        f1 = f1_score(y_true, (y_prob >= t).astype(int))
-        if f1 > best_f1:
-            best_f1, best_t = f1, t
+def metrics_from_preds(y_true, y_prob, dev_y=None, dev_prob=None):
+    """Score on the test split.
+
+    The decision threshold is tuned on the DEVELOPMENT split and then applied to
+    test. Tuning it on y_true would pick the operating point using the same data
+    the metrics are reported on. Falls back to 0.5 if no dev predictions given.
+    """
+    if dev_y is not None and dev_prob is not None:
+        best_f1, best_t = -1.0, 0.5
+        for t in np.arange(0.3, 0.7, 0.01):
+            f1 = f1_score(dev_y, (dev_prob >= t).astype(int))
+            if f1 > best_f1:
+                best_f1, best_t = f1, t
+    else:
+        best_t = 0.5
     yb = (y_prob >= best_t).astype(int)
     return {
         'test_auc': float(roc_auc_score(y_true, y_prob)),
@@ -432,6 +441,7 @@ def main():
     sal_te_ld, _ = make_loaders(sal_te, fg, vcols, tcols, scols, sal_tr_ds.scaler, False, sal_hard_te, args.batch_size, False)
 
     y_test = sal_te['label'].values.astype(int)
+    y_dev = sal_dv['label'].values.astype(int)
 
     def new_model(seed):
         set_seed(seed)
@@ -443,6 +453,7 @@ def main():
 
     seeds = [42 + i * 1000 for i in range(args.num_seeds)]
     preds = {'scratch': [], 'transfer_full': [], 'transfer_frozen': []}
+    dpreds = {'scratch': [], 'transfer_full': [], 'transfer_frozen': []}
     pretrain_dev_aucs, salt_dev = {'scratch': [], 'transfer_full': [], 'transfer_frozen': []}, {}
 
     t0 = time.time()
@@ -455,17 +466,27 @@ def main():
                         args.finetune_epochs, args.finetune_patience, args.weight_decay,
                         seed, tag="scratch")
         _, p, _ = evaluate(m, sal_te_ld, device)
+        _, dp, _ = evaluate(m, sal_dv_ld, device)
         preds['scratch'].append(p)
+        dpreds['scratch'].append(dp)
         print(f"    scratch        : salt-dev AUC {a:.4f}")
 
         # pretrain on drought (shared by B and C)
-        mp = new_model(seed)
-        pa = train_model(mp, dro_tr_ld, dro_dv_ld, device, args.pretrain_lr,
-                        args.pretrain_epochs, args.pretrain_patience, args.weight_decay,
-                        seed, tag="pretrain")
-        pre_state = copy.deepcopy(mp.state_dict())
-        torch.save(pre_state, os.path.join(CKPT_DIR, f"pretrained_seed{seed}.pt"))
-        print(f"    pretrain(drought): drought-dev AUC {pa:.4f}")
+        # Cache key must include the architecture: a checkpoint pretrained at one
+        # hidden_dim/dropout cannot be loaded into a differently shaped model.
+        _pre_path = os.path.join(
+            CKPT_DIR, f"pretrained_seed{seed}_hd{args.hidden_dim}_do{args.dropout}.pt")
+        if os.path.exists(_pre_path):
+            pre_state = torch.load(_pre_path, map_location=device)
+            print(f"    pretrain(drought): loaded cached {os.path.basename(_pre_path)}")
+        else:
+            mp = new_model(seed)
+            pa = train_model(mp, dro_tr_ld, dro_dv_ld, device, args.pretrain_lr,
+                            args.pretrain_epochs, args.pretrain_patience, args.weight_decay,
+                            seed, tag="pretrain")
+            pre_state = copy.deepcopy(mp.state_dict())
+            torch.save(pre_state, _pre_path)
+            print(f"    pretrain(drought): drought-dev AUC {pa:.4f}")
 
         # (B) transfer_full — fine-tune all weights on salt
         m = new_model(seed); m.load_state_dict(pre_state)
@@ -473,7 +494,9 @@ def main():
                         args.finetune_epochs, args.finetune_patience, args.weight_decay,
                         seed, tag="ft_full")
         _, p, _ = evaluate(m, sal_te_ld, device)
+        _, dp, _ = evaluate(m, sal_dv_ld, device)
         preds['transfer_full'].append(p)
+        dpreds['transfer_full'].append(dp)
         print(f"    transfer_full  : salt-dev AUC {a:.4f}")
 
         # (C) transfer_frozen — freeze encoder, train output head only
@@ -485,7 +508,9 @@ def main():
                         seed, only_params=[p for p in m.parameters() if p.requires_grad],
                         tag="ft_frozen")
         _, p, _ = evaluate(m, sal_te_ld, device)
+        _, dp, _ = evaluate(m, sal_dv_ld, device)
         preds['transfer_frozen'].append(p)
+        dpreds['transfer_frozen'].append(dp)
         print(f"    transfer_frozen: salt-dev AUC {a:.4f}")
 
     print(f"\nTotal time: {(time.time()-t0)/60:.1f} min")
@@ -494,7 +519,8 @@ def main():
     summary = {}
     for cond in ['scratch', 'transfer_full', 'transfer_frozen']:
         ens = np.mean(np.array(preds[cond]), axis=0)
-        m = metrics_from_preds(y_test, ens)
+        ens_dev = np.mean(np.array(dpreds[cond]), axis=0)
+        m = metrics_from_preds(y_test, ens, dev_y=y_dev, dev_prob=ens_dev)
         summary[cond] = m
         pd.DataFrame({'true_label': y_test, 'predicted_prob': ens,
                       'predicted_label': (ens >= m['optimal_threshold']).astype(int)}

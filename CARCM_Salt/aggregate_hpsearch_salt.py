@@ -38,10 +38,12 @@ for run in SEARCH_RUNS:
         "opt_threshold": m["optimal_threshold"],
     })
 
-df = pd.DataFrame(rows).sort_values("test_auc", ascending=False).reset_index(drop=True)
+# Configurations are ranked on the development split; test AUC is reported
+# alongside but never used to choose the winning configuration.
+df = pd.DataFrame(rows).sort_values("mean_dev_auc", ascending=False).reset_index(drop=True)
 pd.set_option("display.width", 160)
 print("=" * 100)
-print("CARCM-SALT — V7b HYPERPARAMETER SEARCH  (ranked by test AUC)")
+print("CARCM-SALT — V7b HYPERPARAMETER SEARCH  (ranked by dev AUC)")
 print("=" * 100)
 cols = ["run", "lr", "hidden", "dropout", "batch", "seeds",
         "test_auc", "mean_dev_auc", "f1", "mcc", "accuracy", "precision", "recall"]
